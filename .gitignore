@@ -1,2 +1,5 @@
 vendor/
 .env
+composer.lock
+api/composer.lock
+idea/

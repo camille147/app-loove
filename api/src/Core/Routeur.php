@@ -41,13 +41,20 @@ class Routeur {
                 $controller->setRequest($request);
 
                 try {
-                    $response = new Response(200, call_user_func_array (
-                        [$controller, $route->getAction()], 
+                    $result = call_user_func_array(
+                        [$controller, $route->getAction()],
                         $params
-                    ));
+                    );
+
+                    if ($result instanceof Response) {
+                        $response = $result;
+                    } else {
+                        $response = new Response(200, is_string($result) ? $result : json_encode($result));
+                    }
                 } catch(Exception $e) {
-                    $response = new Response(404, $e->getMessage());
+                    $response = new Response(500, $e->getMessage());
                 }
+
             }
         }
     

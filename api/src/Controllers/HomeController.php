@@ -7,8 +7,9 @@ use App\Models\User;
 class HomeController extends BaseController {
     
     public function index() {
-        return $this->render('home', [
-            'nom' => 'Camille'
+        echo json_encode([
+            'nom' => 'Camille',
+            'message' => 'Bienvenue sur mon app'
         ]);
     }
 }

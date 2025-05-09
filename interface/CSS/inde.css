@@ -1,0 +1,79 @@
+/* Base */
+body {
+    background-color: #fdf6ed;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Logo cercle */
+.logo-container {
+    background-color: #f8ecdb;
+    border-radius: 50%;
+    width: 200px;
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-img {
+    width: 70px;
+    height: auto;
+}
+
+/* Texte HeartBloom */
+.logo-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.8rem;
+    color: #873424;
+}
+
+/* Bouton "Se connecter" */
+.custom-btn-1 {
+    background-color: #6f1d1b;
+    color: #fff;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    padding: 0.6rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn-1:hover {
+    background-color: #561211;
+}
+
+/* Bouton "S'inscrire" */
+.custom-btn-2 {
+    background-color: #fdf6ed;
+    color: #6f1d1b;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    padding: 0.6rem;
+    border: 2px solid #6f1d1b;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn-2:hover {
+    background-color: #f8ecdb;
+}
+
+/* Responsive tweaks (optionnels) */
+@media (min-width: 768px) {
+    .logo-container {
+        width: 240px;
+        height: 240px;
+    }
+
+    .logo-img {
+        width: 90px;
+    }
+
+    .logo-text {
+        font-size: 2.2rem;
+    }
+}

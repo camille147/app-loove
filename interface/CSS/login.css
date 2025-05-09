@@ -1,0 +1,92 @@
+body {
+    background-color: #fdf6ed;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Logo rond */
+.logo-container {
+    background-color: #f8ecdb;
+    border-radius: 50%;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-img {
+    width: 60px;
+    height: auto;
+}
+
+.logo-text {
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.7rem;
+    color: #873424;
+}
+
+/* Formulaire */
+.form-box {
+    background-color: #f8ecdb;
+    border: 2px solid #873424;
+    border-radius: 15px;
+    width: 100%;
+    max-width: 320px;
+}
+
+/* Champs de saisie */
+.custom-input {
+    border-radius: 10px;
+    border: 2px solid #873424;
+    background-color: #fff;
+}
+
+.custom-input:focus {
+    border-color: #6f1d1b;
+    box-shadow: 0 0 0 0.2rem rgba(111, 29, 27, 0.25);
+}
+
+/* Lien mot de passe */
+.forgot-password {
+    font-size: 0.9rem;
+    color: #6f1d1b;
+    text-decoration: none;
+}
+
+.forgot-password:hover {
+    text-decoration: underline;
+}
+
+/* Bouton */
+.custom-btn {
+    background-color: #6f1d1b;
+    color: #fff;
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.3rem;
+    padding: 0.6rem;
+    border-radius: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    border: none;
+    transition: background-color 0.3s ease;
+}
+
+.custom-btn:hover {
+    background-color: #561211;
+}
+
+/* Responsive bonus */
+@media (min-width: 768px) {
+    .logo-container {
+        width: 220px;
+        height: 220px;
+    }
+
+    .logo-img {
+        width: 80px;
+    }
+
+    .logo-text {
+        font-size: 2rem;
+    }
+}

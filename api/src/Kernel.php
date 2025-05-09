@@ -17,6 +17,6 @@ class Kernel {
         $request = new Request($_SERVER, $_GET, $_POST);
         $response = $this->routeur->request($request);
         
-        echo $response->getBody();
+        $response->send();
     }
 }
