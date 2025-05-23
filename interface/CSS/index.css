@@ -1,10 +1,8 @@
-/* Base */
 body {
     background-color: #fdf6ed;
     font-family: 'Segoe UI', sans-serif;
 }
 
-/* Logo cercle */
 .logo-container {
     background-color: #f8ecdb;
     border-radius: 50%;
@@ -21,14 +19,12 @@ body {
     height: auto;
 }
 
-/* Texte HeartBloom */
 .logo-text {
     font-family: 'Great Vibes', cursive;
     font-size: 1.8rem;
     color: #873424;
 }
 
-/* Bouton "Se connecter" */
 .custom-btn-1 {
     background-color: #6f1d1b;
     color: #fff;
@@ -45,7 +41,6 @@ body {
     background-color: #561211;
 }
 
-/* Bouton "S'inscrire" */
 .custom-btn-2 {
     background-color: #fdf6ed;
     color: #6f1d1b;
@@ -62,7 +57,6 @@ body {
     background-color: #f8ecdb;
 }
 
-/* Responsive tweaks (optionnels) */
 @media (min-width: 768px) {
     .logo-container {
         width: 240px;

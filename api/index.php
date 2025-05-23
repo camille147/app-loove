@@ -5,7 +5,6 @@ use App\Controllers\UsersController;
 use App\Core\Routeur;
 use App\Core\TemplateEngine;
 use App\Kernel;
-use App\Core\Database;
 
 
 require 'vendor/autoload.php';
