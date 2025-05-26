@@ -3,12 +3,11 @@
 namespace App\Models;
 
 class User {
-    public int $id;
-    public string $first_name;
-    public string $last_name;
-
-    public string $email;
-    public string $password;
+    private int $id;
+    private string $first_name;
+    private string $last_name;
+    private string $email;
+    private string $passwordHash;
     public string $orientation;
     public string $gender;
     public string $birthDate;
@@ -26,7 +25,7 @@ class User {
         string $first_name,
         string $last_name,
         string $email,
-        string $password,
+        string $passwordHash,
         string $orientation,
         string $gender,
         string $birthDate,
@@ -34,7 +33,7 @@ class User {
         bool $isPremium,
         string $city,
         string $country,
-        string $creationDate,
+        string $createdAt,
         string $relationshipType,
         float $locationLat,
         float $locationLng
@@ -44,7 +43,7 @@ class User {
         $this->first_name = $first_name;
         $this->last_name = $last_name;
         $this->email = $email;
-        $this->password = $password;
+        $this->passwordHash = $passwordHash;
         $this->orientation = $orientation;
         $this->gender = $gender;
         $this->birthDate = $birthDate;
@@ -52,9 +51,16 @@ class User {
         $this->isPremium = $isPremium;
         $this->city = $city;
         $this->country = $country;
-        $this->creationDate = $creationDate;
+        $this->creationDate = $createdAt;
         $this->relationshipType = $relationshipType;
         $this->locationLat = $locationLat;
         $this->locationLng = $locationLng;
     }
+
+    public function getId() { return $this->id;}
+    public function getEmail() { return $this->email;}
+    public function getFirstName() { return $this->first_name;}
+    public function getLastName() { return $this->last_name;}
+    public function getPasswordHash() {return $this->passwordHash;}
+
 }
