@@ -12,14 +12,13 @@ export class AuthController {
 
         this.view.onSubmit = async ({ email, password }) => {
             try {
-                console.log("try")
                 const result = await this.userModel.login(email, password);
 
                 this.view.showMessage("Connexion réussie !", "success")
 
                 //localStorage.setItem("token", result.token);
 
-                this.view.navigate("home")
+                this.view.navigate("dashboard")
             } catch (err) {
                 this.view.showMessage(err.message || "Erreur de connexion", "danger");
             }

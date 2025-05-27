@@ -4,7 +4,6 @@ export class UserModel {
     }
 
     async login(email, password) {
-        console.log("login 1")
         const response = await fetch(`http://app-loove-api.local/login`, {
             method: "POST",
             body: JSON.stringify({ email, password }),
