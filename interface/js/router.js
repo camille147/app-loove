@@ -6,6 +6,7 @@ import {DashboardUserView} from "../views/DashboardUserView";
 import {ProfileUserView} from "../views/ProfileUserView";
 import {AddAlbumView} from "../views/AddAlbumView";
 import {AlbumsView} from "../views/AlbumsView";
+import {SearchView} from "../views/SearchView";
 
 export class Router {
     constructor(root, apiBaseUrl) {
@@ -25,6 +26,7 @@ export class Router {
             profileUser : () => new ProfileUserView(this.root, this.navigate.bind(this)).render(),
             addAlbum : () => new AddAlbumView(this.root, this.navigate.bind(this)).render(),
             albums : () => new AlbumsView(this.root, this.navigate.bind(this)).render(),
+            search : () => new SearchView(this.root, this.navigate.bind(this)).render(),
 
         }
     }

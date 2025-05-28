@@ -12,7 +12,7 @@ export class ConnectionView {
             <div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center">
                 
                 <div class="logo-container mb-4">
-                    <img src="logo.png" alt="HeartBloom Logo" name="logo-img mb-2"/>
+                    <img src="logo.png" alt="TrackShots Logo" name="logo-img mb-2"/>
                 </div>
             
                 <div class="form-box p-4 mb-4">
@@ -41,7 +41,6 @@ export class ConnectionView {
     bindEvents() {
         document.getElementById('home').addEventListener('click', () => {
             this.navigate("home")
-            console.log("home")
         })
         const form = document.getElementById('login-form')
         const btnSubmit = document.getElementById('connection')
@@ -53,9 +52,7 @@ export class ConnectionView {
 
             if (this.onSubmit) {
                 try {
-                    console.log("onSubmit")
                     await this.onSubmit({ email, password })
-
                 } catch (error) {
                     console.error("Erreur dans onSubmit:", error)
                 }
@@ -63,7 +60,6 @@ export class ConnectionView {
                 console.warn("Aucune fonction onSubmit définie.")
             }
         })
-
     }
     showMessage(text) {
         const messageDiv = document.getElementById('show_message')

@@ -8,17 +8,18 @@ export class Album {
         this.alt = alt
     }
 
-    render () {
-        this.root.innerHTML=  `
-            <div class="col">
-                <div class="card h-100" id="${this.id}">
-                    <img src="${this.img}" class="card-img-top" alt="${this.alt}"/>
-                    <div class="card-body">
-                        <h5 class="card-title">${this.title}</h5>
-                        <p class="card-text">${this.text}</p>
-                    </div>
+    render() {
+        this.root.innerHTML = `
+            <div id="${this.id}" class="group relative overflow-hidden rounded-lg shadow-md cursor-pointer">
+                <img src="${this.img}"
+                     alt="${this.alt}"
+                     class="w-full h-32 sm:h-40 object-cover transition-transform duration-300 group-hover:scale-105"
+                />
+                <div class="absolute bottom-0 left-0 w-full bg-black/60 text-white text-center text-xs sm:text-sm p-1 sm:p-2 truncate">
+                    ${this.title}
                 </div>
             </div>
         `;
     }
 }
+
