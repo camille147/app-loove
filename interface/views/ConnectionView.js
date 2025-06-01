@@ -8,31 +8,59 @@ export class ConnectionView {
 
     render() {
         this.root.innerHTML = ` 
-            <button class="btn custom-btn-2" data-view="home" id="home"> Retour </button>
-            <div class="container d-flex flex-column align-items-center justify-content-center min-vh-100 text-center">
+            <div class="p-4">
+                <button class="btn btn-outline btn-secondary mb-4" data-view="home" id="home">← Retour</button>
+            </div>
+
+            <div class="flex flex-col items-center justify-center min-h-screen text-center px-4">
+                <div class="mb-6">
+                    <img src="logo.png" alt="TrackShots Logo" class="w-24 h-24 object-contain mx-auto"/>
+                </div>
                 
-                <div class="logo-container mb-4">
-                    <img src="logo.png" alt="TrackShots Logo" name="logo-img mb-2"/>
+                <div class="card w-full max-w-sm shadow-xl bg-base-100">
+                    <div class="card-body">
+                        <form id="login-form" class="space-y-4">
+                            <div class="form-control">
+                                <input 
+                                    type="email" 
+                                    name="email" 
+                                    id="email" 
+                                    placeholder="Votre adresse mail" 
+                                    class="input input-bordered w-full" 
+                                    required
+                                />
+                            </div>
+
+                            <div class="form-control">
+                                <input 
+                                    type="password" 
+                                    name="password" 
+                                    id="password" 
+                                    placeholder="Votre mot de passe" 
+                                    class="input input-bordered w-full" 
+                                    required 
+                                    minlength="12"
+                                />
+                            </div>
+
+                            <div class="text-left">
+                                <a href="#" class="link link-hover text-sm">Mot de passe oublié ?</a>
+                            </div>
+
+                            <div id="show_message" class="text-error text-sm"></div>
+
+                            <div>
+                                <button 
+                                    type="submit" 
+                                    id="connection" 
+                                    class="btn btn-primary w-full mt-2"
+                                >
+                                    Se connecter
+                                </button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-            
-                <div class="form-box p-4 mb-4">
-                    <form id="login-form">
-                        <div class="mb-3">
-                            <input type="email" name="email" class="form-control" id="email" placeholder="Votre adresse mail" required>
-                        </div>
-                        <div class="mb-3">
-                            <input type="password" name="password" class="form-control" id="password" placeholder="Votre mot de passe" required minlength="12">
-                        </div>
-                        <div class="text-start mb-3">
-                            <a href="#" name="forgot-password">Mot de passe oublié ?</a>
-                        </div>
-                        <div id="show_message"></div>
-                         <div class="text-start mb-3 mt-3">
-                            <button class="btn btn-primary custom-btn-1 w-100 mb-3" type="submit" id="connection"> Se connecter </button>
-                        </div>
-                    </form>
-                </div>
-               
             </div>
         `
         this.bindEvents()

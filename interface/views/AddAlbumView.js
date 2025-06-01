@@ -8,62 +8,67 @@ export class AddAlbumView {
 
     render() {
         this.root.innerHTML = `
-            <div class="container mx-auto max-w-xl px-4 py-8 text-black border-black font-orbitron bg-white rounded-xl shadow-xl">
-              <h1 class="text-3xl text-center text-red-600 font-bold mb-6">Créer un Album</h1>
-            
-              <form>
-                <div class="mb-4">
-                  <label for="albumName" class="block mb-1">Nom de l'album</label>
-                  <input type="text" id="albumName" placeholder="Ex: Vacances 2025" required
-                    class="w-full px-4 py-2 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:border-red-500">
-                </div>
-            
-                <div class="mb-4">
-                  <label for="albumDesc" class="block mb-1">Description</label>
-                  <textarea id="albumDesc" rows="3" placeholder="Décrivez brièvement l'album..."
-                    class="w-full px-4 py-2 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:border-red-500"></textarea>
-                </div>
-            
-                <div class="mb-4">
-                  <label for="creationDate" class="block mb-1">Date de création</label>
-                  <input type="date" id="creationDate"
-                    class="w-full px-4 py-2 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none focus:border-red-500">
-                </div>
-            
-                <div class="mb-4">
-                  <label for="coverImage" class="block mb-1">Image de couverture</label>
-                  <input type="file" id="coverImage" accept="image/*"
-                    class="w-full px-4 py-2 rounded bg-gray-900 text-white border border-gray-700 focus:outline-none">
-                </div>
-            
-                <div class="mb-4">
-                  <label class="block mb-2">Visibilité</label>
-                  <div class="flex gap-4">
-                    <label class="flex items-center">
-                      <input type="radio" name="visibility" value="public" id="public" checked
-                        class="mr-2 text-red-500 focus:ring-red-500">
-                      Public
-                    </label>
-                    <label class="flex items-center">
-                      <input type="radio" name="visibility" value="private" id="private"
-                        class="mr-2 text-red-500 focus:ring-red-500">
-                      Privé
-                    </label>
-                  </div>
-                </div>
-            
-                <div class="mb-4">
-                  <label class="block mb-2">Étiquettes</label>
-                  <div class="grid grid-cols-2 gap-2 tags">
+            <div class="max-w-xl mx-auto p-6 bg-base-100 rounded-xl shadow-xl text-base-content font-orbitron mt-10">
+              <h1 class="text-3xl font-bold text-center text-error mb-6">Créer un Album</h1>
 
+              <form>
+                <div class="form-control mb-4">
+                  <label for="albumName" class="label">
+                    <span class="label-text">Nom de l'album</span>
+                  </label>
+                  <input type="text" id="albumName" placeholder="Ex: Vacances 2025" required
+                    class="input input-bordered w-full" />
+                </div>
+
+                <div class="form-control mb-4">
+                  <label for="albumDesc" class="label">
+                    <span class="label-text">Description</span>
+                  </label>
+                  <textarea id="albumDesc" rows="3" placeholder="Décrivez brièvement l'album..."
+                    class="textarea textarea-bordered w-full"></textarea>
+                </div>
+
+                <div class="form-control mb-4">
+                  <label for="creationDate" class="label">
+                    <span class="label-text">Date de création</span>
+                  </label>
+                  <input type="date" id="creationDate" class="input input-bordered w-full" />
+                </div>
+
+                <div class="form-control mb-4">
+                  <label for="coverImage" class="label">
+                    <span class="label-text">Image de couverture</span>
+                  </label>
+                  <input type="file" id="coverImage" accept="image/*" class="file-input file-input-bordered w-full" />
+                </div>
+
+                <div class="form-control mb-4">
+                  <label class="label">
+                    <span class="label-text">Visibilité</span>
+                  </label>
+                  <div class="flex gap-4">
+                    <label class="label cursor-pointer">
+                      <input type="radio" name="visibility" value="public" id="public" class="radio checked:bg-error" checked />
+                      <span class="label-text ml-2">Public</span>
+                    </label>
+                    <label class="label cursor-pointer">
+                      <input type="radio" name="visibility" value="private" id="private" class="radio checked:bg-error" />
+                      <span class="label-text ml-2">Privé</span>
+                    </label>
                   </div>
                 </div>
-            
+
+                <div class="form-control mb-4">
+                  <label class="label">
+                    <span class="label-text">Étiquettes</span>
+                  </label>
+                  <div class="grid grid-cols-2 gap-2 tags">
+                    <!-- tags dynamiques ici -->
+                  </div>
+                </div>
+
                 <div>
-                  <button type="submit"
-                    class="w-full py-3 rounded bg-red-600 hover:bg-red-700 text-white font-semibold tracking-wide transition duration-300">
-                    Créer l'album
-                  </button>
+                  <button type="submit" class="btn btn-error w-full">Créer l'album</button>
                 </div>
               </form>
             </div>
