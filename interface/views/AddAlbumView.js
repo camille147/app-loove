@@ -9,7 +9,7 @@ export class AddAlbumView {
     render() {
         this.root.innerHTML = `
             <div class="max-w-xl mx-auto p-6 bg-base-100 rounded-xl shadow-xl text-base-content font-orbitron mt-10">
-              <h1 class="text-3xl font-bold text-center text-error mb-6">Créer un Album</h1>
+              <h1 class="text-3xl font-bold text-center red-color mb-6">Créer un Album</h1>
 
               <form>
                 <div class="form-control mb-4">
@@ -63,12 +63,11 @@ export class AddAlbumView {
                     <span class="label-text">Étiquettes</span>
                   </label>
                   <div class="grid grid-cols-2 gap-2 tags">
-                    <!-- tags dynamiques ici -->
                   </div>
                 </div>
 
                 <div>
-                  <button type="submit" class="btn btn-error w-full">Créer l'album</button>
+                  <button type="submit" class="btn red-color-background w-full">Créer l'album</button>
                 </div>
               </form>
             </div>

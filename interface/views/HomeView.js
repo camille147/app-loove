@@ -8,14 +8,14 @@ export class HomeView {
         this.root.innerHTML = `
             <div class="flex flex-col items-center justify-center min-h-screen text-center bg-base-100 text-base-content font-orbitron">
               <div class="mb-8">
-                <h1 class="text-5xl font-bold tracking-widest text-error drop-shadow-lg">TrackShots</h1>
+                <h1 class="text-5xl font-bold tracking-widest red-color drop-shadow-lg">TrackShots</h1>
               </div>
             
               <div class="w-full px-4 max-w-xs space-y-4">
                 <button
                   id="connection"
                   data-view="connection"
-                  class="btn btn-error btn-wide"
+                  class="btn red-color-background btn-wide"
                 >
                   Se connecter
                 </button>

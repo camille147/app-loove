@@ -35,8 +35,13 @@ class AuthController extends BaseController {
 
         $_SESSION['user'] = [
             'id' => $user->getId(),
+            'username' => $user->getFirstName(),
             'email' => $user->getEmail(),
-            'first_name' => $user->getFirstName(),
+            'profile_picture' => $user->profilePicture,
+            'created_at' => $user->creationDate,
+            'updated_at' => $user->updatedDate
+
+
         ];
 
         $body = json_encode([

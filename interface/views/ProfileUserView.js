@@ -1,3 +1,5 @@
+import {UserModel} from "../models/UserModel";
+
 export class ProfileUserView {
     constructor(root, navigate) {
         this.root = root
@@ -6,6 +8,8 @@ export class ProfileUserView {
     }
 
     render() {
+        //const user = UserModel.user('camille', '0000');
+
         this.root.innerHTML = `
             <div class="min-h-screen bg-base-100 flex flex-col items-center justify-center p-6">
               <div class="card w-full max-w-md bg-base-200 shadow-xl">
@@ -19,7 +23,7 @@ export class ProfileUserView {
                     <i class="bi bi-envelope me-1"></i> fdvdfv@ref.com
                   </p>
                   <div class="card-actions mt-4">
-                    <button class="btn btn-error">Modifier le profil</button>
+                    <button class="btn red-color-background">Modifier le profil</button>
                     <button class="btn btn-outline">Paramètres</button>
                   </div>
                 </div>

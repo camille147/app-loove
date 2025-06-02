@@ -1,3 +1,11 @@
 .font-orbitron {
     font-family: 'Orbitron', sans-serif;
 }
+
+.red-color {
+    color: #FF1801;
+}
+
+.red-color-background{
+    background-color: #FF1801;
+}

@@ -9,7 +9,7 @@ export class ConnectionView {
     render() {
         this.root.innerHTML = ` 
             <div class="p-4">
-                <button class="btn btn-outline btn-secondary mb-4" data-view="home" id="home">← Retour</button>
+                <button class="btn btn-outline red-color mb-4" data-view="home" id="home">← Retour</button>
             </div>
 
             <div class="flex flex-col items-center justify-center min-h-screen text-center px-4">
@@ -53,7 +53,7 @@ export class ConnectionView {
                                 <button 
                                     type="submit" 
                                     id="connection" 
-                                    class="btn btn-primary w-full mt-2"
+                                    class="btn red-color-background w-full mt-2"
                                 >
                                     Se connecter
                                 </button>

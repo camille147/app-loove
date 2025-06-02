@@ -4,63 +4,43 @@ namespace App\Models;
 
 class User {
     private int $id;
-    private string $first_name;
-    private string $last_name;
+    private string $username;
     private string $email;
     private string $passwordHash;
-    public string $orientation;
-    public string $gender;
-    public string $birthDate;
-    public bool $isAdmin;
-    public bool $isPremium;
-    public string $city;
-    public string $country;
+    public string $profilePicture;
+    public bool $role;
     public string $creationDate;
-    public string $relationshipType;
-    public float $locationLat;
-    public float $locationLng;
+    public string $updatedDate;
+
 
     public function __construct(
         int $id,
-        string $first_name,
-        string $last_name,
+        string $username,
         string $email,
         string $passwordHash,
-        string $orientation,
-        string $gender,
-        string $birthDate,
-        bool $isAdmin,
-        bool $isPremium,
-        string $city,
-        string $country,
-        string $createdAt,
-        string $relationshipType,
-        float $locationLat,
-        float $locationLng
+        string $profilePicture,
+        bool $role,
+        string $creationDate,
+        string $updatedDate
 
     ){
         $this->id = $id;
-        $this->first_name = $first_name;
-        $this->last_name = $last_name;
+        $this->username = $username;
         $this->email = $email;
         $this->passwordHash = $passwordHash;
-        $this->orientation = $orientation;
-        $this->gender = $gender;
-        $this->birthDate = $birthDate;
-        $this->isAdmin = $isAdmin;
-        $this->isPremium = $isPremium;
-        $this->city = $city;
-        $this->country = $country;
-        $this->creationDate = $createdAt;
-        $this->relationshipType = $relationshipType;
-        $this->locationLat = $locationLat;
-        $this->locationLng = $locationLng;
+        $this->profilePicture = $profilePicture;
+        $this->role = $role;
+        $this->creationDate = $creationDate;
+        $this->updatedDate = $updatedDate;
     }
 
-    public function getId() { return $this->id;}
-    public function getEmail() { return $this->email;}
-    public function getFirstName() { return $this->first_name;}
-    public function getLastName() { return $this->last_name;}
-    public function getPasswordHash() {return $this->passwordHash;}
+    public function getId(): int
+    { return $this->id;}
+    public function getEmail(): string
+    { return $this->email;}
+    public function getFirstName(): string
+    { return $this->username;}
+    public function getPasswordHash(): string
+    {return $this->passwordHash;}
 
 }

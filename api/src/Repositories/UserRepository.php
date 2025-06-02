@@ -18,21 +18,13 @@ class UserRepository extends BaseRepository {
 
 
         return new User($result['id'],
-            $result['first_name'],
-            $result['last_name'],
+            $result['username'],
             $result['email'],
-            $result['password'],   //hash du mdp
-            $result['orientation'],
-            $result['gender'],
-            $result['birth_date'],
-            (bool)$result['is_admin'],
-            (bool)$result['is_premium'],
-            $result['city'],
-            $result['country'],
+            $result['password_hash'],   //hash du mdp
+            $result['profile_picture'],
+            $result['role'],
             $result['created_at'],
-            $result['relationship_type'],
-            (float)$result['location_lat'],
-            (float)$result['location_lng']
+            $result['updated_at'],
         );
 
     }

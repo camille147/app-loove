@@ -19,24 +19,19 @@ export class Navbar {
             <nav class="fixed bottom-0 left-0 right-0 bg-base-100 text-base-content font-orbitron shadow-inner z-50 border-t border-gray-300">
                 <div class="flex justify-around items-center py-2">
                     <a href="#" class="nav-link flex flex-col items-center text-xs hover:text-error transition" data-view="dashboard">
-                        <i class="bi bi-house text-2xl"></i>
-                        <span>Accueil</span>
+                        <i class="fa-solid fa-house text-xl red-color"></i>
                     </a>
                     <a href="#" class="nav-link flex flex-col items-center text-xs hover:text-error transition" data-view="search">
-                        <i class="bi bi-search text-2xl"></i>
-                        <span>Search</span>
+                        <i class="fa-solid fa-magnifying-glass text-xl red-color"></i>
                     </a>
                     <a href="#" class="nav-link flex flex-col items-center text-xs hover:text-error transition" data-view="albums">
-                        <i class="bi bi-images text-2xl"></i>
-                        <span>Albums</span>
+                        <i class="fas fa-images text-xl red-color"></i>
                     </a>
                     <a href="#" class="nav-link flex flex-col items-center text-xs hover:text-error transition" data-view="addAlbum">
-                        <i class="bi bi-camera text-2xl"></i>
-                        <span>Ajouter</span>
+                        <i class="fas fa-camera text-xl red-color"></i>
                     </a>
                     <a href="#" class="nav-link flex flex-col items-center text-xs hover:text-error transition" data-view="profileUser">
-                        <i class="bi bi-person text-2xl"></i>
-                        <span>Profil</span>
+                        <i class="fa-solid fa-user text-xl red-color"></i>
                     </a>
                 </div>
             </nav>
@@ -57,7 +52,7 @@ export class Navbar {
     updateActiveLink() {
         document.querySelectorAll('.nav-link[data-view]').forEach(link => {
             const isActive = link.getAttribute('data-view') === this.currentView;
-            link.classList.toggle('text-error', isActive);
+            link.classList.toggle('red-color', isActive);
             link.classList.toggle('text-base-content', !isActive);
         });
     }
