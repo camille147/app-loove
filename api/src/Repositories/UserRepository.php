@@ -13,10 +13,6 @@ class UserRepository extends BaseRepository {
             ->fetch(['email' => $email])
         ;
 
-        //var_dump($result);
-
-
-
         return new User($result['id'],
             $result['username'],
             $result['email'],
@@ -26,6 +22,46 @@ class UserRepository extends BaseRepository {
             $result['created_at'],
             $result['updated_at'],
         );
+
+    }
+
+    public function createUser(string $username, string $email, string $password, string $profile_picture = null): ?User{
+
+        $password_hash = password_hash($password, PASSWORD_DEFAULT);
+
+        try{
+            $this
+                ->query("INSERT INTO users (username, email, password_hash, profile_picture, role, created_at, updated_at) 
+                            VALUES (:username, :email, :password_hash, :profile_picture, :role, NOW(), NOW())")
+                ->execute([
+                    'username' => $username,
+                    'email' => $email,
+                    'password_hash' => $password_hash,
+                    'profile_picture' => $profile_picture,
+                    'role' => 0
+                ]);
+
+            $id =$this->lastInsertedId();
+
+            $result = $this
+                ->query("SELECT * FROM users WHERE id = :id")
+                ->fetch(['id' => $id]);
+
+            return new User($result['id'],
+                $result['username'],
+                $result['email'],
+                $result['password_hash'],
+                $result['profile_picture'],
+                $result['role'],
+                $result['created_at'],
+                $result['updated_at'],
+            );
+        } catch (\PDOException $e) {
+            if ($e->getCode() =='23000') {
+                throw new \Exception("email et/ou pseudo déjà utilisé");
+            }
+            throw $e;
+        }
 
     }
 
@@ -58,18 +94,27 @@ class UserRepository extends BaseRepository {
     }
 
 
-    public function get(string $identifier): User {
+    public function get(int $id): User {
         $result = $this
             ->query("SELECT * FROM users WHERE id= :id")
-            ->fetch(['id' => $identifier])
+            ->fetch(['id' => $id])
         ;
 
         if(empty($result)) {
-            throw new Exception("User with identifier $identifier does not exist");
+            throw new Exception("User with identifier $id does not exist");
         }
 
-        return new User($result['id'], $result['nom'], $result['prenom'], $result['age'], $result['localisation']);
+        return new User($result['id'],
+            $result['username'],
+            $result['email'],
+            $result['password_hash'],
+            $result['profile_picture'],
+            $result['role'],
+            $result['created_at'],
+            $result['updated_at'],
+        );
     }
+
 
 
     public function all(): array {

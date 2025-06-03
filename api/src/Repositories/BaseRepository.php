@@ -66,4 +66,8 @@ abstract class BaseRepository {
         $this->current_statement->execute();
         return $this->current_statement->fetchAll();
     }
+
+    protected function lastInsertedId(): string {
+        return $this->connection->lastInsertId();
+    }
 }

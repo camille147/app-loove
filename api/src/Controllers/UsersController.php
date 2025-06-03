@@ -8,6 +8,12 @@ use App\Core\Response;
 
 class UsersController extends BaseController {
 
+    private $Repo;
+
+    public function __construct() {
+        $this->Repo = new UserRepository();
+
+    }
     public function liste() {
         $repository = new UserRepository();
         $users = ['Alice', 'Bob']; // ou fetch depuis un repo
@@ -17,6 +23,17 @@ class UsersController extends BaseController {
         return new Response(200, $body);
 
     }
+    public function showUser(int $id) {
+        try {
+            $user = $this->Repo->get($id);
+
+            return new Response(200, json_encode($user));
+        } catch (Exception $e) {
+            return new Response(404, json_encode(['error' => 'Utilisateur non troubé']));
+        }
+
+    }
+
 //    public function liste() {
 //        $repository = new UserRepository();
 //        //var_dump($repository->all());
@@ -30,6 +47,7 @@ class UsersController extends BaseController {
 //        $repo = new UserRepository();
 //        echo json_encode($repo->findAllUsers());
 //    }
+
     public function show_json_users() {
         header("Content-Type: application/json");
 
