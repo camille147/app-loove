@@ -3,13 +3,16 @@
 namespace App\Core;
 
 class Route {
-
+public array $middlewares = [];
     public function __construct(
         private string $path,
         private string $controller,
         private string $action,
         private array $methods = [],
-    ) {}
+        array $middlewares = []
+    ) {
+        $this->middlewares = $middlewares;
+    }
 
     public function getPath(): string {
         return $this->path;
@@ -27,6 +30,9 @@ class Route {
         return $this->action;
     }
 
+    public function getMiddlewares(): array {
+        return $this->middlewares;
+    }
     public function isValidFor(Request $request) {
 
         $exploded_uri = explode('/', trim($request->uri));

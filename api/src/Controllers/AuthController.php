@@ -12,10 +12,15 @@ class AuthController extends BaseController {
 
     public function __construct() {
         $this->Repo = new UserRepository();
+        header("Access-Control-Allow-Origin: http://app-loove-interface.local");
+        header("Access-Control-Allow-Credentials: true");
+        header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+        header("Access-Control-Allow-Headers: Content-Type");
+        header("Content-Type: application/json");
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        header('Content-Type: application/json');
+        //header('Content-Type: application/json');
     }
 
     public function login() {
@@ -27,11 +32,14 @@ class AuthController extends BaseController {
         $user = $this->Repo->findByEmail($email);
 
 
-
         if (!$user || !password_verify($password, $user->getPasswordHash())) {
             http_response_code(401);
             echo json_encode(["message" => "Identifiants invalides"]);
             return;
+        }
+
+        if (session_status() !== PHP_SESSION_ACTIVE) {
+            session_start();
         }
 
 
@@ -39,20 +47,24 @@ class AuthController extends BaseController {
             'id' => $user->getId(),
             'username' => $user->getFirstName(),
             'email' => $user->getEmail(),
+            'role' => (int) $user->getRole(),
             'profile_picture' => $user->profilePicture,
             'created_at' => $user->creationDate,
             'updated_at' => $user->updatedDate
 
-
         ];
+        $_SESSION['last_activity'] = time();
+
+        $token = bin2hex(random_bytes(32));
+        $_SESSION['token'] = $token;
 
         $body = json_encode([
             "message" => "Connexion réussie, identifiants valides",
+            "token" => $token,
             "user" => $_SESSION['user'],
         ]);
 
         return new Response(200, $body);
-
     }
 
     public function register() {
@@ -95,6 +107,14 @@ class AuthController extends BaseController {
 
     public function logout() {
         session_destroy();
-        echo json_encode(["message" => "déco ok"]);
+        return new Response(200, json_encode(["message" => "Déconnexion réussie"]));
+    }
+
+
+    public function me () {
+        if(!isset($_SESSION['user'])) {
+            return new Response(401, json_encode(["message" => "Non connecté"]));
+        }
+        return new Response(200, json_encode(["user" => $_SESSION['user']]));
     }
 }

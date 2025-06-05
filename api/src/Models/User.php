@@ -8,7 +8,7 @@ class User {
     private string $email;
     private string $passwordHash;
     public string $profilePicture;
-    private bool $role;
+    private int $role;
     public string $creationDate;
     public string $updatedDate;
 
@@ -19,7 +19,7 @@ class User {
         string $email,
         string $passwordHash,
         string $profilePicture,
-        bool $role,
+        int $role,
         string $creationDate,
         string $updatedDate
 
@@ -42,7 +42,7 @@ class User {
     { return $this->username;}
     public function getPasswordHash(): string
     {return $this->passwordHash;}
-    public function getRole(): string
+    public function getRole(): int
     {return $this->role;}
 
 }

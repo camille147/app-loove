@@ -12,14 +12,15 @@ class Routeur {
         private array $routes = []
     ) {}
 
-    public function addRoute(string|array $methods, string $path, string $controller, string $action, )
+    public function addRoute(string|array $methods, string $path, string $controller, string $action, array $middlewares = [])
     {
         if (is_string($methods)) {
             $methods = [$methods];
         }
 
-        $this->routes[] = new Route($path, $controller, $action, $methods);
+        $this->routes[] = new Route($path, $controller, $action, $methods, $middlewares);
     }
+
 
     public function request(Request $request): Response 
     {
@@ -28,6 +29,21 @@ class Routeur {
         /** @var Route $route */
         foreach($this->routes as $route) {
             if ($route->isValidFor($request)) {
+
+                foreach ($route->getMiddlewares() as $mw) {
+                    $middlewareClass = $mw['middleware'];
+                    //var_dump($middlewareClass);
+
+                    $requiredRole = $mw['role'] ?? null;
+
+                    $middleware = new $middlewareClass();
+                    $middlewareResult = $middleware->handle($request, $requiredRole);
+
+                    if ($middlewareResult instanceof Response) {
+                        return $middlewareResult; // stop la requête si refusée
+                    }
+                }
+
                 $reflected_controller = new ReflectionClass($route->getController());
 
                 $exploded_uri = explode('/', trim($request->uri));

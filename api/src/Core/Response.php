@@ -23,7 +23,7 @@ class Response {
     public function send(): void {
         http_response_code($this->code);
         header('Content-Type: application/json');
-        header('Access-Control-Allow-Origin: *');
+        //header('Access-Control-Allow-Origin: *');
         echo $this->body;
     }
 }
