@@ -50,7 +50,8 @@ class AuthController extends BaseController {
             'role' => (int) $user->getRole(),
             'profile_picture' => $user->profilePicture,
             'created_at' => $user->creationDate,
-            'updated_at' => $user->updatedDate
+            'updated_at' => $user->updatedDate,
+            'bio' => $user->bio
 
         ];
         $_SESSION['last_activity'] = time();
@@ -70,7 +71,7 @@ class AuthController extends BaseController {
     public function register() {
         $data = json_decode(file_get_contents("php://input"), true);
 
-        if(!isset($data['username'], $data['email'], $data['password'], $data['profile_picture'])) {
+        if(!isset($data['username'], $data['email'], $data['password'], $data['profile_picture'], $data['bio'])) {
             return new Response(400,json_encode(['message' => 'Champs manquants']));
         }
 
@@ -78,11 +79,12 @@ class AuthController extends BaseController {
         $email = $data['email'];
         $password = $data['password'];
         $profile_picture = $data['profile_picture'];
+        $bio = $data['bio'];
 
         try{
             $userRepo = new UserRepository();
 
-            $user = $userRepo->createUser($username, $email, $password, $profile_picture);
+            $user = $userRepo->createUser($username, $email, $password, $profile_picture, $bio);
             $body = json_encode([
                 "message" => "Inscription réussie",
                 'user' => [
@@ -90,7 +92,8 @@ class AuthController extends BaseController {
                     'username' => $user->getFirstName(),
                     'email' => $user->getEmail(),
                     'profile_picture' => $user->profilePicture,
-                    'created_at' => $user->creationDate
+                    'created_at' => $user->creationDate,
+                    'bio' => $user->bio
                 ]
 
             ]);

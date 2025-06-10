@@ -6,6 +6,29 @@
     color: #FF1801;
 }
 
+.black-color {
+    color: #000000;
+}
+
+.grey-color {
+    color: #C4C4C4;
+}
+
 .red-color-background{
     background-color: #FF1801;
+}
+
+.black-color-background{
+    background-color: #000000;
+}
+
+.grey-color-background {
+    color: #C4C4C4;
+}
+
+.background-track {
+    background-image: url('../assets/track_background_home.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }

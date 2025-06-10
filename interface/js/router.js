@@ -7,6 +7,9 @@ import {ProfileUserView} from "../views/ProfileUserView";
 import {AddAlbumView} from "../views/AddAlbumView";
 import {AlbumsView} from "../views/AlbumsView";
 import {SearchView} from "../views/SearchView";
+import {AdminUsersView} from "../views/AdminUsersView";
+import {AdminDashboardView} from "../views/AdminDashboardView";
+import {ProfileController} from "../controllers/ProfileController";
 
 export class Router {
     constructor(root, apiBaseUrl) {
@@ -15,15 +18,26 @@ export class Router {
         this.navbar = null
 
         this.routes = {
-            home: () => new HomeView(this.root, this.navigate.bind(this)).render(),   // permet de passer la func ds les vues sans perdre le this du router
-            connection: () => {
+            //home: () => new HomeView(this.root, this.navigate.bind(this)).render(),   // permet de passer la func ds les vues sans perdre le this du router
+            home: () => {
                 const authController = new AuthController(this.root, this.navigate.bind(this), this.apiBaseUrl)
                 authController.showLogin()
                 //new ConnectionView(this.root, this.navigate.bind(this)).render(),
             },
-            signin : () => new SignInView(this.root, this.navigate.bind(this)).render(),
+            signin : () => {
+                const authController = new AuthController(this.root, this.navigate.bind(this), this.apiBaseUrl)
+                authController.showSignIn()
+            },
             dashboard : () => new DashboardUserView(this.root, this.navigate.bind(this)).render(),
-            profileUser : () => new ProfileUserView(this.root, this.navigate.bind(this)).render(),
+            adminDashboard : () => new AdminDashboardView(this.root, this.navigate.bind(this)).render(),
+            profileUser : () => {
+                const profileController = new ProfileController(this.root, this.navigate.bind(this), this.apiBaseUrl )
+                profileController.showProfile()
+            },
+            logout: () => {
+                const authController = new AuthController(this.root, this.navigate.bind(this), this.apiBaseUrl)
+                authController.showLogout()
+            },
             addAlbum : () => new AddAlbumView(this.root, this.navigate.bind(this)).render(),
             albums : () => new AlbumsView(this.root, this.navigate.bind(this)).render(),
             search : () => new SearchView(this.root, this.navigate.bind(this)).render(),
@@ -35,8 +49,19 @@ export class Router {
         const view = this.routes[viewName]
         if (view) {
             view()
+            localStorage.setItem('lastView', viewName)
             if (this.navbar) {
-                this.navbar.setActiveView(viewName)
+                const user = this.getUSer()
+                const isConnected = this.isAuthentificated()
+                const isAdmin = user?.role === 1
+                const header = document.getElementById("navbar")
+
+                if(isConnected && !isAdmin) {
+                    this.navbar.mount(header)
+                    this.navbar.setActiveView(viewName)
+                } else {
+                    this.navbar.unmount(header)
+                }
             }
         } else {
             this.root.innerHTML = "<h1>404 - Vue inconnue</h1>"
@@ -52,12 +77,36 @@ export class Router {
         })
     }
 
+
+    isAuthentificated() {
+        const token = localStorage.getItem("token")
+        return !!token
+    }
+
+    getUSer() {
+        const user = localStorage.getItem("user")
+        if (!user) return null
+
+        try {
+            return JSON.parse(user)
+        } catch (error) {
+            return null
+        }
+
+    }
+
     setNavbar(navbar) {
         this.navbar = navbar
     }
 
     start(defaultView = 'home') {
         this.initNavigation()
-        this.navigate(defaultView)
+
+        const lastView = localStorage.getItem('lastView') || defaultView
+        if (!this.isAuthentificated() && lastView !== 'home' && lastView !== 'signin') {
+            this.navigate('home')
+        } else {
+            this.navigate(lastView)
+        }
     }
 }

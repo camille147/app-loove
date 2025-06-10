@@ -14,27 +14,42 @@ export class Navbar {
         this.addEvents()
     }
 
+    unmount(container) {
+        if (container) {
+            container.innerHTML =""
+        }
+    }
+
     render () {
         return `
-            <nav class="fixed bottom-0 left-0 right-0 bg-base-100 text-base-content font-orbitron shadow-inner z-50 border-t border-gray-300">
-                <div class="flex justify-around items-center py-2">
-                    <a href="#" class="nav-link flex flex-col items-center text-xs hover:text-error transition" data-view="dashboard">
-                        <i class="fa-solid fa-house text-xl red-color"></i>
-                    </a>
-                    <a href="#" class="nav-link flex flex-col items-center text-xs hover:text-error transition" data-view="search">
-                        <i class="fa-solid fa-magnifying-glass text-xl red-color"></i>
-                    </a>
-                    <a href="#" class="nav-link flex flex-col items-center text-xs hover:text-error transition" data-view="albums">
-                        <i class="fas fa-images text-xl red-color"></i>
-                    </a>
-                    <a href="#" class="nav-link flex flex-col items-center text-xs hover:text-error transition" data-view="addAlbum">
-                        <i class="fas fa-camera text-xl red-color"></i>
-                    </a>
-                    <a href="#" class="nav-link flex flex-col items-center text-xs hover:text-error transition" data-view="profileUser">
-                        <i class="fa-solid fa-user text-xl red-color"></i>
-                    </a>
+            <div class="fixed inset-x-0 bottom-6 flex justify-center z-50">
+              <nav class="bg-white/70 backdrop-blur-md shadow-xl rounded-full px-6 py-3 border border-white/40 max-w-md w-full mx-auto">
+                <div class="flex justify-around items-center w-full text-[1.2rem] black-color font-orbitron">
+                  
+                  <a href="#" class="nav-link flex items-center justify-center" data-view="dashboard">
+                    <i class="fa-solid fa-house text-xl"></i>
+                  </a>
+            
+                  <a href="#" class="nav-link flex items-center justify-center" data-view="search">
+                    <i class="fa-solid fa-magnifying-glass text-xl"></i>
+                  </a>
+                  
+                    <a href="#" class="nav-link flex items-center justify-center" data-view="addAlbum">
+                    <i class="fa-solid fa-square-plus text-xl"></i>
+                  </a>
+                  
+                  <a href="#" class="nav-link flex items-center justify-center" data-view="albums">
+                    <i class="fas fa-images text-xl"></i>
+                  </a>
+            
+            
+                  <a href="#" class="nav-link flex items-center justify-center" data-view="profileUser">
+                    <i class="fa-solid fa-user text-xl"></i>
+                  </a>
+            
                 </div>
-            </nav>
+              </nav>
+            </div>
         `
     }
     addEvents() {
@@ -52,7 +67,9 @@ export class Navbar {
     updateActiveLink() {
         document.querySelectorAll('.nav-link[data-view]').forEach(link => {
             const isActive = link.getAttribute('data-view') === this.currentView;
-            link.classList.toggle('red-color', isActive);
+            const activeClasses = ['red-color', 'bg-red-100', 'p-3', 'rounded-full'];
+
+            activeClasses.forEach(cls => link.classList.toggle(cls, isActive));
             link.classList.toggle('text-base-content', !isActive);
         });
     }

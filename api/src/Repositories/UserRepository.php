@@ -21,24 +21,26 @@ class UserRepository extends BaseRepository {
             $result['role'],
             $result['created_at'],
             $result['updated_at'],
+            $result['bio']
         );
 
     }
 
-    public function createUser(string $username, string $email, string $password, string $profile_picture = null): ?User{
+    public function createUser(string $username, string $email, string $password, string $profile_picture = null, string $bio): ?User{
 
         $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
         try{
             $this
-                ->query("INSERT INTO users (username, email, password_hash, profile_picture, role, created_at, updated_at) 
-                            VALUES (:username, :email, :password_hash, :profile_picture, :role, NOW(), NOW())")
+                ->query("INSERT INTO users (username, email, password_hash, profile_picture, role, created_at, updated_at, bio) 
+                            VALUES (:username, :email, :password_hash, :profile_picture, :role, NOW(), NOW(), :bio)")
                 ->execute([
                     'username' => $username,
                     'email' => $email,
                     'password_hash' => $password_hash,
                     'profile_picture' => $profile_picture,
-                    'role' => 0
+                    'role' => 0,
+                    'bio' => $bio
                 ]);
 
             $id =$this->lastInsertedId();
@@ -55,6 +57,7 @@ class UserRepository extends BaseRepository {
                 $result['role'],
                 $result['created_at'],
                 $result['updated_at'],
+                $result['bio']
             );
         } catch (\PDOException $e) {
             if ($e->getCode() =='23000') {
@@ -112,6 +115,7 @@ class UserRepository extends BaseRepository {
             $result['role'],
             $result['created_at'],
             $result['updated_at'],
+            $result['bio']
         );
     }
 

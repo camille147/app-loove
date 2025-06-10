@@ -11,6 +11,7 @@ class User {
     private int $role;
     public string $creationDate;
     public string $updatedDate;
+    public string $bio;
 
 
     public function __construct(
@@ -21,7 +22,8 @@ class User {
         string $profilePicture,
         int $role,
         string $creationDate,
-        string $updatedDate
+        string $updatedDate,
+        string $bio
 
     ){
         $this->id = $id;
@@ -32,6 +34,7 @@ class User {
         $this->role = $role;
         $this->creationDate = $creationDate;
         $this->updatedDate = $updatedDate;
+        $this->bio = $bio;
     }
 
     public function getId(): int
