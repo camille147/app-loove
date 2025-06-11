@@ -10,6 +10,8 @@ import {SearchView} from "../views/SearchView";
 import {AdminUsersView} from "../views/AdminUsersView";
 import {AdminDashboardView} from "../views/AdminDashboardView";
 import {ProfileController} from "../controllers/ProfileController";
+import {Album} from "../components/album";
+import {AlbumController} from "../controllers/AlbumController";
 
 export class Router {
     constructor(root, apiBaseUrl) {
@@ -38,8 +40,14 @@ export class Router {
                 const authController = new AuthController(this.root, this.navigate.bind(this), this.apiBaseUrl)
                 authController.showLogout()
             },
-            addAlbum : () => new AddAlbumView(this.root, this.navigate.bind(this)).render(),
-            albums : () => new AlbumsView(this.root, this.navigate.bind(this)).render(),
+            addAlbum: () => {
+                const albumController = new AlbumController(this.root, this.navigate.bind(this), this.apiBaseUrl )
+                albumController.showCreateAlbumForm()
+            },
+            myAlbums : () => {
+                const controller = new AlbumController(this.root, this.navigate.bind(this), this.apiBaseUrl)
+                controller.showUserAlbums();
+            },
             search : () => new SearchView(this.root, this.navigate.bind(this)).render(),
 
         }

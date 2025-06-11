@@ -45,7 +45,7 @@ export class SignInView {
     
                         <div class="form-control">
                             <label class="label" for="photo">Photo de profil</label>
-                            <input type="file" id="photo-sign-in" class="file-input file-input-bordered" accept="image/*" required />
+                            <input type="file" id="photo" class="file-input file-input-bordered" accept="image/*" required />
                         </div>
     
                         <div class="form-control">
@@ -102,7 +102,7 @@ export class SignInView {
             const email = document.getElementById('email-sign-in').value.trim()
             const password = document.getElementById('password-sign-in').value
             const confirmPassword = document.getElementById('confirmPassword-sign-in').value
-            const profile_picture = document.getElementById('photo-sign-in').value
+            const profile_picture = document.getElementById('photo')
             const termsChecked = document.getElementById('terms').checked
             const bio = document.getElementById('bio-sign-in').value.trim()
 
@@ -116,9 +116,16 @@ export class SignInView {
                 return
             }
 
+            if(profile_picture.files.length === 0) {
+                this.showMessage("L'image de couverture est requise")
+                return
+            }
+
+            const profile_picture_file = profile_picture.files[0]
+
             if (this.onSubmit) {
                 try {
-                    await this.onSubmit({ username, email, password, profile_picture, bio })
+                    await this.onSubmit({ username, email, password, profile_picture_file, bio })
                 } catch (error) {
                     console.error("Erreur dans onSubmit:", error)
                 }

@@ -2,6 +2,7 @@ import { UserModel } from "../models/UserModel.js";
 import { ConnectionView } from "../views/ConnectionView.js";
 import {SignInView} from "../views/SignInView";
 import {HomeView} from "../views/HomeView";
+import {AddAlbumView} from "../views/AddAlbumView";
 
 export class AuthController {
     constructor(root, navigate, apiBaseUrl) {
@@ -38,11 +39,11 @@ export class AuthController {
 
     showSignIn() {
         const view = new SignInView(this.root, this.navigate)
-        view.render()
 
-        view.onSubmit = async ({username, email, password, profile_picture, bio}) => {
+
+        view.onSubmit = async (formData) => {
             try {
-                const result = await this.userModel.signIn({ username, email, password, profile_picture, bio });
+                await this.userModel.signIn(formData);
                 view.showMessage("Inscription réussie ! Redirection en cours...");
                 setTimeout(() => this.navigate("home"), 1500);
             } catch (err) {
@@ -50,7 +51,9 @@ export class AuthController {
 
             }
         }
+        view.render()
     }
+
 
     showLogout(){
 

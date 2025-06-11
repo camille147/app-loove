@@ -19,10 +19,20 @@ export class UserModel {
         return data
     }
 
-    async signIn({ username, email, password, profile_picture, bio }) {
+    async signIn({ username, email, password, profile_picture_file, bio }) {
+
+        const formData = new FormData()
+        formData.append("username", username)
+        formData.append("email", email)
+        formData.append("password", password)
+        formData.append("bio", bio)
+        formData.append("photo", profile_picture_file)
+
+
         const response = await fetch(`http://app-loove-api.local/register`, {
             method: "POST",
-            body: JSON.stringify({username, email, password, profile_picture, bio})
+            credentials: "include",
+            body: formData,
         })
 
         if (!response.ok) {

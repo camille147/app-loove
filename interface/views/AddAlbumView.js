@@ -8,10 +8,10 @@ export class AddAlbumView {
 
     render() {
         this.root.innerHTML = `
-            <div class="max-w-xl mx-auto p-6 bg-base-100 rounded-xl shadow-xl text-base-content font-orbitron mt-10">
+             <div class="max-w-xl mx-auto p-6 bg-base-100 rounded-xl shadow-xl text-base-content font-orbitron mt-10">
               <h1 class="text-3xl font-bold text-center red-color mb-6">Créer un Album</h1>
 
-              <form>
+              <form id="createAlbumForm">
                 <div class="form-control mb-4">
                   <label for="albumName" class="label">
                     <span class="label-text">Nom de l'album</span>
@@ -63,8 +63,11 @@ export class AddAlbumView {
                     <span class="label-text">Étiquettes</span>
                   </label>
                   <div class="grid grid-cols-2 gap-2 tags">
+                    <!-- Tu pourras ajouter dynamiquement des tags ici si besoin -->
                   </div>
                 </div>
+
+                <div id="message" class="text-error text-center mb-4"></div>
 
                 <div>
                   <button type="submit" class="btn red-color-background w-full">Créer l'album</button>
@@ -73,6 +76,58 @@ export class AddAlbumView {
             </div>
 
         `
+        this.bindEvents()
+    }
+
+    bindEvents() {
+        const form = document.getElementById('createAlbumForm')
+        const messageDiv = document.getElementById('message')
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            messageDiv.textContent = ''
+
+            const albumName = document.getElementById('albumName').value.trim()
+            const albumDesc = document.getElementById('albumDesc').value.trim()
+            const creationDate = document.getElementById('creationDate').value
+            const coverImageInput = document.getElementById('coverImage')
+            const visibility = document.querySelector('input[name="visibility"]:checked').value
+
+            if (!albumName) {
+                messageDiv.textContent = "Le nom de l'album est requis."
+                return
+            }
+
+            if (coverImageInput.files.length === 0) {
+                messageDiv.textContent = "L'image de couverture est requise."
+                return
+            }
+
+            const coverImageFile = coverImageInput.files[0]
+
+            if (this.onSubmit) {
+                try {
+                    await this.onSubmit({
+                        title: albumName,
+                        description: albumDesc,
+                        creationDate,
+                        visibility,
+                        coverImageFile,
+                    })
+                } catch (error) {
+                    messageDiv.textContent = error.message || "Erreur lors de la création de l'album."
+                    console.error(error)
+                }
+            } else {
+                console.warn("Aucune fonction onSubmit définie.")
+            }
+        })
+    }
+
+    showMessage(text) {
+        const messageDiv = document.getElementById('message')
+        if (messageDiv) messageDiv.textContent = text
+
     }
 
 }

@@ -11,39 +11,87 @@ class AlbumRepository extends BaseRepository {
 
         try{
             $this
-                ->query("INSERT INTO albums (username, email, password_hash, profile_picture, role, created_at, updated_at, bio)
-                    VALUES (:username, :email, :password_hash, :profile_picture, :role, NOW(), NOW(), :bio)")
+                ->query("INSERT INTO albums (user_id, title, description, created_at, visibility, img_profile_album)
+                    VALUES (:user_id, :title, :description, NOW(), :visibility, :img_profile_album)")
                 ->execute([
-                    'username' => $username,
-                    'email' => $email,
-                    'password_hash' => $password_hash,
-                    'profile_picture' => $profile_picture,
-                    'role' => 0,
-                    'bio' => $bio
+                    'user_id' => $user_id,
+                    'title' => $title,
+                    'description' => $description,
+                    'visibility' => $visibility,
+                    'img_profile_album' => $img_profile_album
                 ]);
 
             $id =$this->lastInsertedId();
 
             $result = $this
-                ->query("SELECT * FROM users WHERE id = :id")
+                ->query("SELECT * FROM albums WHERE id = :id")
                 ->fetch(['id' => $id]);
 
-            return new User($result['id'],
-            $result['username'],
-            $result['email'],
-            $result['password_hash'],
-            $result['profile_picture'],
-            $result['role'],
+            return new Album($result['id'],
+            $result['user_id'],
+            $result['title'],
+            $result['description'],
             $result['created_at'],
-            $result['updated_at'],
-            $result['bio']
+            $result['visibility'],
+            $result['img_profile_album']
             );
         } catch (\PDOException $e) {
             if ($e->getCode() =='23000') {
-                throw new \Exception("email et/ou pseudo déjà utilisé");
+                throw new \Exception("err création album");
             }
             throw $e;
         }
+    }
+
+
+    public function findByUserAndFilter(int $userId, string $filter = 'all'): array {
+        $albums = [];
+
+        switch ($filter) {
+            case 'public':
+                $results = $this
+                    ->query("SELECT * FROM albums WHERE user_id = :userId AND visibility = 'public'")
+                    ->fetchAll(['userId' => $userId]);
+                break;
+
+            case 'private':
+                $results = $this
+                    ->query("SELECT * FROM albums WHERE user_id = :userId AND visibility = 'private'")
+                    ->fetchAll(['userId' => $userId]);
+                break;
+
+            case 'shared':
+                $results = $this
+                    ->query("SELECT a.* FROM albums a 
+                                    INNER JOIN album_access aa ON a.id = aa.album_id
+                                    WHERE aa.user_id = :userId")
+                    ->fetchAll(['userId' => $userId]);
+                break;
+
+            case 'all':
+            default:
+                $results = $this
+                    ->query("SELECT DISTINCT a.* FROM albums a 
+                                    LEFT JOIN album_access aa ON a.id = aa.album_id
+                                    WHERE a.user_id = :userId OR aa.user_id = :userId")
+                    ->fetchAll(['userId' => $userId]);
+                break;
+
+        }
+
+        foreach ($results as $result) {
+            $albums[] = new Album($result['id'],
+                $result['user_id'],
+                $result['title'],
+                $result['description'],
+                $result['created_at'],
+                $result['visibility'],
+                $result['img_profile_album']);
+        }
+
+
+
+        return $albums;
     }
 
 

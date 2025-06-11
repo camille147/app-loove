@@ -6,6 +6,7 @@ use App\Core\Request;
 use App\Core\Response;
 use App\Core\TemplateEngine;
 use App\Repositories\UserRepository;
+use App\Services\UploadManager;
 
 class AuthController extends BaseController {
     private $Repo;
@@ -69,29 +70,31 @@ class AuthController extends BaseController {
     }
 
     public function register() {
-        $data = json_decode(file_get_contents("php://input"), true);
 
-        if(!isset($data['username'], $data['email'], $data['password'], $data['profile_picture'], $data['bio'])) {
+        if(!isset($_POST['username'], $_POST['email'], $_POST['password'], $_FILES['photo'], $_POST['bio'])) {
             return new Response(400,json_encode(['message' => 'Champs manquants']));
         }
 
-        $username = $data['username'];
-        $email = $data['email'];
-        $password = $data['password'];
-        $profile_picture = $data['profile_picture'];
-        $bio = $data['bio'];
+        $username = $_POST['username'];
+        $email = $_POST['email'];
+        $password = $_POST['password'];
+        $profile_picture = $_FILES['photo'];
+        $bio = $_POST['bio'];
 
         try{
+            $uploader = new UploadManager(__DIR__ . '../../../../interface/uploads/profile_pictures');
+            $filename = $uploader->upload($profile_picture);
+
             $userRepo = new UserRepository();
 
-            $user = $userRepo->createUser($username, $email, $password, $profile_picture, $bio);
+            $user = $userRepo->createUser($username, $email, $password, $filename, $bio);
             $body = json_encode([
                 "message" => "Inscription réussie",
                 'user' => [
                     'id' => $user->getId(),
                     'username' => $user->getFirstName(),
                     'email' => $user->getEmail(),
-                    'profile_picture' => $user->profilePicture,
+                    'photo' => $user->profilePicture,
                     'created_at' => $user->creationDate,
                     'bio' => $user->bio
                 ]

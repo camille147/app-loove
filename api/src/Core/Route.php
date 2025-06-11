@@ -33,34 +33,39 @@ public array $middlewares = [];
     public function getMiddlewares(): array {
         return $this->middlewares;
     }
-    public function isValidFor(Request $request) {
+    public function isValidFor(Request $request): bool
+    {
+        // Extraire uniquement la partie path (avant le ?)
+        $pathOnly = parse_url($request->uri, PHP_URL_PATH);
 
-        $exploded_uri = explode('/', trim($request->uri));
-        $exploded_path = explode('/', trim($this->path));
+        // Vérifie la méthode HTTP
+        if (!in_array($request->method, $this->getMethods(), true)) {
+            return false;
+        }
 
-        if($request->uri === $this->path) {
+        $exploded_uri = explode('/', trim($pathOnly, '/'));
+        $exploded_path = explode('/', trim($this->path, '/'));
+
+        if ($pathOnly === $this->path) {
             return true;
         }
 
-        if(count($exploded_uri) !== count($exploded_path)) {
+        if (count($exploded_uri) !== count($exploded_path)) {
             return false;
         }
 
-        if(!in_array($request->method, $this->getMethods(), true)) {
-            return false;
-        }
-
-        foreach($exploded_path as $index => $value) {
+        foreach ($exploded_path as $index => $value) {
             $isVariable = str_contains($value, '{') && str_contains($value, '}');
-            if($isVariable) {
+            if ($isVariable) {
                 continue;
             }
 
-            if($value !== $exploded_uri[$index]) {
+            if ($value !== $exploded_uri[$index]) {
                 return false;
             }
         }
 
         return true;
     }
+
 }
