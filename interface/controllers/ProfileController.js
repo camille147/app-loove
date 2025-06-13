@@ -4,6 +4,9 @@ import {AlbumModel} from "../models/AlbumModel";
 import {ConnectionView} from "../views/ConnectionView";
 import {ProfileUserView} from "../views/ProfileUserView";
 import {ModificationProfileView} from "../views/ModificationProfileView";
+import {MenuUserView} from "../views/MenuUserView";
+import {HomeView} from "../views/HomeView";
+import {SignInView} from "../views/SignInView";
 
 export class ProfileController {
     constructor(root, navigate, apiBaseUrl) {
@@ -21,19 +24,22 @@ export class ProfileController {
             const user = await this.userModel.me()
 
             const albums = await this.albumModel.getMyAlbums()
-            //console.log(albums)
-            //console.log(user['user'])
             const view = await new ProfileUserView(this.root, this.navigate, user, albums)
-            //console.log("avant render")
             view.render()
-            //console.log("passe")
-            //console.log(user)
 
         }catch (e) {
             console.error("Erreur lors de la récupération du profil :", e.message)
             this.navigate("home")
         }
     }
+
+    async showMenu (){
+
+            const view = await new MenuUserView(this.root, this.navigate)
+            view.render()
+
+    }
+
 
     async showModificationProfile() {
         try {
@@ -56,6 +62,25 @@ export class ProfileController {
             this.navigate("home")
         }
 
+
+    }
+
+    async showDelete() {
+        const view = new MenuUserView(this.root, this.navigate)
+
+            try {
+                const user = await this.userModel.me();
+                await this.userModel.delete(user.id);
+                view.showMessage("Suppression réussie ! Redirection en cours...");
+                localStorage.removeItem("token")
+                localStorage.removeItem("user")
+                localStorage.removeItem("lastView")
+
+                setTimeout(() => this.navigate("home"), 1500);
+
+            } catch (err) {
+                view.showMessage(err.message || "Erreur lors de la suppression");
+            }
 
     }
 

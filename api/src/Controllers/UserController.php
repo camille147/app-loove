@@ -26,8 +26,6 @@ class UserController extends BaseController {
             session_start();
         }
 
-
-
         //file_put_contents(__DIR__ . '/debug-upload.log', print_r($_FILES, true), FILE_APPEND);
         //file_put_contents(__DIR__ . '/debug-upload.log', "\nPOST:\n" . print_r($_POST, true), FILE_APPEND);
 
@@ -90,6 +88,29 @@ class UserController extends BaseController {
         }
     }
 
+    public function deleteProfile() {
+
+        try{
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+
+            if (!isset($_SESSION['user']['id'])) {
+                return new Response(401, json_encode(['message' => 'Non authentifié']));
+
+            }
+            $userId = $_SESSION['user']['id'];
+            $userRepo = new UserRepository();
+            $user = $userRepo->deleteUser($userId);
+
+            return new Response(200, json_encode([
+                "message"=> "profil supprimé"
+            ]));
+        } catch (\Exception $e) {
+            return new Response(500,json_encode(['error' => $e->getMessage()]));
+        }
+
+    }
     public function home(): Response {
         $user = $_SESSION['user'] ?? null;
 

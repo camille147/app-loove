@@ -11,12 +11,12 @@ export class ProfileUserView {
 
     render() {
         this.root.innerHTML = `
+            
             <div class="p-4">
-        <button class="ml-auto flex items-center gap-2 text-red-600 hover:text-red-800 transition-all" id="disconnection">
-          <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
-          <span class="hidden sm:inline">Déconnexion</span>
-        </button>
-      </div>
+                <button class="ml-auto flex items-center gap-2 text-red-600 hover:text-red-800 transition-all" id="menu">
+                  <i class="fa-solid fa-bars text-xl "></i> 
+                </button>
+            </div>
 
       <div class="max-w-xl mx-auto bg-base-100 shadow-xl rounded-lg p-6">
         <div class="flex items-center gap-6">
@@ -70,11 +70,10 @@ export class ProfileUserView {
             })
         })
 
-
-        const btnDisconnection = document.getElementById('disconnection')
-        btnDisconnection.addEventListener('click', async (e) => {
+        const btnMenu = document.getElementById('menu')
+        btnMenu.addEventListener('click', async (e) => {
             e.preventDefault()
-            this.navigate("logout")
+            this.navigate("menu")
         })
 
         const btnModification = document.getElementById('modification')

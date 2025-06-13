@@ -18,7 +18,16 @@ export class UserModel {
         return response
     }
 
-
+    async delete(id) {
+        const response = await apiFetch(`http://app-loove-api.local/user/profile/delete`, {
+            method: "POST",
+            body: JSON.stringify({id}),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        return response
+    }
 
     async signIn({ username, email, password, profile_picture_file, bio }) {
 

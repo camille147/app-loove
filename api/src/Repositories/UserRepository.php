@@ -78,14 +78,12 @@ class UserRepository extends BaseRepository {
 
     public function editUser(int $id, string $username, string $email, ?string $profile_picture, string $bio): ?User {
         try {
-
             $execute = [
                 'id' => $id,
                 'username' => $username,
                 'email' => $email,
                 'bio' => $bio,
             ];
-
 
             $query = "UPDATE users SET username = :username, email = :email, bio = :bio";
 
@@ -95,7 +93,6 @@ class UserRepository extends BaseRepository {
             }
 
             $query .= ", updated_at = NOW() WHERE id = :id";
-
 
             $this
                 ->query($query)
@@ -125,6 +122,33 @@ class UserRepository extends BaseRepository {
         }
 
 
+    }
+
+    public function deleteUser(int $id): ?User {
+        $this
+            ->query("UPDATE users SET is_deleted = 1 WHERE id = :id")
+            ->fetch(['id' => $id])
+        ;
+
+        $result = $this
+            ->query("SELECT * FROM users WHERE id = :id")
+            ->fetch(['id' => $id]);
+
+        if (!$result) {
+            return null; // Or handle user-not-found as needed
+        }
+
+        return new User($result['id'],
+            $result['username'],
+            $result['email'],
+            $result['password_hash'],   //hash du mdp
+            $result['profile_picture'],
+            $result['role'],
+            $result['created_at'],
+            $result['updated_at'],
+            $result['bio'],
+            $result['is_deleted']
+        );
     }
 
 

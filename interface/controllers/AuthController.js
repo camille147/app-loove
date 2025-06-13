@@ -33,9 +33,9 @@ export class AuthController {
                     view.navigate("adminDashboard")
                 }
             } catch (err) {
-                view.showMessage(err.message || "Erreur de connexion", "danger");
+                view.showMessage(err.message || "Erreur de connexion", "danger")
             }
-        };
+        }
     }
 
     showSignIn() {
@@ -60,11 +60,12 @@ export class AuthController {
 
         localStorage.removeItem("token")
         localStorage.removeItem("user")
+        localStorage.removeItem("lastView")
         const view = new HomeView(this.root, this.navigate)
         view.render()
 
-
     }
+
 
     startInactivityTimer() {
         let timeout

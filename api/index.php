@@ -64,4 +64,7 @@ $routeur->addRoute(['GET'], '/user/albums', \App\Controllers\AlbumController::cl
 $routeur->addRoute(['POST'], 'user/profile/update', \App\Controllers\UserController::class, 'editProfile', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 ]);
+$routeur->addRoute(['POST'], 'user/profile/delete', \App\Controllers\UserController::class, 'deleteProfile', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+]);
 new Kernel($routeur);

@@ -56,7 +56,17 @@ export class Router {
             modification: () => {
                 const profileController = new ProfileController(this.root, this.navigate.bind(this), this.apiBaseUrl)
                 profileController.showModificationProfile()
+            },
+            menu: () => {
+                const profileController = new ProfileController(this.root, this.navigate.bind(this), this.apiBaseUrl)
+                profileController.showMenu()
+            },
+            delete: () => {
+                const profileController = new ProfileController(this.root, this.navigate.bind(this), this.apiBaseUrl)
+                profileController.showDelete()
             }
+
+
 
         }
     }
