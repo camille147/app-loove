@@ -51,7 +51,7 @@ class AlbumController extends BaseController {
             $albumRepo = new AlbumRepository();
             $album = $albumRepo->createAlbum($user_id, $title, $description, $visibility, $filename);
 
-            return new Response(201, json_encode(['message' => 'Album crée',
+            return new Response(201, json_encode(['message' => 'AlbumListComponent crée',
                 'album' => [
                     'id' => $album->getId(),
                     'title' => $album->getTitle(),

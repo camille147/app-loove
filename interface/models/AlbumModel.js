@@ -38,7 +38,7 @@ export class AlbumModel {
     async getMyAlbums() {
         const token = localStorage.getItem("token")
 
-        const response = await fetch(`http://app-loove-api.local/user/albums`, {
+        const response = await fetch(`http://app-loove-api.local/user/albums?filter=private`, {
             method : "GET",
             credentials: "include",
             headers: {
@@ -47,9 +47,32 @@ export class AlbumModel {
         })
 
         if (!response.ok) {
-            console.log("erreur create album")
+            console.log("erreur recup album privé")
             const errorData = await response.json()
-            throw new Error(errorData.message || "Erreur lors recup utili")
+            throw new Error(errorData.message || "Erreur lors recup album privé")
+        }
+
+
+        const myAlbums = await response.json()
+        return myAlbums.albums
+
+    }
+
+    async getAlbumsByFilter(filter = 'all') {
+        const token = localStorage.getItem("token")
+
+        const response = await fetch(`http://app-loove-api.local/user/albums?filter=${filter}`, {
+            method : "GET",
+            credentials: "include",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        })
+
+        if (!response.ok) {
+            console.log("erreur recup album filtrer")
+            const errorData = await response.json()
+            throw new Error(errorData.message || "Erreur lors recup albums filtrés")
         }
 
 

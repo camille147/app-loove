@@ -14,15 +14,7 @@ class UsersController extends BaseController {
         $this->Repo = new UserRepository();
 
     }
-    public function liste() {
-        $repository = new UserRepository();
-        $users = ['Alice', 'Bob']; // ou fetch depuis un repo
-        $body = json_encode([
-            'users' => $repository->all()
-        ]);
-        return new Response(200, $body);
 
-    }
     public function showUser(int $id) {
         try {
             $user = $this->Repo->get($id);
@@ -48,12 +40,6 @@ class UsersController extends BaseController {
 //        echo json_encode($repo->findAllUsers());
 //    }
 
-    public function show_json_users() {
-        header("Content-Type: application/json");
-
-        $repo = new UserRepository();
-        echo json_encode($repo->findAllUsers());
-    }
 
 
 

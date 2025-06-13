@@ -12,6 +12,7 @@ class User {
     public string $creationDate;
     public string $updatedDate;
     public string $bio;
+    private int $isDeleted;
 
 
     public function __construct(
@@ -23,7 +24,9 @@ class User {
         int $role,
         string $creationDate,
         string $updatedDate,
-        string $bio
+        string $bio,
+        int $isDeleted
+
 
     ){
         $this->id = $id;
@@ -35,6 +38,7 @@ class User {
         $this->creationDate = $creationDate;
         $this->updatedDate = $updatedDate;
         $this->bio = $bio;
+        $this->isDeleted = $isDeleted;
     }
 
     public function getId(): int
@@ -47,5 +51,9 @@ class User {
     {return $this->passwordHash;}
     public function getRole(): int
     {return $this->role;}
+    public function getIsDeleted(): int {
+        return $this->isDeleted;
+
+    }
 
 }

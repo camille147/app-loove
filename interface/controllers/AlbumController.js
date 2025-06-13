@@ -1,6 +1,7 @@
 import {AlbumModel} from "../models/AlbumModel";
 import {AddAlbumView} from "../views/AddAlbumView";
 import {ProfileUserView} from "../views/ProfileUserView";
+import {AlbumsView} from "../views/AlbumsView";
 
 export class AlbumController {
     constructor(root, navigate, apiBaseUrl) {
@@ -23,11 +24,10 @@ export class AlbumController {
         view.render();
     }
 
-    async showUserAlbums() {
-        // CHANGER PROFILE USER VIEW POUR PRENDRE ALBUMS ET USER
+    async showAlbums(filter='all') {
         try {
-            const albums = await this.albumModel.getMyAlbums();
-            const view = new ProfileUserView( this.root, this.navigate, user, albums);
+            const albums = await this.albumModel.getAlbumsByFilter(filter);
+            const view = new AlbumsView( this.root, this.navigate, albums);
             view.render();
         } catch (e) {
             console.error("Erreur chargement albums :", e.message);

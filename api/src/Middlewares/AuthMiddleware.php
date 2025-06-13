@@ -24,7 +24,8 @@ class AuthMiddleware {
             return new Response(401, json_encode(['message' => 'Token invalide']));
         }
 
-        if (!isset($_SESSION['last_activity']) || (time() - $_SESSION['last_activity'] > 3600)) {
+        if (!isset($_SESSION['last_activity']) || (time() - $_SESSION['last_activity'] > 1800)) {
+            session_unset(); //vide ttes les var de sessionq
             session_destroy();
             return new Response(401, json_encode(['message' => 'Session expirée']));
         }

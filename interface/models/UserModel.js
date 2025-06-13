@@ -1,23 +1,24 @@
+import {apiFetch} from "../js/utils/apiFetch";
+
 export class UserModel {
     constructor(baseUrl) {
         this.baseUrl = baseUrl //http://app-loove-api.local
     }
 
     async login(email, password) {
-        const response = await fetch(`http://app-loove-api.local/login`, {
+        const response = await apiFetch(`http://app-loove-api.local/login`, {
             method: "POST",
-            credentials: "include",
-            body: JSON.stringify({ email, password }),
+            body: JSON.stringify({email, password}),
+            headers: {
+                "Content-Type": "application/json",
+            }
         })
-        if (!response.ok) {
-            const errorData = await response.json()
-            throw new Error(errorData.message || "Erreur serveur")
-        }
 
-        const data = await response.json()
-        localStorage.setItem("token", data.token)
-        return data
+        localStorage.setItem("token", response.token)
+        return response
     }
+
+
 
     async signIn({ username, email, password, profile_picture_file, bio }) {
 
@@ -29,65 +30,33 @@ export class UserModel {
         formData.append("photo", profile_picture_file)
 
 
-        const response = await fetch(`http://app-loove-api.local/register`, {
+        return await apiFetch(`${this.baseUrl}/register`, {
             method: "POST",
-            credentials: "include",
             body: formData,
         })
-
-        if (!response.ok) {
-            const errorData = await response.json()
-            throw new Error(errorData.error || "erreur lors de l'inscription")
-        }
-
-        const data = await response.json()
-        return data
     }
 
 
 
     async me() {
-        const token = localStorage.getItem("token")
-        //console.log(token)
-        const response = await fetch(`http://app-loove-api.local/me`, {
+        return await apiFetch(`${this.baseUrl}/me`, {
             method: "GET",
-            credentials: "include",
-            headers:  {
-                "Authorization": `Bearer ${token}`
-            },
         })
-        if (!response.ok) {
-            console.log("erreur me")
-            const errorData = await response.json()
-            throw new Error(errorData.message || "Erreur lors recup utili")
-        }
-
-        const user = await response.json()
-        return user
     }
 
     async logout() {
-        const token = localStorage.getItem("token")
-
-        const response = await fetch(`http://app-loove-api.local/logout`, {
+        return await apiFetch(`${this.baseUrl}/logout`, {
             method: "GET",
-            credentials: "include",
-            headers:  {
-                "Authorization": `Bearer ${token}`
-            },
         })
-        if (!response.ok) {
-            const errorData = await response.json()
-            throw new Error(errorData.message || "erreur lor deco")
-        }
-
-        const data = await response.json()
-        return data
     }
 
+    async modification(formData){
+        return await apiFetch(`${this.baseUrl}/user/profile/update`, {
+            method: "POST",
+            body: formData,
+        })
 
-
-
+    }
 
 }
 

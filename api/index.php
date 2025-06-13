@@ -23,8 +23,26 @@ header("Access-Control-Allow-Headers: Content-Type, Authorization");
 header("Content-Type: application/json");
 
 
+if (preg_match('#^/uploads/(.+)$#', $_SERVER['REQUEST_URI'], $matches)) {
+
+    $uploadsDir = realpath(__DIR__ . '/../interface/uploads');
+    $fileName = $matches[1];
+    $filePath = $uploadsDir . DIRECTORY_SEPARATOR . str_replace(['/', '\\'], DIRECTORY_SEPARATOR, $fileName);
+    if (file_exists($filePath) && is_file($filePath)) {
+        $mimeType = mime_content_type($filePath);
+        header("Content-Type: $mimeType");
+        readfile($filePath);
+        exit();
+    } else {
+        http_response_code(404);
+        echo "Fichier non trouvé.";
+        exit();
+    }
+}
+
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . '/../');
 $dotenv->Load();
+
 
 $routeur = new Routeur();
 $routeur->addRoute('GET', '/user/home', \App\Controllers\UserController::class, 'home', [
@@ -41,6 +59,9 @@ $routeur->addRoute(['POST'], '/user/albums/create', \App\Controllers\AlbumContro
 ['middleware' => AuthMiddleware::class, 'role' => 0]
 ]);
 $routeur->addRoute(['GET'], '/user/albums', \App\Controllers\AlbumController::class, 'list', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+]);
+$routeur->addRoute(['POST'], 'user/profile/update', \App\Controllers\UserController::class, 'editProfile', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 ]);
 new Kernel($routeur);

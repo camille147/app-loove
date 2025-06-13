@@ -19,16 +19,30 @@ class UploadManager
     public function upload(array $file): string
     {
         if (!isset($file['tmp_name']) || !is_uploaded_file($file['tmp_name'])) {
-            throw new \Exception("Fichier invalide");
+            throw new \Exception("Fichier invalide ou non televersé");
         }
+
 
         if (!in_array($file['type'], $this->allowedTypes)) {
             throw new \Exception("Type de fichier non autorisé");
         }
 
-        if ($file['size'] > $this->maxSize) {
-            throw new \Exception("Fichier trop volumineux");
+        if ($file['error'] !== UPLOAD_ERR_OK) {
+            throw new \Exception("Erreur d'upload : code " . $file['error']);
         }
+
+        $finfo = new \finfo(FILEINFO_MIME_TYPE);
+        $mime = $finfo->file($file['tmp_name']);
+        if (!in_array($mime, $this->allowedTypes)) {
+            throw new \Exception("Type de fichier non autorisé : $mime");
+        }
+
+
+        if ($file['size'] > $this->maxSize) {
+            throw new \Exception("Fichier trop volumineux sup à 5Mo");
+        }
+
+
 
         $extension = pathinfo($file['name'], PATHINFO_EXTENSION);
         $uniqueName = uniqid('', true) . '.' . $extension;

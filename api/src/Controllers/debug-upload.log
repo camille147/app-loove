@@ -1,0 +1,860 @@
+Array
+(
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio 48000
+)
+
+Array
+(
+    [photo] => Array
+        (
+            [name] => home1.jpg
+            [full_path] => home1.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => home1.jpg
+            [full_path] => home1.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => skylineheights.jpg
+            [full_path] => skylineheights.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\phpF649.tmp
+            [error] => 0
+            [size] => 1924443
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => sarah.jpg
+            [full_path] => sarah.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\phpC0EE.tmp
+            [error] => 0
+            [size] => 412051
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => skylineheights.jpg
+            [full_path] => skylineheights.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\php33FC.tmp
+            [error] => 0
+            [size] => 1924443
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => skylineheights.jpg
+            [full_path] => skylineheights.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\phpD51F.tmp
+            [error] => 0
+            [size] => 1924443
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => skylineheights.jpg
+            [full_path] => skylineheights.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\php4753.tmp
+            [error] => 0
+            [size] => 1924443
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => sarah.jpg
+            [full_path] => sarah.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\phpAE65.tmp
+            [error] => 0
+            [size] => 412051
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => gardenhaven.jpg
+            [full_path] => gardenhaven.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\phpCAE7.tmp
+            [error] => 0
+            [size] => 1701252
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000
+)
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => sarah.jpg
+            [full_path] => sarah.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\phpC3D1.tmp
+            [error] => 0
+            [size] => 412051
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camilles
+    [email] => camille@mail.coms
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => home1.jpg
+            [full_path] => home1.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => home1.jpg
+            [full_path] => home1.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => emily.jpg
+            [full_path] => emily.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => skylineheights.jpg
+            [full_path] => skylineheights.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\phpC42E.tmp
+            [error] => 0
+            [size] => 1924443
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => gardenhaven.jpg
+            [full_path] => gardenhaven.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\phpFB3D.tmp
+            [error] => 0
+            [size] => 1701252
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => home1.jpg
+            [full_path] => home1.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => sarah.jpg
+            [full_path] => sarah.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\php8639.tmp
+            [error] => 0
+            [size] => 412051
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => skylineheights.jpg
+            [full_path] => skylineheights.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\php4B1.tmp
+            [error] => 0
+            [size] => 1924443
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => mark.jpg
+            [full_path] => mark.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => mark.jpg
+            [full_path] => mark.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camilles
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camilles
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => emily.jpg
+            [full_path] => emily.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => 
+            [full_path] => 
+            [type] => 
+            [tmp_name] => 
+            [error] => 4
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+
+
+Array
+(
+    [photo] => Array
+        (
+            [name] => emily.jpg
+            [full_path] => emily.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camille
+    [email] => camille@mail.com
+    [bio] => test bio n°52010000000000s
+)
+
+
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+)
+
+POST:
+Array
+(
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => sarah.jpg
+            [full_path] => sarah.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\phpFFD2.tmp
+            [error] => 0
+            [size] => 412051
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camill
+    [email] => camille@mail.com
+    [bio] => test bio update n°21548621456214582142
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => emily.jpg
+            [full_path] => emily.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camill
+    [email] => camille@mail.com
+    [bio] => test bio update n°21548621456214582142
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => emily.jpg
+            [full_path] => emily.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camill
+    [email] => camille@mail.com
+    [bio] => test bio update n°21548621456214582142
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => emily.jpg
+            [full_path] => emily.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camill
+    [email] => camille@mail.com
+    [bio] => test bio update n°21548621456214582142
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => emily.jpg
+            [full_path] => emily.jpg
+            [type] => 
+            [tmp_name] => 
+            [error] => 1
+            [size] => 0
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camill
+    [email] => camille@mail.com
+    [bio] => test bio update n°21548621456214582142
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => skylineheights.jpg
+            [full_path] => skylineheights.jpg
+            [type] => image/jpeg
+            [tmp_name] => C:\wamp64\tmp\php755E.tmp
+            [error] => 0
+            [size] => 1924443
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => camill
+    [email] => camille@mail.com
+    [bio] => test bio update n°21548621456214582142
+)
+Array
+(
+    [photo] => Array
+        (
+            [name] => villaimg.png
+            [full_path] => villaimg.png
+            [type] => image/png
+            [tmp_name] => C:\wamp64\tmp\phpEE01.tmp
+            [error] => 0
+            [size] => 884325
+        )
+
+)
+
+POST:
+Array
+(
+    [username] => Annette
+    [email] => annette@mailcom
+    [bio] => C'est un prénom d'origine hébraïque. Annette est dérivé de « hannah » qui veut dire « grâce ».  
+)

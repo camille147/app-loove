@@ -32,12 +32,21 @@ class AuthController extends BaseController {
 
         $user = $this->Repo->findByEmail($email);
 
+        if ($user == null) {
+            return new Response(404, json_encode(["message" => "Utilistair introuvalbel"]));
 
-        if (!$user || !password_verify($password, $user->getPasswordHash())) {
-            http_response_code(401);
-            echo json_encode(["message" => "Identifiants invalides"]);
-            return;
         }
+        if (!$user || $user->getIsDeleted() == 1) {
+            return new Response(403, json_encode(["message" => "Compte désactivé/ supprimé"]));
+
+
+        }
+        if (!$user || !password_verify($password, $user->getPasswordHash())) {
+            return new Response(401, json_encode(["message" => "Identifiants invalides"]));
+
+        }
+
+
 
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
@@ -52,7 +61,8 @@ class AuthController extends BaseController {
             'profile_picture' => $user->profilePicture,
             'created_at' => $user->creationDate,
             'updated_at' => $user->updatedDate,
-            'bio' => $user->bio
+            'bio' => $user->bio,
+            'is_deleted' => $user->getIsDeleted()
 
         ];
         $_SESSION['last_activity'] = time();

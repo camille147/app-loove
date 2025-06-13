@@ -28,6 +28,7 @@ export class AuthController {
 
                 if (role === 0) {
                     view.navigate("dashboard")
+                    this.startInactivityTimer()
                 } else {
                     view.navigate("adminDashboard")
                 }
@@ -64,5 +65,32 @@ export class AuthController {
 
 
     }
+
+    startInactivityTimer() {
+        let timeout
+
+        const logoutInactivity = () => {
+            localStorage.removeItem("token")
+            localStorage.removeItem("user")
+            localStorage.removeItem("lastView")
+            alert("Vous avez été déconnecté pour inactivité.")
+            this.navigate("home")
+        }
+
+        const resetTimer = () => {
+            clearTimeout(timeout)
+            timeout = setTimeout(logoutInactivity, 20 * 60 *1000) //20min
+        }
+
+        window.addEventListener("mousemove", resetTimer)
+        window.addEventListener("keypress", resetTimer)
+        window.addEventListener("click", resetTimer)
+        window.addEventListener("scroll", resetTimer)
+        window.addEventListener("touchstart", resetTimer)
+
+        resetTimer()
+    }
+
+
 
 }
