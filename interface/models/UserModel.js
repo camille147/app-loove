@@ -18,10 +18,9 @@ export class UserModel {
         return response
     }
 
-    async delete(id) {
+    async delete() {
         const response = await apiFetch(`http://app-loove-api.local/user/profile/delete`, {
             method: "POST",
-            body: JSON.stringify({id}),
             headers: {
                 "Content-Type": "application/json",
             }

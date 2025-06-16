@@ -68,8 +68,8 @@ export class ModificationProfileView {
 
     bindEvents(){
 
-        console.log(this.user)
-        console.log(this.user.user.photo)
+        //console.log(this.user)
+        //console.log(this.user.user.photo)
         const btnReturn = document.getElementById('return')
         btnReturn.addEventListener('click', async (e) => {
             e.preventDefault()

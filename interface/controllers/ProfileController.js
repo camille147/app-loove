@@ -69,8 +69,8 @@ export class ProfileController {
         const view = new MenuUserView(this.root, this.navigate)
 
             try {
-                const user = await this.userModel.me();
-                await this.userModel.delete(user.id);
+                //const user = await this.userModel.me();
+                await this.userModel.delete();
                 view.showMessage("Suppression réussie ! Redirection en cours...");
                 localStorage.removeItem("token")
                 localStorage.removeItem("user")

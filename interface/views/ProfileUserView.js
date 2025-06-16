@@ -12,12 +12,6 @@ export class ProfileUserView {
     render() {
         this.root.innerHTML = `
             
-            <div class="p-4">
-                <button class="ml-auto flex items-center gap-2 text-red-600 hover:text-red-800 transition-all" id="menu">
-                  <i class="fa-solid fa-bars text-xl "></i> 
-                </button>
-            </div>
-
       <div class="max-w-xl mx-auto bg-base-100 shadow-xl rounded-lg p-6">
         <div class="flex items-center gap-6">
           <div class="avatar">
@@ -27,18 +21,26 @@ export class ProfileUserView {
           </div>
           <div>
             <h2 class="text-2xl font-bold">${this.user.user.username}</h2>
-            <div class="flex gap-6 mt-2 text-sm text-gray-500">
+            <!--<div class="flex gap-6 mt-2 text-sm text-gray-500">
               <span><strong>152</strong> publications</span>
               <span><strong>2 340</strong> abonnés</span>
-            </div>
-            <p class="mt-2 text-sm">
-              ${this.user.user.bio}
-            </p>
-            <button class="btn btn-outline btn-primary btn-sm" id="modification">
-              <i class="fa-solid fa-pen mr-2"></i> Modifier le profil
-            </button>
+            </div>-->
+            
+            <div class="flex items-center justify-between mt-2">
+    <button class="btn btn-outline btn-primary btn-sm" id="modification">
+      <i class="fa-solid fa-pen mr-2"></i> Modifier le profil
+    </button>
+    
+    <button class=" px-2" id="menu">
+    <i class="fa-solid fa-gear text-sm"></i>
+  </button>
+  </div>
           </div>
         </div>
+<p class="mt-2 text-sm">
+              ${this.user.user.bio}
+            </p>
+
 
         <div class="px-4 mt-6">
           <h3 class="font-semibold mb-2">Mes albums</h3>

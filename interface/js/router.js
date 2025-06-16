@@ -12,6 +12,7 @@ import {AdminDashboardView} from "../views/AdminDashboardView";
 import {ProfileController} from "../controllers/ProfileController";
 import {AlbumListComponent} from "../components/AlbumListComponent";
 import {AlbumController} from "../controllers/AlbumController";
+import {PhotoController} from "../controllers/PhotoController";
 
 export class Router {
     constructor(root, apiBaseUrl) {
@@ -64,7 +65,17 @@ export class Router {
             delete: () => {
                 const profileController = new ProfileController(this.root, this.navigate.bind(this), this.apiBaseUrl)
                 profileController.showDelete()
-            }
+            },
+            photos: (albumId) => {
+                const controller = new PhotoController(this.root, this.navigate.bind(this), this.apiBaseUrl);
+                controller.showPhotos(albumId);
+            },
+
+            addPhoto: (albumId) => {
+                const controller = new PhotoController(this.root, this.navigate.bind(this), this.apiBaseUrl);
+                controller.showAddPhotoForm(albumId);
+            },
+
 
 
 
@@ -72,25 +83,35 @@ export class Router {
     }
 
     navigate(viewName) {
-        const view = this.routes[viewName]
-        if (view) {
-            view()
-            localStorage.setItem('lastView', viewName)
-            if (this.navbar) {
-                const user = this.getUSer()
-                const isConnected = this.isAuthentificated()
-                const isAdmin = user?.role === 1
-                const header = document.getElementById("navbar")
+        // Ex: viewName = "photos/123" ou "addPhoto/123"
+        const [route, param] = viewName.split('/');
 
-                if(isConnected && !isAdmin) {
-                    this.navbar.mount(header)
-                    this.navbar.setActiveView(viewName)
+        const routeHandler = this.routes[route];
+
+        if (routeHandler) {
+            if (param) {
+                routeHandler(param);
+            } else {
+                routeHandler();
+            }
+
+            localStorage.setItem('lastView', viewName);
+
+            if (this.navbar) {
+                const user = this.getUSer();
+                const isConnected = this.isAuthentificated();
+                const isAdmin = user?.role === 1;
+                const header = document.getElementById("navbar");
+
+                if (isConnected && !isAdmin) {
+                    this.navbar.mount(header);
+                    this.navbar.setActiveView(route);  // attention : ici route sans param
                 } else {
-                    this.navbar.unmount(header)
+                    this.navbar.unmount(header);
                 }
             }
         } else {
-            this.root.innerHTML = "<h1>404 - Vue inconnue</h1>"
+            this.root.innerHTML = "<h1>404 - Vue inconnue</h1>";
         }
     }
 

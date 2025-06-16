@@ -67,4 +67,22 @@ $routeur->addRoute(['POST'], 'user/profile/update', \App\Controllers\UserControl
 $routeur->addRoute(['POST'], 'user/profile/delete', \App\Controllers\UserController::class, 'deleteProfile', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 ]);
+$routeur->addRoute(['GET'], '/user/album/photos', \App\Controllers\PhotoController::class, 'list', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+]);
+$routeur->addRoute(['POST'], '/user/album/photos/create', \App\Controllers\PhotoController::class, 'create', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+]);
+$routeur->addRoute(['POST'], '/user/albums/photo/favorite', \App\Controllers\PhotoController::class, 'toggleFavorite', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+
+]);
+$routeur->addRoute(['GET'], '/tags/search', \App\Controllers\PhotoController::class, 'searchTags', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+
+]);
+$routeur->addRoute(['GET'], '/tags', \App\Controllers\PhotoController::class, 'listAllTags', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+
+]);
 new Kernel($routeur);
