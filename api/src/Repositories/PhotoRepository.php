@@ -88,18 +88,18 @@ class PhotoRepository extends BaseRepository {
         $query = "SELECT DISTINCT p.* FROM photos p";
 
         if($tag !== null) {
-            $query .=" INNER JOIN photo_tag pt ON p.id = pt.photo_id
+            $query .=" INNER JOIN photo_tags pt ON p.id = pt.photo_id
                 INNER JOIN tags t ON pt.tag_id = t.id
                 WHERE p.album_id = :albumId 
                 AND t.name = :tag
-                AND p.is_deleted = 0";
+                AND p.is_deleted = 0 ";
             $params['tag'] = $tag;
         } else {
             $query.= " WHERE p.album_id = :albumId AND p.is_deleted = 0 ";
         }
 
         if ($favorite) {
-            $query.= "AND p.is_favorite = 1";
+            $query.= " AND p.is_favorite = true ";
         }
 
         if ($order === 'recent') {
@@ -108,6 +108,8 @@ class PhotoRepository extends BaseRepository {
         } elseif ($order === 'old') {
             $query .="ORDER BY p.taken_at ASC";
         }
+
+
 
         $results = $this
             ->query($query)

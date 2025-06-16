@@ -1,10 +1,10 @@
 export class AddPhotoView {
-    constructor(root, navigate, albumId) {
+    constructor(root, navigate, albumId, allTags = []) {
         this.root = root;
         this.navigate = navigate;
         this.albumId = albumId;
+        this.allTags = allTags;
         this.onSubmit = null;
-        this.allTags = [];
         this.selectedTags = new Set();
     }
 
@@ -29,63 +29,83 @@ export class AddPhotoView {
                     <input type="file" id="img_file" name="img_file" accept="image/*" required />
                 </div>
                 <div class="mb-3">
-                    <label for="tagSearch" class="block font-semibold">Rechercher et sélectionner tags</label>
+                    <label for="tagSearch" class="block font-semibold">Rechercher et ajouter des tags love</label>
                     <input type="text" id="tagSearch" placeholder="Rechercher un tag..." class="input input-bordered w-full mb-2" />
-                    <div id="tagsContainer" class="flex flex-wrap gap-2"></div>
+                    <div id="tagSuggestions" class="flex flex-wrap gap-2 mb-2"></div>
+                    <div id="selectedTagsContainer" class="flex flex-wrap gap-2"></div>
                 </div>
                 <button type="submit" class="btn btn-primary mt-4">Ajouter</button>
                 <button type="button" id="cancelBtn" class="btn btn-secondary mt-4 ml-2">Annuler</button>
             </form>
         `;
 
-        await this.loadTags();
-        this.renderTags(this.allTags);
         this.bindEvents();
     }
 
-    async loadTags() {
-        try {
-            const res = await fetch("http://app-loove-api.local/tags", { credentials: "include" });
-            const data = await res.json();
-            this.allTags = data.tags || [];
-        } catch (e) {
-            console.error("Erreur chargement tags", e);
-            this.allTags = [];
-        }
-    }
 
-    renderTags(tags) {
-        const container = this.root.querySelector("#tagsContainer");
-        container.innerHTML = tags.map(tag => `
-            <button type="button" class="tag-btn btn btn-sm btn-outline" data-tag="${tag.name}">${tag.name}</button>
-        `).join('');
-    }
+
 
     bindEvents() {
-        const form = this.root.querySelector("#addPhotoForm");
-        const tagSearch = this.root.querySelector("#tagSearch");
-        const tagsContainer = this.root.querySelector("#tagsContainer");
+        const form = this.root.querySelector("#addPhotoForm")
+        const tagSearch = this.root.querySelector("#tagSearch")
+        const tagSuggestions = this.root.querySelector('#tagSuggestions')
+        const selectedTagsContainer = this.root.querySelector("#selectedTagsContainer")
 
-        tagSearch.addEventListener("input", (e) => {
-            const search = e.target.value.toLowerCase();
-            const filteredTags = this.allTags.filter(tag => tag.name.toLowerCase().includes(search));
-            this.renderTags(filteredTags);
-        });
+       const updateSelectedTags = () => {
+            selectedTagsContainer.innerHTML = ""
+           this.selectedTags.forEach(tag => {
+               const btn = document.createElement("button")
+               btn.type = "button"
+               btn.className = "btn btn-sm btn-primary"
+               btn.innerHTML = `${tag} <span class="ml-1">$times;</span>`
+               btn.addEventListener("click", () => {
+                   this.selectedTags.delete(tag)
+                   updateSelectedTags()
+                   renderSuggestions()
+               })
+               selectedTagsContainer.appendChild(btn)
+           })
+       }
 
-        tagsContainer.addEventListener("click", (e) => {
-            if (e.target.matches(".tag-btn")) {
-                const tag = e.target.getAttribute("data-tag");
-                if (this.selectedTags.has(tag)) {
-                    this.selectedTags.delete(tag);
-                    e.target.classList.remove("btn-primary");
-                    e.target.classList.add("btn-outline");
-                } else {
-                    this.selectedTags.add(tag);
-                    e.target.classList.add("btn-primary");
-                    e.target.classList.remove("btn-outline");
-                }
+       const renderSuggestions = () => {
+            const search = tagSearch.value.toLowerCase().trim()
+
+           if(!search) {
+               tagSuggestions.innerHTML = ""
+               return
+           }
+
+            const filteredTags = this.allTags.filter(tag =>
+                tag.toLowerCase().includes(search) && !this.selectedTags.has(tag)
+            )
+
+           if (filteredTags.length === 0) {
+               tagSuggestions.innerHTML = `
+            <span class="text-gray-500 italic">Aucun tag trouvé</span>
+        `;
+               return;
+           }
+
+           tagSuggestions.innerHTML = filteredTags.map(tag => `
+                <button type="button" class="btn btn-sm btn-outline" data-tag="${tag}">${tag}</button>           
+            `).join('')
+       }
+
+
+       tagSearch.addEventListener("input", renderSuggestions)
+
+        tagSuggestions.addEventListener("click", (e) => {
+            if (e.target.matches("button[data-tag]")) {
+                const tag = e.target.getAttribute("data-tag")
+                this.selectedTags.add(tag)
+                tagSearch.value = ""
+                renderSuggestions()
+                updateSelectedTags()
             }
-        });
+        })
+
+
+
 
         form.addEventListener("submit", (e) => {
             e.preventDefault();
@@ -114,5 +134,8 @@ export class AddPhotoView {
         this.root.querySelector("#cancelBtn").addEventListener("click", () => {
             this.navigate(`photos/${this.albumId}`);
         });
+
+        updateSelectedTags()
+
     }
 }

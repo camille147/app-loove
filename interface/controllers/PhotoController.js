@@ -11,14 +11,16 @@ export class PhotoController {
     }
 
     async showAddPhotoForm(albumId) {
-        const view = new AddPhotoView(this.root, this.navigate, albumId);
+        const tags = await this.photoModel.getAllTags()
+        const view = new AddPhotoView(this.root, this.navigate, albumId, tags);
         view.onSubmit = async (formData) => {
             try {
                 await this.photoModel.createPhoto(formData)
                 this.navigate(`photos/${albumId}`);
             } catch (e) {
                 console.error("Erreur création photo :", e.message);
-                alert("Erreur : " + e.message);            }
+                alert("Erreur : " + e.message);
+            }
         };
         await view.render()
     }
@@ -28,8 +30,8 @@ export class PhotoController {
             const photos = await this.photoModel.getPhotosByAlbum(albumId)
             const view = new PhotosView( this.root, this.navigate, albumId, photos)
             view.model = this.photoModel
-            view.onToggleFavorite = async (photoId) => {
-                await this.photoModel.toggleFavorite(photoId);
+            view.onToggleFavorite = async (photoId, isFavorite) => {
+                await this.photoModel.toggleFavorite(photoId, isFavorite);
                 await view.applyFilters()
             }
             await view.render()

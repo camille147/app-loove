@@ -56,11 +56,19 @@ export class PhotoModel {
             })
         }
 
-    async toggleFavorite(photoId) {
-        return await apiFetch(`${this.baseUrl}/user/album/photos/${photoId}/favorite`, {
-            method: "PATCH",
-            credentials: "include"
-        })
+    async toggleFavorite(photoId, isFavorite) {
+        const formData = new URLSearchParams();
+        formData.append('photo_id', photoId);
+        formData.append('favorite', isFavorite ? '1' : '0');
+
+        return await apiFetch(`${this.baseUrl}/user/albums/photo/favorite`, {
+            method: "POST",
+            body: formData,
+            credentials: "include",
+            headers: {
+                "Content-Type": "application/x-www-form-urlencoded"
+            }
+        });
     }
 
     async getAllTags() {

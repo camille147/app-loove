@@ -10,9 +10,13 @@ export class PhotosView {
         this.photos = photos
         this.albumId = albumId
         this.onToggleFavorite = null;
-        this.model = null;    }
+        this.model = null;
+    }
 
     async render() {
+        const photoListComponent = new PhotoListComponent(this.photos, this.handleToggleFavorite.bind(this))
+
+
         this.root.innerHTML = `
         <div class="max-w-4xl mx-auto bg-white shadow rounded p-6">
                 <div class="mb-4 flex flex-wrap justify-between items-center gap-4">
@@ -34,44 +38,34 @@ export class PhotosView {
                     <button id="addPhotoBtn" class="btn btn-primary btn-sm">Ajouter une photo</button>
                 </div>
                 <div id="photoListContainer">
-                
+                    ${photoListComponent.render()}
                 </div>
             </div>
         `;
 
+        this.photoListComponent = photoListComponent
+
         await this.loadTags()
-
-        this.photoListComponent = new PhotoListComponent(this.photos, async (photoId) => {
-            if (this.onToggleFavorite) {
-                await this.onToggleFavorite(photoId);
-                //await this.applyFilters();
-            }
-        });
-
-        this.renderPhotos(this.photos);
-
         this.bindEvents();
+        this.photoListComponent.bindEvents(this.root.querySelector('#photoListContainer'))
     }
 
 
     async loadTags() {
         if (!this.model) return;
         try {
-            const tags = await this.model.getAllTags();
-            const tagSelect = this.root.querySelector('#filterTag');
-            tagSelect.innerHTML = `<option value="">Tous tags</option>` + tags.map(tag => `<option value="${tag.name}">${tag.name}</option>`).join('');
+            const tags = await this.model.getAllTags()
+            console.log(tags)
+            const tagSelect = this.root.querySelector('#filterTag')
+            tagSelect.innerHTML = `<option value="">Tous tags</option>` + tags.map(tag => `<option value="${tag}">${tag}</option>`).join('');
         } catch {
-            // erreur silencieuse
+            console.warn("Erreur chargement des tags :", e.message)
         }
     }
 
-    renderPhotos(photos) {
-        const container = this.root.querySelector('#photoListContainer');
-        container.innerHTML = this.photoListComponent.render();
-        this.photoListComponent.bindEvents(container);
-    }
-
     bindEvents()  {
+
+
         this.root.querySelector('#filterOrder').addEventListener('change', () => this.applyFilters())
         this.root.querySelector('#filterTag').addEventListener('change', () => this.applyFilters())
         this.root.querySelector('#favoriteCheckbox').addEventListener('change', () => this.applyFilters())
@@ -90,9 +84,23 @@ export class PhotosView {
 
         if (!this.model) return
 
-        this.photos = await this.model.getPhotosByAlbum(this.albumId, {order, tag, favorite})
-        this.renderPhotos(this.photos)
+        try {
+            const filteredPhotos = await this.model.getPhotosByAlbum(this.albumId, { order, tag, favorite })
+            const newComponent = new PhotoListComponent(filteredPhotos, this.handleToggleFavorite.bind(this))
+            const container = this.root.querySelector('#photoListContainer')
+            container.innerHTML = newComponent.render()
+            newComponent.bindEvents(container)
+            this.photoListComponent = newComponent
+        } catch (e) {
+            alert("Erreur filtrage photos : " + e.message)
+        }
 
+    }
+
+    async handleToggleFavorite(photoId, isFavorite){
+        if (this.onToggleFavorite) {
+            await this.onToggleFavorite(photoId, isFavorite)
+        }
     }
 
 
