@@ -15,6 +15,7 @@ class Photo {
     private int $isDeleted;
 
     private int $albumId;
+    private array $tags;
 
 
     public function __construct(
@@ -29,6 +30,7 @@ class Photo {
         int $isFavorite,
         int $isDeleted,
         int $albumId,
+        array $tags = []
 
     ) {
         $this->id = $id;
@@ -42,6 +44,7 @@ class Photo {
         $this->isFavorite = $isFavorite;
         $this->isDeleted = $isDeleted;
         $this->albumId = $albumId;
+        $this->tags = $tags;
 
     }
 
@@ -70,6 +73,26 @@ class Photo {
     public function getIsDeleted(): int {
         return $this->isDeleted;
 
+    }
+    public function getTags(): array {
+        return $this->tags;
+    }
+
+    public function toArray() {
+        return [
+            'id' => $this->id,
+            'user_id' => $this->userId,
+            'filename' => $this->filename,
+            'description' => $this->description,
+            'taken_at' => $this->takenAt,
+            'uploaded_at' => $this->uploadedAt,
+            'alt' => $this->alt,
+            'title' => $this->title,
+            'is_favorite' => $this->isFavorite,
+            'is_deleted' => $this->isDeleted,
+            'album_id' => $this->albumId,
+            'tags' => $this->tags,
+        ];
     }
 
 }

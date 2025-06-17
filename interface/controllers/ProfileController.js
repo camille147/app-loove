@@ -62,7 +62,6 @@ export class ProfileController {
             this.navigate("home")
         }
 
-
     }
 
     async showDelete() {

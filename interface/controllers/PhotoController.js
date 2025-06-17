@@ -1,6 +1,9 @@
 import {PhotoModel} from "../models/PhotoModel";
 import {AddPhotoView} from "../views/AddPhotoView";
 import {PhotosView} from "../views/PhotosView";
+import {ModificationProfileView} from "../views/ModificationProfileView";
+import {ModificationPhotoView} from "../views/ModificationPhotoView";
+import {MenuUserView} from "../views/MenuUserView";
 
 
 export class PhotoController {
@@ -30,8 +33,14 @@ export class PhotoController {
             const photos = await this.photoModel.getPhotosByAlbum(albumId)
             const view = new PhotosView( this.root, this.navigate, albumId, photos)
             view.model = this.photoModel
+
             view.onToggleFavorite = async (photoId, isFavorite) => {
                 await this.photoModel.toggleFavorite(photoId, isFavorite);
+                await view.applyFilters()
+            }
+
+            view.onToggleDelete = async (photoId) => {
+                await this.photoModel.deletePhoto(photoId);
                 await view.applyFilters()
             }
             await view.render()
@@ -40,5 +49,32 @@ export class PhotoController {
             alert("Erreur chargement photos : " + e.message);
             this.navigate("home");
         }
+
+
     }
+
+    async showModificationPhoto(photoId) {
+        try {
+            const photo = await this.photoModel.getInformations(photoId)
+
+            const view = new ModificationPhotoView(this.root, this.navigate, photo)
+            view.onSubmit = async (formData) => {
+                try {
+                    await this.photoModel.modification(formData)
+                    this.navigate(`photos/${photo.photoId}`)
+                } catch (e) {
+                    alert("Erreur :" + e.message)
+                }
+            }
+
+            view.render()
+
+        } catch (e) {
+            console.error("Erreur lors de la modification du profil :", e.message)
+            this.navigate("home")
+        }
+    }
+
+
+
 }

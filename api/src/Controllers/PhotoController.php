@@ -38,7 +38,7 @@ class PhotoController extends BaseController {
             $album_id = $_POST['album_id'] ?? null;
             $title = $_POST['title'] ?? null;
             $description = $_POST['description'] ?? null;
-            $alt = $_POST['alt'] ?? '';
+            $alt = $_POST['title'] ?? '';
             $takenAt = $_POST['taken_at'] ?? date('Y-m-d H:i:s');
             $tagsJSON = $_POST['tags'] ?? '[]';
             $tags = json_decode($tagsJSON, true);
@@ -178,5 +178,141 @@ class PhotoController extends BaseController {
             return new Response(500, json_encode(['message' => $e->getMessage()]));
         }
     }
+
+
+    public function photo()
+    {
+        try {
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+
+            if (!isset($_SESSION['user']['id'])) {
+                return new Response(401, json_encode(['message' => 'Non authentifié']));
+            }
+
+
+            $photo_id = $_GET['photo_id'] ?? null;
+
+            if(!$photo_id) {
+                return new Response(400, json_encode(['message' => 'photo id manqua,t']));
+            }
+
+
+            $photo = $this->repo->get($photo_id);
+            //var_dump($photo);
+
+            return new Response(200, json_encode(['photo' => $photo->toArray()]));
+
+
+        }catch (\Exception $e) {
+            return new Response(500, json_encode(['message' => $e->getMessage()]));
+        }
+    }
+
+
+    public function editPhoto()
+    {
+        try {
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+
+
+            if (!isset($_SESSION['user']['id'])) {
+                return new Response(401, json_encode(['message' => 'Non authentifié']));
+            }
+
+            $userId = $_SESSION['user']['id'];
+
+            //var_dump($_POST);
+            $rawPostData = file_get_contents("php://input");
+            if (empty($_POST) && !empty($rawPostData)) {
+                $_POST = json_decode($rawPostData, true);
+            }
+
+            if (!isset($_POST['photo_id'])) {
+                return new Response(400, json_encode(['message' => 'Champs photo id manquants']));
+            }
+
+            $photoId = $_POST['photo_id'];
+            $title = $_POST['title'];
+            $description = $_POST['description'];
+            $takenAt = $_POST['taken_at'];
+            $alt = $_POST['alt'] ?? null;
+
+            $tags = $_POST['tags'] ?? [];
+            if (!is_array($tags)) {
+                $tags = json_decode($tags, true) ?? [];
+            }
+
+            try {
+                // Récupérer la photo existante
+                $photo = $this->repo->get($photoId);
+                if (!$photo) {
+                    return new Response(404, json_encode(['message' => 'Photo non trouvée']));
+                }
+
+                // Mise à jour des informations
+                $this->repo->editPhoto($photoId, $title, $description, $takenAt, $alt, $tags);
+
+                // Récupérer la photo mise à jour
+                $updatedPhoto = $this->repo->get($photoId);
+
+                return new Response(200, json_encode([
+                    "message" => "Photo mise à jour",
+                    "photo" => $updatedPhoto->toArray()
+                ]));
+
+            } catch (\Exception $e) {
+                return new Response(500, json_encode(['error' => $e->getMessage()]));
+            }
+
+        }catch (\Exception $e) {
+            return new Response(500, json_encode(['message' => $e->getMessage()]));
+        }
+    }
+
+
+    public function deletePhoto() {
+        try {
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+
+
+            if (!isset($_SESSION['user']['id'])) {
+                return new Response(401, json_encode(['message' => 'Non authentifié']));
+            }
+
+
+            $rawPostData = file_get_contents("php://input");
+            $_DELETE = json_decode($rawPostData, true) ?? [];
+
+            if (!isset($_DELETE['photo_id'])) {
+                return new Response(400, json_encode(['message' => 'photo_id manquant']));
+            }
+
+            $photoId = $_DELETE['photo_id'];
+
+            try {
+                $this->repo->deletePhoto($photoId);
+
+                return new Response(200, json_encode([
+                    "message" => "Photo supprimée"
+                ]));
+
+            } catch (\Exception $e) {
+                return new Response(500, json_encode(['error' => $e->getMessage()]));
+            }
+        }catch (\Exception $e) {
+            return new Response(500, json_encode(['message' => $e->getMessage()]));
+        }
+    }
+
+
+
+
+
 
 }

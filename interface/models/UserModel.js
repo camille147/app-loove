@@ -63,7 +63,6 @@ export class UserModel {
             method: "POST",
             body: formData,
         })
-
     }
 
 }

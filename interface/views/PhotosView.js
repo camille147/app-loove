@@ -10,11 +10,13 @@ export class PhotosView {
         this.photos = photos
         this.albumId = albumId
         this.onToggleFavorite = null;
+        this.onToggleDelete = null;
+
         this.model = null;
     }
 
     async render() {
-        const photoListComponent = new PhotoListComponent(this.photos, this.handleToggleFavorite.bind(this))
+        const photoListComponent = new PhotoListComponent(this.photos, this.handleToggleFavorite.bind(this), this.handlePhotoClick.bind(this), this.deletePhotoBtn.bind(this))
 
 
         this.root.innerHTML = `
@@ -65,6 +67,7 @@ export class PhotosView {
 
     bindEvents()  {
 
+        const photoListContainer = document.querySelector("#photoListContainer")
 
         this.root.querySelector('#filterOrder').addEventListener('change', () => this.applyFilters())
         this.root.querySelector('#filterTag').addEventListener('change', () => this.applyFilters())
@@ -73,6 +76,7 @@ export class PhotosView {
         this.root.querySelector('#addPhotoBtn').addEventListener('click', () => {
             this.navigate(`addPhoto/${this.albumId}`)
         });
+
 
     }
 
@@ -86,7 +90,7 @@ export class PhotosView {
 
         try {
             const filteredPhotos = await this.model.getPhotosByAlbum(this.albumId, { order, tag, favorite })
-            const newComponent = new PhotoListComponent(filteredPhotos, this.handleToggleFavorite.bind(this))
+            const newComponent = new PhotoListComponent(filteredPhotos, this.handleToggleFavorite.bind(this), this.handlePhotoClick.bind(this))
             const container = this.root.querySelector('#photoListContainer')
             container.innerHTML = newComponent.render()
             newComponent.bindEvents(container)
@@ -101,6 +105,17 @@ export class PhotosView {
         if (this.onToggleFavorite) {
             await this.onToggleFavorite(photoId, isFavorite)
         }
+    }
+
+    async deletePhotoBtn(photoId){
+        if (this.onToggleDelete) {
+            await this.onToggleDelete(photoId)
+        }
+    }
+
+    handlePhotoClick(photoId) {
+        console.log("Album sélectionné :", photoId)
+        this.navigate(`modificationPhoto/${photoId}`)
     }
 
 

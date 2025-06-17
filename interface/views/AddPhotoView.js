@@ -107,29 +107,41 @@ export class AddPhotoView {
 
 
 
-        form.addEventListener("submit", (e) => {
-            e.preventDefault();
-            const title = form.title.value.trim();
-            const description = form.description.value.trim();
-            const takenAt = form.takenAt.value;
-            const file = form.img_file.files[0];
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault()
+            //messageDiv.textContent = ''
+
+            const title = document.getElementById('title').value.trim()
+            const description = document.getElementById('description').value.trim()
+            const takenAt = document.getElementById('takenAt').value
+            const file = document.getElementById('img_file')
             const tags = Array.from(this.selectedTags);
 
-            if (!file) {
-                alert("Veuillez sélectionner un fichier image");
-                return;
+            if (file.files.length === 0) {
+                console.log("img manquante")
+                return
             }
 
-            const formData = new FormData();
-            formData.append("title", title);
-            formData.append("description", description);
-            formData.append("takenAt", takenAt);
-            formData.append("img_file", file);
-            formData.append("album_id", this.albumId);
-            formData.append("tags", JSON.stringify(tags));
+            const coverImageFile = file.files[0]
 
-            if (this.onSubmit) this.onSubmit(formData);
-        });
+            if (this.onSubmit) {
+                try {
+                    const formData = new FormData();
+                    formData.append('title', title);
+                    formData.append('description', description);
+                    formData.append('takenAt', takenAt);
+                    formData.append('photo_file', coverImageFile);
+                    formData.append('album_id', this.albumId);
+                    formData.append('tags', JSON.stringify(tags));
+
+                    await this.onSubmit(formData);
+                } catch (error) {
+                    console.error(error)
+                }
+            } else {
+                console.warn("Aucune fonction onSubmit définie.")
+            }
+        })
 
         this.root.querySelector("#cancelBtn").addEventListener("click", () => {
             this.navigate(`photos/${this.albumId}`);

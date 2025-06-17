@@ -105,7 +105,7 @@ export class ModificationProfileView {
             const picture = profile_picture_file.files[0] || null
             console.log(picture)
 
-console.log(profile_picture_file.files[0]
+            console.log(profile_picture_file.files[0]
         )
             const formData = new FormData(form);
 

@@ -22,7 +22,7 @@ export class MenuUserView {
                   <span class="hidden sm:inline">Déconnexion</span>
                 </button>
             </div>
-                                    <div id="show_message" class="text-error text-sm"></div>
+            <div id="show_message" class="text-error text-sm"></div>
 
             <div class="p-4">
                 <button class="ml-auto flex items-center gap-2 text-red-600 hover:text-red-800 transition-all" id="delete">

@@ -85,4 +85,16 @@ $routeur->addRoute(['GET'], '/tags', \App\Controllers\PhotoController::class, 'l
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 
 ]);
+$routeur->addRoute(['GET'], '/photo', \App\Controllers\PhotoController::class, 'photo', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+
+]);
+$routeur->addRoute(['POST'], '/user/album/photo/update', \App\Controllers\PhotoController::class, 'editPhoto', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+
+]);
+$routeur->addRoute(['DELETE'], '/user/album/photo/delete', \App\Controllers\PhotoController::class, 'deletePhoto', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+
+]);
 new Kernel($routeur);

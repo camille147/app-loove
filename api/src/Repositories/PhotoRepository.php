@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use App\Models\Album;
 use App\Models\Photo;
+use App\Models\User;
 use Exception;
 
 class PhotoRepository extends BaseRepository {
@@ -153,6 +154,8 @@ class PhotoRepository extends BaseRepository {
             ->fetchAll(['query' => $query . '%']);
         return array_map(fn($row) => $row['name'], $results);
     }
+
+
     public function getAllTags(): array {
         $results = $this
             ->query("SELECT DISTINCT name FROM tags ORDER BY name ASC")
@@ -160,5 +163,93 @@ class PhotoRepository extends BaseRepository {
 
         return array_map(fn($row) => $row['name'], $results);
     }
+
+    public function get (int $photoId) {
+        $result = $this
+                ->query("SELECT p.*, GROUP_CONCAT(t.name) AS tags 
+    FROM photos p
+    LEFT JOIN photo_tags pt ON p.id = pt.photo_id
+    LEFT JOIN tags t ON pt.tag_id = t.id
+    WHERE p.id = :id
+    GROUP BY p.id")
+            ->fetch(['id' => $photoId])
+        ;
+
+        //var_dump($result);
+        if(empty($result)) {
+            throw new Exception("photo non identifié");
+        }
+
+        return new Photo($result['id'],
+            $result['user_id'],
+            $result['filename'],
+            $result['description'],
+            $result['taken_at'],
+            $result['uploaded_at'],
+            $result['alt'],
+            $result['title'],
+            $result['is_favorite'],
+            $result['is_deleted'],
+            $result['album_id'],
+            explode(',', $result['tags'] ?? '')
+        );
+    }
+
+
+
+    public function editPhoto(int $photoId, ?string $title, ?string $description, ?string $takenAt, ?string $alt, array $tags = []): ?Photo {
+        try {
+            $execute = [
+                'photoId' => $photoId,
+                'title' => $title,
+                'description' => $description,
+                'takenAt' => $takenAt,
+                'alt' => $alt
+            ];
+
+            $query = "UPDATE photos SET title = :title, description = :description, taken_at = :takenAt, alt = :alt , uploaded_at = NOW() WHERE id = :photoId";
+
+
+            $this->query($query)->execute($execute);
+
+            // Mettre à jour les tags associés à la photo
+            if (!empty($tags)) {
+                $this->query("DELETE FROM photo_tags WHERE photo_id = :photoId")->execute(['photoId' => $photoId]);
+                foreach ($tags as $tag) {
+                    $tagId = $this->getTagIdByName($tag);
+                    if ($tagId) {
+                        $this->addTagToPhoto($photoId, $tagId);
+                    }
+                }
+            }
+
+            // Récupérer la photo mise à jour
+            $result = $this->get($photoId);
+
+            return $result;
+
+        } catch (\PDOException $e) {
+            if ($e->getCode() == '23000') {
+                throw new \Exception("Erreur lors de la mise à jour de la photo.");
+            }
+            throw $e;
+        }
+    }
+
+    public function deletePhoto(int $photoId): bool {
+        try {
+            $this->query("DELETE FROM photos WHERE id = :photoId")
+                ->execute(['photoId' => $photoId]);
+
+
+            return true;
+        }catch (\Exception $e) {
+            throw new Exception("Erreur lors de la suppression : " . $e->getMessage());
+        }
+    }
+
+
+
+
 }
 

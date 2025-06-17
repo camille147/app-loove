@@ -28,6 +28,8 @@ class User {
         int $isDeleted
 
 
+
+
     ){
         $this->id = $id;
         $this->username = $username;
@@ -39,6 +41,8 @@ class User {
         $this->updatedDate = $updatedDate;
         $this->bio = $bio;
         $this->isDeleted = $isDeleted;
+
+
     }
 
     public function getId(): int

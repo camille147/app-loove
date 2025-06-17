@@ -75,6 +75,14 @@ export class Router {
                 const controller = new PhotoController(this.root, this.navigate.bind(this), this.apiBaseUrl);
                 controller.showAddPhotoForm(albumId);
             },
+            modificationPhoto: (photoId) => {
+                const controller = new PhotoController(this.root, this.navigate.bind(this), this.apiBaseUrl);
+                controller.showModificationPhoto(photoId);
+            },
+            photo: () => {
+                const photoController = new PhotoController(this.root, this.navigate.bind(this), this.apiBaseUrl)
+                photoController.showInformations()
+            },
 
 
 

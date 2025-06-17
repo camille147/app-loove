@@ -79,5 +79,32 @@ export class PhotoModel {
         return response.tags
     }
 
+    async getInformations(photoId) {
+        const params = new URLSearchParams();
+        params.append('photo_id', photoId);
+
+        return await apiFetch(`${this.baseUrl}/photo?${params.toString()}`, {
+            method: "GET",
+        });
+    }
+
+    async modification(formData){
+        return await apiFetch(`${this.baseUrl}/user/album/photo/update`, {
+            method: "POST",
+            body: formData,
+        })
+    }
+
+    async deletePhoto(photoId) {
+        const response = await apiFetch(`http://app-loove-api.local/user/album/photo/delete`, {
+            method: "DELETE",
+            body: JSON.stringify({ photo_id: photoId }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        return response;
+    }
+
 
 }
