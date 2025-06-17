@@ -61,7 +61,8 @@ export class PhotoController {
             view.onSubmit = async (formData) => {
                 try {
                     await this.photoModel.modification(formData)
-                    this.navigate(`photos/${photo.photoId}`)
+                    console.log(photo.photo.album_id)
+                    this.navigate(`photos/${photo.photo.album_id}`)
                 } catch (e) {
                     alert("Erreur :" + e.message)
                 }

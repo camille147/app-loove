@@ -88,10 +88,11 @@ export class PhotoModel {
         });
     }
 
-    async modification(formData){
+    async modification(photoDataModif){
         return await apiFetch(`${this.baseUrl}/user/album/photo/update`, {
             method: "POST",
-            body: formData,
+            body: JSON.stringify(photoDataModif),
+            headers: {"Content-Type" : "applications/json"}
         })
     }
 

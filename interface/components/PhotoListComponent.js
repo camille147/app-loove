@@ -15,7 +15,6 @@ export class PhotoListComponent {
         return `
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-4">
                 ${this.photos.map(photo => `
-                    <div class="btn-photo cursor-pointer" data-photo-id="${photo.id}">
                         <div class="bg-white rounded-2xl shadow-lg overflow-hidden relative transition transform hover:scale-105 duration-300">
                             <img src="http://app-loove-interface.local/uploads/photos/${photo.filename}" 
                                  alt="${photo.alt || ''}" 
@@ -33,7 +32,10 @@ export class PhotoListComponent {
                  title="Delete">
                   <i class="fa-solid fa-trash text-xl"></i>
                 </button>
-            </div>
+                <button class="btn-photo  "
+data-photo-id="${photo.id}  "               title="modif">
+                 modif
+                </button>
                         </div>
                     </div>
                 `).join('')}
