@@ -26,8 +26,6 @@ class UserController extends BaseController {
             session_start();
         }
 
-        //file_put_contents(__DIR__ . '/debug-upload.log', print_r($_FILES, true), FILE_APPEND);
-        //file_put_contents(__DIR__ . '/debug-upload.log', "\nPOST:\n" . print_r($_POST, true), FILE_APPEND);
 
 
         if (!isset($_SESSION['user']['id'])) {
@@ -50,7 +48,6 @@ class UserController extends BaseController {
                 $uploadDir = realpath(__DIR__ . '/../') . '/../../interface/uploads/profile_pictures';
                 $uploadManager = new UploadManager($uploadDir);
                 $filename = $uploadManager->upload($_FILES['photo']);
-                //file_put_contents(__DIR__.'/debug.log', "Upload dir: " . $uploadDir . PHP_EOL, FILE_APPEND);
 
 
             } catch (\Exception $e) {

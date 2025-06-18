@@ -1,11 +1,11 @@
 export class AddPhotoView {
     constructor(root, navigate, albumId, allTags = []) {
-        this.root = root;
-        this.navigate = navigate;
-        this.albumId = albumId;
-        this.allTags = allTags;
-        this.onSubmit = null;
-        this.selectedTags = new Set();
+        this.root = root
+        this.navigate = navigate
+        this.albumId = albumId
+        this.allTags = allTags
+        this.onSubmit = null
+        this.selectedTags = new Set()
     }
 
     async render() {

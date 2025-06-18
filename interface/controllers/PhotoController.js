@@ -56,8 +56,8 @@ export class PhotoController {
     async showModificationPhoto(photoId) {
         try {
             const photo = await this.photoModel.getInformations(photoId)
-
-            const view = new ModificationPhotoView(this.root, this.navigate, photo)
+            const tags = await this.photoModel.getAllTags()
+            const view = new ModificationPhotoView(this.root, this.navigate, photo, tags)
             view.onSubmit = async (formData) => {
                 try {
                     await this.photoModel.modification(formData)

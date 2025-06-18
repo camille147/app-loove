@@ -160,7 +160,6 @@ class PhotoRepository extends BaseRepository {
         $results = $this
             ->query("SELECT DISTINCT name FROM tags ORDER BY name ASC")
             ->fetchAll();
-
         return array_map(fn($row) => $row['name'], $results);
     }
 

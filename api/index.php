@@ -45,18 +45,17 @@ $dotenv->Load();
 
 
 $routeur = new Routeur();
-$routeur->addRoute('GET', '/user/home', \App\Controllers\UserController::class, 'home', [
-    ['middleware' => AuthMiddleware::class, 'role' => 0]
-]);
+
+//route user + admin
+$routeur->addRoute(['POST'], '/login', \App\Controllers\AuthController::class, 'login');
+$routeur->addRoute(['POST'], '/register', \App\Controllers\AuthController::class, 'register');
+$routeur->addRoute(['GET'], '/logout', \App\Controllers\AuthController::class, 'logout');
 $routeur->addRoute(['GET'], '/me', \App\Controllers\AuthController::class, 'me', [
     ['middleware' => AuthMiddleware::class]
 ]);
-$routeur->addRoute(['POST'], '/login', \App\Controllers\AuthController::class, 'login');
-$routeur->addRoute(['POST'], '/register', \App\Controllers\AuthController::class, 'register');
-
-$routeur->addRoute(['GET'], '/logout', \App\Controllers\AuthController::class, 'logout');
+//route user
 $routeur->addRoute(['POST'], '/user/albums/create', \App\Controllers\AlbumController::class, 'create', [
-['middleware' => AuthMiddleware::class, 'role' => 0]
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
 ]);
 $routeur->addRoute(['GET'], '/user/albums', \App\Controllers\AlbumController::class, 'list', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
@@ -77,6 +76,14 @@ $routeur->addRoute(['POST'], '/user/albums/photo/favorite', \App\Controllers\Pho
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 
 ]);
+$routeur->addRoute(['POST'], '/user/album/photo/update', \App\Controllers\PhotoController::class, 'editPhoto', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+
+]);
+$routeur->addRoute(['DELETE'], '/user/album/photo/delete', \App\Controllers\PhotoController::class, 'deletePhoto', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+
+]);
 $routeur->addRoute(['GET'], '/tags/search', \App\Controllers\PhotoController::class, 'searchTags', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 
@@ -89,12 +96,25 @@ $routeur->addRoute(['GET'], '/photo', \App\Controllers\PhotoController::class, '
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 
 ]);
-$routeur->addRoute(['POST'], '/user/album/photo/update', \App\Controllers\PhotoController::class, 'editPhoto', [
-    ['middleware' => AuthMiddleware::class, 'role' => 0]
-
+//route admin
+$routeur->addRoute(['POST'], '/admin/new', \App\Controllers\AdminController::class, 'adminCreateAdmin', [
+    ['middleware' => AuthMiddleware::class, 'role' => 1]
 ]);
-$routeur->addRoute(['DELETE'], '/user/album/photo/delete', \App\Controllers\PhotoController::class, 'deletePhoto', [
-    ['middleware' => AuthMiddleware::class, 'role' => 0]
-
+$routeur->addRoute(['GET'], '/admin', \App\Controllers\AdminController::class, 'adminGetUsers', [
+    ['middleware' => AuthMiddleware::class, 'role' => 1]
 ]);
+$routeur->addRoute(['POST'], '/admin/delete', \App\Controllers\AdminController::class, 'adminDeleteUser', [
+    ['middleware' => AuthMiddleware::class, 'role' => 1]
+]);
+$routeur->addRoute(['POST'], '/admin/tag/new', \App\Controllers\AdminController::class, 'adminCreateTag', [
+    ['middleware' => AuthMiddleware::class, 'role' => 1]
+]);
+$routeur->addRoute(['POST'], '/admin/tags', \App\Controllers\AdminController::class, 'adminGetTags', [
+    ['middleware' => AuthMiddleware::class, 'role' => 1]
+]);
+
+
+
+
+
 new Kernel($routeur);

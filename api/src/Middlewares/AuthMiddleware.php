@@ -32,8 +32,8 @@ class AuthMiddleware {
 
         if ($requiredRole !== null) {
             if (!isset($_SESSION['user']['role']) || $_SESSION['user']['role'] != $requiredRole) {
-                var_dump($requiredRole);
-                var_dump($_SESSION['user']['role']);
+                //var_dump($requiredRole);
+                //var_dump($_SESSION['user']['role']);
                 return new Response(403, json_encode(['message' => 'Accès refusé : rôle insuffisant']));
             }
         }
