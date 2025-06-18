@@ -6,6 +6,8 @@ import {SignInView} from "../views/SignInView";
 import {AdminCreationAdminView} from "../views/AdminCreationAdminView";
 import {ProfileUserView} from "../views/ProfileUserView";
 import {AdminProfileView} from "../views/AdminProfileView";
+import {AdminTagsCreateView} from "../views/AdminTagsCreateView.";
+import {HomeView} from "../views/HomeView";
 
 export class AdminController {
     constructor(root, navigate, apiBaseUrl) {
@@ -39,8 +41,19 @@ export class AdminController {
             const tags = await this.adminModel.getTags();
             const view = new AdminTagsCreateView(this.root, this.navigate, tags)
 
-            //A FINIR
-        }catch (e) {
+            view.render()
+
+            view.onSubmit = async ({name}) => {
+                try {
+                    const result = await this.adminModel.createTag(name)
+                    this.showTagsAndCreate();
+                    //view.navigate("dashboard")
+                } catch (err) {
+                    console.error("Erreur création tag :", err.message)
+                }
+            }
+
+        } catch (e) {
             console.error("Erreur chargement tags et/ou création :", e.message)
             this.navigate("home")
         }

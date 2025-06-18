@@ -13,6 +13,25 @@ export class AdminModel {
         return response.users
     }
 
+    async createTag(name) {
+        const response = await apiFetch(`http://app-loove-api.local/admin/tag/new`, {
+            method: "POST",
+            body: JSON.stringify({name}),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+        return response
+    }
+
+    async getTags(){
+        const response = await apiFetch(`${this.baseUrl}/admin/tags`, {
+            method: "GET",
+            credentials: "include"
+        })
+        return response.tags
+    }
+
 
     async deleteAdmin(userId) {
         const body = new URLSearchParams()

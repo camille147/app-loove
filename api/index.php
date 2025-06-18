@@ -109,7 +109,7 @@ $routeur->addRoute(['POST'], '/admin/delete', \App\Controllers\AdminController::
 $routeur->addRoute(['POST'], '/admin/tag/new', \App\Controllers\AdminController::class, 'adminCreateTag', [
     ['middleware' => AuthMiddleware::class, 'role' => 1]
 ]);
-$routeur->addRoute(['POST'], '/admin/tags', \App\Controllers\AdminController::class, 'adminGetTags', [
+$routeur->addRoute(['GET'], '/admin/tags', \App\Controllers\AdminController::class, 'adminGetTags', [
     ['middleware' => AuthMiddleware::class, 'role' => 1]
 ]);
 
