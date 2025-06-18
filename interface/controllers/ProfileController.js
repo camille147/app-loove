@@ -49,7 +49,14 @@ export class ProfileController {
             view.onSubmit = async (formData) => {
                 try {
                     await this.userModel.modification(formData)
-                    this.navigate("profileUser")
+                    if (user.user.role === 0) {
+                        this.navigate("profileUser")
+
+                    } else {
+                        console.log(user)
+                        this.navigate("adminProfile")
+
+                    }
                 } catch (e) {
                     alert("Erreur :" + e.message)
                 }

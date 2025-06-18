@@ -29,7 +29,7 @@ export class AddPhotoView {
                     <input type="file" id="img_file" name="img_file" accept="image/*" required />
                 </div>
                 <div class="mb-3">
-                    <label for="tagSearch" class="block font-semibold">Rechercher et ajouter des tags love</label>
+                    <label for="tagSearch" class="block font-semibold">Rechercher et ajouter des tags</label>
                     <input type="text" id="tagSearch" placeholder="Rechercher un tag..." class="input input-bordered w-full mb-2" />
                     <div id="tagSuggestions" class="flex flex-wrap gap-2 mb-2"></div>
                     <div id="selectedTagsContainer" class="flex flex-wrap gap-2"></div>

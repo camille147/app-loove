@@ -117,12 +117,13 @@ class AdminController extends BaseController
             $userDeleteId = $_POST['user_id'] ?? null;
             //var_dump($userDeleteId);
             $userRepo = new UserRepository();
-
-            //var_dump($userRepo);
-            $user = $userRepo->deleteUser($userDeleteId);
-            if ($user->getRole() == 0) {
+            $userInformations = $userRepo->get($userDeleteId);
+            if ($userInformations->getRole() == 1) {
                 return new Response(401, json_encode(['message' => 'nop admin']));
             }
+            //var_dump($userRepo);
+            $user = $userRepo->deleteUser($userDeleteId);
+
             //var_dump($user->getRole());
 
             return new Response(200, json_encode([

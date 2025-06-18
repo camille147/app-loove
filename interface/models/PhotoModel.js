@@ -18,7 +18,7 @@ export class PhotoModel {
         })
 
         if (!response.ok) {
-            console.log("erreur recup album privé")
+            console.log("erreur recup photo privé")
             const errorData = await response.json()
             throw new Error(errorData.message || "Erreur lors recup album privé")
         }

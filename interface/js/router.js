@@ -11,14 +11,18 @@ import {AdminUsersView} from "../views/AdminUsersView";
 import {AdminDashboardView} from "../views/AdminDashboardView";
 import {ProfileController} from "../controllers/ProfileController";
 import {AlbumListComponent} from "../components/AlbumListComponent";
+import {NavBarAdminComponent} from "../components/NavBarAdminComponent";
+
 import {AlbumController} from "../controllers/AlbumController";
 import {PhotoController} from "../controllers/PhotoController";
+import {AdminController} from "../controllers/AdminController";
 
 export class Router {
     constructor(root, apiBaseUrl) {
         this.root = root
         this.apiBaseUrl = apiBaseUrl
         this.navbar = null
+        this.navBarAdmin = null
 
         this.routes = {
             //home: () => new HomeView(this.root, this.navigate.bind(this)).render(),   // permet de passer la func ds les vues sans perdre le this du router
@@ -32,7 +36,22 @@ export class Router {
                 authController.showSignIn()
             },
             dashboard : () => new DashboardUserView(this.root, this.navigate.bind(this)).render(),
-            adminDashboard : () => new AdminDashboardView(this.root, this.navigate.bind(this)).render(),
+            adminDashboard : () => {
+                const adminController = new AdminController(this.root, this.navigate.bind(this), this.apiBaseUrl )
+                adminController.showAdmin()
+            },
+            adminTags : () => {
+                const adminController = new AdminController(this.root, this.navigate.bind(this), this.apiBaseUrl )
+                adminController.showTagsAndCreate()
+            },
+            adminCreateAdmin : () => {
+                const adminController = new AdminController(this.root, this.navigate.bind(this), this.apiBaseUrl )
+                adminController.showCreateAdmin()
+            },
+            adminProfile : () => {
+                const adminController = new AdminController(this.root, this.navigate.bind(this), this.apiBaseUrl )
+                adminController.showProfileAdmin()
+            },
             profileUser : () => {
                 const profileController = new ProfileController(this.root, this.navigate.bind(this), this.apiBaseUrl )
                 profileController.showProfile()
@@ -103,21 +122,35 @@ export class Router {
                 routeHandler();
             }
 
-            localStorage.setItem('lastView', viewName);
+            localStorage.setItem('lastView', viewName)
+
+            const user = this.getUSer()
+            const isConnected = this.isAuthentificated()
+            const isAdmin = user?.role === 1
+            const navbarContainer = document.getElementById("navbar");
+            const navBarAdminContainer = document.getElementById("navBarAdmin");
+const mainContent = document.getElementById("app")
 
             if (this.navbar) {
-                const user = this.getUSer();
-                const isConnected = this.isAuthentificated();
-                const isAdmin = user?.role === 1;
-                const header = document.getElementById("navbar");
-
                 if (isConnected && !isAdmin) {
-                    this.navbar.mount(header);
+                    this.navbar.mount(navbarContainer);
                     this.navbar.setActiveView(route);  // attention : ici route sans param
                 } else {
-                    this.navbar.unmount(header);
+                    this.navbar.unmount(navbarContainer);
                 }
             }
+
+
+            if (isAdmin) {
+                if (!this.navBarAdmin) {
+                    this.navBarAdmin = new NavBarAdminComponent(this.navigate.bind(this))
+                }
+                this.navBarAdmin.mount(navBarAdminContainer)
+            } else if (this.navBarAdmin) {
+                this.navBarAdmin.unmount(navBarAdminContainer)
+                this.navBarAdmin = null
+            }
+
         } else {
             this.root.innerHTML = "<h1>404 - Vue inconnue</h1>";
         }

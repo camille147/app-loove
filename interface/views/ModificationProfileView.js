@@ -73,7 +73,13 @@ export class ModificationProfileView {
         const btnReturn = document.getElementById('return')
         btnReturn.addEventListener('click', async (e) => {
             e.preventDefault()
-            this.navigate("profileUser")
+            if(this.user.user.role === 0) {
+                this.navigate("profileUser")
+
+            } else {
+                this.navigate("adminProfile")
+
+            }
         })
 
         const form = document.getElementById('editProfileForm')

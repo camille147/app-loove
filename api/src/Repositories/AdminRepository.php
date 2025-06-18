@@ -43,7 +43,7 @@ class AdminRepository extends BaseRepository {
 
     public function getAllUsers(): array {
         $results = $this
-            ->query("SELECT * FROM users")
+            ->query("SELECT * FROM users WHERE is_deleted = 0 ORDER BY created_at DESC")
             ->fetchAll();
 
         //var_dump($results);
