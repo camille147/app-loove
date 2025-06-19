@@ -30,8 +30,9 @@ export class PhotoController {
 
     async showPhotos(albumId, filters={}) {
         try {
+            const albumInfo = await this.photoModel.getAlbum(albumId)
             const photos = await this.photoModel.getPhotosByAlbum(albumId)
-            const view = new PhotosView( this.root, this.navigate, albumId, photos)
+            const view = new PhotosView(this.root, this.navigate, albumId, photos, albumInfo)
             view.model = this.photoModel
 
             view.onToggleFavorite = async (photoId, isFavorite) => {

@@ -33,8 +33,9 @@ export class PhotoListComponent {
                   <i class="fa-solid fa-trash text-xl"></i>
                 </button>
                 <button class="btn-photo  "
-data-photo-id="${photo.id}  "               title="modif">
-                 modif
+data-photo-id="${photo.id}  "               
+                    title="modif">
+                 <i class="fa-solid fa-pen mr-2"></i>
                 </button>
                         </div>
                     </div>

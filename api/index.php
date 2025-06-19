@@ -74,13 +74,20 @@ $routeur->addRoute(['POST'], '/user/album/photos/create', \App\Controllers\Photo
 ]);
 $routeur->addRoute(['POST'], '/user/albums/photo/favorite', \App\Controllers\PhotoController::class, 'toggleFavorite', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
-
+]);
+$routeur->addRoute(['GET'], '/user/albums/photos/favorite', \App\Controllers\PhotoController::class, 'listAllFavorites', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
 ]);
 $routeur->addRoute(['POST'], '/user/album/photo/update', \App\Controllers\PhotoController::class, 'editPhoto', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
-
 ]);
 $routeur->addRoute(['DELETE'], '/user/album/photo/delete', \App\Controllers\PhotoController::class, 'deletePhoto', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+]);
+$routeur->addRoute(['POST'], '/user/album/update', \App\Controllers\AlbumController::class, 'editAlbum', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+]);
+$routeur->addRoute(['DELETE'], '/user/album/delete', \App\Controllers\AlbumController::class, 'deleteAlbum', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 
 ]);
@@ -89,6 +96,10 @@ $routeur->addRoute(['GET'], '/tags/search', \App\Controllers\PhotoController::cl
 
 ]);
 $routeur->addRoute(['GET'], '/tags', \App\Controllers\PhotoController::class, 'listAllTags', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+
+]);
+$routeur->addRoute(['GET'], '/album', \App\Controllers\AlbumController::class, 'album', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 
 ]);

@@ -163,6 +163,8 @@ class PhotoRepository extends BaseRepository {
         return array_map(fn($row) => $row['name'], $results);
     }
 
+
+
     public function get (int $photoId) {
         $result = $this
                 ->query("SELECT p.*, GROUP_CONCAT(t.name) AS tags 
@@ -245,6 +247,31 @@ class PhotoRepository extends BaseRepository {
         }catch (\Exception $e) {
             throw new Exception("Erreur lors de la suppression : " . $e->getMessage());
         }
+    }
+
+
+    public function getAllFavorites($userId): array
+    {
+        $results = $this
+            ->query("SELECT * FROM photos WHERE is_favorite = 1 AND user_id = :user_id")
+            ->fetchAll(['user_id' => $userId]);
+
+        $favorites = [];
+        foreach ($results as $result) {
+            $favorites[] = new Photo($result['id'],
+                $result['user_id'],
+                $result['filename'],
+                $result['description'],
+                $result['taken_at'],
+                $result['uploaded_at'],
+                $result['alt'],
+                $result['title'],
+                $result['is_favorite'],
+                $result['is_deleted'],
+                $result['album_id'],
+            );
+        }
+        return $favorites;
     }
 
 

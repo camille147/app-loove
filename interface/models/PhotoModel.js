@@ -47,6 +47,14 @@ export class PhotoModel {
         return response.photos
     }
 
+    async getFavorites( ) {
+        const response = await apiFetch(`${this.baseUrl}/user/albums/photos/favorite`, {
+            method: "GET",
+            credentials: "include"
+        })
+        return response.favorites
+    }
+
 
         async createPhoto(formData) {
             return await apiFetch(`${this.baseUrl}/user/album/photos/create`, {
@@ -77,6 +85,17 @@ export class PhotoModel {
             credentials: "include"
         })
         return response.tags
+    }
+
+    async getAlbum(albumId) {
+        const params = new URLSearchParams();
+        params.append('album_id', albumId);
+        const response = await apiFetch(`${this.baseUrl}/album?${params.toString()}`, {
+            method: "GET",
+            credentials: "include"
+        })
+        //console.log(response)
+        return response
     }
 
     async getInformations(photoId) {

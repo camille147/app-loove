@@ -94,5 +94,56 @@ class AlbumRepository extends BaseRepository {
         return $albums;
     }
 
+    public function getAlbum(int $album_id) {
+        $result = $this
+            ->query("SELECT * FROM albums WHERE id = :id")
+            ->fetch(['id' => $album_id]);
+        return new Album($result['id'],
+            $result['user_id'],
+            $result['title'],
+            $result['description'],
+            $result['created_at'],
+            $result['visibility'],
+            $result['img_profile_album']);
+    }
+
+    public function editAlbum(int $albumId, ?string $title, ?string $description, ?string $visibility, ?string $img_profile_album): ?Album {
+        try {
+            $execute = [
+                'albumId' => $albumId,
+                'title' => $title,
+                'description' => $description,
+                'visibility' => $visibility,
+                'img_profile_album' => $img_profile_album
+            ];
+
+            $this->query("UPDATE albums SET title = :title, description = :description, visibility = :visibility, img_profile_album = :img_profile_album WHERE id = :albumId")
+                ->execute($execute);
+
+            // Récupérer la photo mise à jour
+            $result = $this->getAlbum($albumId);
+
+            return $result;
+
+        } catch (\PDOException $e) {
+            if ($e->getCode() == '23000') {
+                throw new \Exception("Erreur lors de la mise à jour de l'album.");
+            }
+            throw $e;
+        }
+    }
+
+
+    public function deleteAlbum(int $albumId): bool {
+        try {
+            $this->query("DELETE FROM albums WHERE id = :albumId")
+                ->execute(['albumId' => $albumId]);
+
+            return true;
+        }catch (\Exception $e) {
+            throw new Exception("Erreur lors de la suppression album : " . $e->getMessage());
+        }
+    }
+
 
 }

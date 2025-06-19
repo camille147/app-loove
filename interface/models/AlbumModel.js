@@ -66,5 +66,35 @@ export class AlbumModel {
         return myAlbums.albums
     }
 
+
+    async modification(formData){
+        return await apiFetch(`${this.baseUrl}/user/album/update`, {
+            method: "POST",
+            body: formData,
+        })
+    }
+
+    async getAlbum(albumId) {
+        const params = new URLSearchParams();
+        params.append('album_id', albumId);
+        const response = await apiFetch(`${this.baseUrl}/album?${params.toString()}`, {
+            method: "GET",
+            credentials: "include"
+        })
+        //console.log(response)
+        return response
+    }
+
+    async deleteAlbum(albumId) {
+        const response = await apiFetch(`http://app-loove-api.local/user/album/delete`, {
+            method: "DELETE",
+            body: JSON.stringify({ album_id: albumId }),
+            headers: {
+                "Content-Type": "application/json",
+            }
+        });
+        return response;
+    }
+
 }
 

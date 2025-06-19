@@ -58,15 +58,6 @@ export class AddAlbumView {
                   </div>
                 </div>
 
-                <div class="form-control mb-4">
-                  <label class="label">
-                    <span class="label-text">Étiquettes</span>
-                  </label>
-                  <div class="grid grid-cols-2 gap-2 tags">
-                    <!-- Tu pourras ajouter dynamiquement des tags ici si besoin -->
-                  </div>
-                </div>
-
                 <div id="message" class="text-error text-center mb-4"></div>
 
                 <div>

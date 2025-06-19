@@ -1,4 +1,4 @@
-import {UserModel} from "../models/UserModel";
+import {AuthModel} from "../models/AuthModel";
 
 export class ProfileUserView {
     constructor(root, navigate, user, albums= []) {

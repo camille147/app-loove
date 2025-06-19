@@ -1,4 +1,4 @@
-import {UserModel} from "../models/UserModel";
+import {AuthModel} from "../models/AuthModel";
 import {AlbumModel} from "../models/AlbumModel";
 
 import {ConnectionView} from "../views/ConnectionView";
@@ -10,12 +10,12 @@ import {SignInView} from "../views/SignInView";
 
 export class ProfileController {
     constructor(root, navigate, apiBaseUrl) {
-        this.userModel = new UserModel(apiBaseUrl)
+        this.userModel = new AuthModel(apiBaseUrl)
         this.root = root
         this.navigate = navigate
 
         this.albumModel = new AlbumModel(apiBaseUrl)
-        this.userModel = new UserModel(apiBaseUrl)
+        this.userModel = new AuthModel(apiBaseUrl)
 
     }
 

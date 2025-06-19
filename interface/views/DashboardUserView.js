@@ -1,11 +1,16 @@
+import {PhotoListComponent} from "../components/PhotoListComponent";
+import {FavoriteCarouselComponent} from "../components/FavoriteCarouselComponent";
 
 export class DashboardUserView {
-    constructor(root, navigate) {
+    constructor(root, navigate, favorites) {
         this.root = root
         this.navigate = navigate
+        this.favorites = favorites || []
     }
 
     render() {
+        const favoriteCarouselComponent = new FavoriteCarouselComponent(this.favorites)
+
         this.root.innerHTML = `
             <div class="max-w-md mx-auto space-y-4">
 
@@ -28,6 +33,7 @@ export class DashboardUserView {
           <span class="text-yellow-500 text-2xl">⭐</span>
           <h2 class="card-title">Photos favorites</h2>
         </div>
+                                <div id="favorites-carousel" class="w-full overflow-x-auto"></div>
       </div>
 
       <!-- Invitations reçues -->
@@ -48,6 +54,14 @@ export class DashboardUserView {
 
     </div>
         `
+        this.root.querySelector('#favorites-carousel').innerHTML = favoriteCarouselComponent.render()
+        favoriteCarouselComponent.bindEvents(this.root.querySelector('#favorites-carousel'))
+        this.bindEvents()
+    }
+
+
+    bindEvents() {
+
     }
 
 }

@@ -1,4 +1,4 @@
-import {UserModel} from "../models/UserModel";
+import {AuthModel} from "../models/AuthModel";
 
 export class AdminProfileView {
     constructor(root, navigate, user, ) {

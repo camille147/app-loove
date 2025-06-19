@@ -1,4 +1,4 @@
-import { UserModel } from "../models/UserModel.js";
+import { AuthModel } from "../models/AuthModel.js";
 import { ConnectionView } from "../views/ConnectionView.js";
 import {SignInView} from "../views/SignInView";
 import {HomeView} from "../views/HomeView";
@@ -6,7 +6,7 @@ import {AddAlbumView} from "../views/AddAlbumView";
 
 export class AuthController {
     constructor(root, navigate, apiBaseUrl) {
-        this.userModel = new UserModel(apiBaseUrl);
+        this.userModel = new AuthModel(apiBaseUrl);
         this.root = root
         this.navigate = navigate
     }

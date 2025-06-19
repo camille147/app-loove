@@ -16,6 +16,7 @@ import {NavBarAdminComponent} from "../components/NavBarAdminComponent";
 import {AlbumController} from "../controllers/AlbumController";
 import {PhotoController} from "../controllers/PhotoController";
 import {AdminController} from "../controllers/AdminController";
+import {UserController} from "../controllers/UserController";
 
 export class Router {
     constructor(root, apiBaseUrl) {
@@ -35,7 +36,10 @@ export class Router {
                 const authController = new AuthController(this.root, this.navigate.bind(this), this.apiBaseUrl)
                 authController.showSignIn()
             },
-            dashboard : () => new DashboardUserView(this.root, this.navigate.bind(this)).render(),
+            dashboard : () => {
+                const userController = new UserController(this.root, this.navigate.bind(this), this.apiBaseUrl)
+                userController.showFavorites()
+            },
             adminDashboard : () => {
                 const adminController = new AdminController(this.root, this.navigate.bind(this), this.apiBaseUrl )
                 adminController.showAdmin()
@@ -84,6 +88,14 @@ export class Router {
             delete: () => {
                 const profileController = new ProfileController(this.root, this.navigate.bind(this), this.apiBaseUrl)
                 profileController.showDelete()
+            },
+            deleteAlbum: (albumId) => {
+                const albumController = new AlbumController(this.root, this.navigate.bind(this), this.apiBaseUrl)
+                albumController.showDeleteAlbum(albumId)
+            },
+            updateAlbum: (albumId) => {
+                const albumController = new AlbumController(this.root, this.navigate.bind(this), this.apiBaseUrl)
+                albumController.showUpdateAlbum(albumId)
             },
             photos: (albumId) => {
                 const controller = new PhotoController(this.root, this.navigate.bind(this), this.apiBaseUrl);

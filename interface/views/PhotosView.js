@@ -4,13 +4,14 @@ import {PhotoListComponent} from "../components/PhotoListComponent";
 
 export class PhotosView {
 
-    constructor(root, navigate, albumId, photos = []) {
+    constructor(root, navigate, albumId, photos = [], albumInfo) {
         this.root = root
         this.navigate = navigate
         this.photos = photos
         this.albumId = albumId
         this.onToggleFavorite = null;
         this.onToggleDelete = null;
+        this.albumInfo = albumInfo
 
         this.model = null;
     }
@@ -20,24 +21,78 @@ export class PhotosView {
 
 
         this.root.innerHTML = `
+
+        <div class="relative ">
+              <img src="http://app-loove-interface.local/uploads/${this.albumInfo.album.img_profile_album}" alt="Photo de profil" />
+
+              <h1 class="absolute bottom-4 left-4 text-white font-bold text-xl drop-shadow">
+                ${this.albumInfo.album.title}
+              </h1>
+              <div class="drawer drawer-end absolute top-4 left-4 z-10">
+                  <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+                  <div class="drawer-content">
+                    <!-- Page content here -->
+                    <label for="my-drawer" class="drawer-button"><i class="fa-solid fa-ellipsis-vertical"></i></label>
+                  </div>
+                  <div class="drawer-side">
+                    <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+                    <ul class="menu bg-base-200 text-base-content min-h-full w-60 p-4">
+                      <!-- Sidebar content here -->
+                      <li>
+                        <button class="btn btn-outline btn-primary btn-sm" id="modification">
+                          <i class="fa-solid fa-pen mr-2"></i> Modifier le profil
+                        </button>
+                      </li>
+                      <li>
+                        <button class="btn btn-outline btn-primary btn-sm" id="delete" data-album-id="${this.albumId}" >
+                            <i class="fa-solid fa-trash"></i> Supprimer l'album
+                        </button>
+                      </li>
+                      
+                    </ul>
+                  </div>
+              </div>
+        
+        </div>
+
+        <div class="flex ml-2 gap-6 mt-2  text-sm text-gray-500">
+            <span>${this.albumInfo.album.visibility}</span>
+        </div>
+        <p class="mt-4 ml-2">${this.albumInfo.album.description}</p>
+
         <div class="max-w-4xl mx-auto bg-white shadow rounded p-6">
                 <div class="mb-4 flex flex-wrap justify-between items-center gap-4">
-                    <h3 class="text-xl font-bold">Photos de l’album</h3>
-                    <div class="flex gap-2">
-                        <select id="filterOrder" class="select select-bordered select-sm">
+                
+                
+                
+                <div class="drawer drawer-end">
+  <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-content">
+    <!-- Page content here -->
+    <label for="my-drawer" class="drawer-button"><i class="fa-solid fa-sliders"></i></label>
+  </div>
+  <div class="drawer-side">
+    <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+    <ul class="menu bg-base-200 text-base-content min-h-full w-60 p-4">
+      <!-- Sidebar content here -->
+      <li><select id="filterOrder" class="select select-bordered select-sm">
                             <option value="all">Tous</option>
                             <option value="recent">Récentes</option>
                             <option value="old">Anciennes</option>
-                        </select>
-                        <select id="filterTag" class="select select-bordered select-sm">
+                        </select></li>
+      <li><select id="filterTag" class="select select-bordered select-sm">
                             <option value="">Tous tags</option>
-                        </select>
-                        <label class="label cursor-pointer flex items-center">
+                        </select></li>
+                        
+                        <li><label class="label cursor-pointer flex items-center">
                             <input type="checkbox" id="favoriteCheckbox" class="checkbox checkbox-sm" />
                             <span class="label-text ml-2">Favoris</span>
-                        </label>
-                    </div>
-                    <button id="addPhotoBtn" class="btn btn-primary btn-sm">Ajouter une photo</button>
+                        </label></li>
+    </ul>
+  </div>
+</div>
+        
+                    <button id="addPhotoBtn" class="w-24 rounded-full red-color-background"><i class="fa-solid fa-plus"></i></button>
                 </div>
                 <div id="photoListContainer">
                     ${photoListComponent.render()}
@@ -75,7 +130,26 @@ export class PhotosView {
 
         this.root.querySelector('#addPhotoBtn').addEventListener('click', () => {
             this.navigate(`addPhoto/${this.albumId}`)
-        });
+        })
+
+        const deleteAlbumBtn = document.getElementById("delete")
+        const modificationAlbumBtn = document.getElementById("modification")
+
+        deleteAlbumBtn.addEventListener('click', async (e) => {
+            console.log('delete')
+            e.preventDefault()
+
+            const albumId =  e.currentTarget.getAttribute('data-album-id');
+            console.log(albumId)
+            this.navigate(`deleteAlbum/${albumId}`)
+        })
+
+        modificationAlbumBtn.addEventListener('click', async(e) => {
+            console.log('modif')
+            e.preventDefault()
+
+            this.navigate(`updateAlbum/${this.albumId}`)
+        })
 
 
     }

@@ -98,7 +98,7 @@ class PhotoController extends BaseController {
 
             $album_id = $_GET['album_id'] ?? null;
             if(!$album_id) {
-                return new Response(400, json_encode(['message' => 'album id manqua,t']));
+                return new Response(400, json_encode(['message' => 'album id manquant']));
             }
 
             $order = $_GET['order'] ?? 'all';
@@ -310,6 +310,46 @@ class PhotoController extends BaseController {
         }
     }
 
+
+
+    public function listAllFavorites() {
+        try {
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+
+
+            if (!isset($_SESSION['user']['id'])) {
+                return new Response(401, json_encode(['message' => 'Non authentifié']));
+            }
+
+            $userId = $_SESSION['user']['id'];
+
+
+            $favorites = $this->repo->getAllFavorites($userId);
+
+            $favoritesArray = array_map(fn($photo) => [
+                'id' => $photo->getId(),
+                'user_id' => $photo->getUserId(),
+                'album_id' => $photo->getAlbumId(),
+                'filename' => $photo->getFilename(),
+                'description' => $photo->getDescription(),
+                'takenDate' => $photo->getTakenAt(),
+                'uploadDate' => $photo->getUploadedAt(),
+                'alt' => $photo->getAlt(),
+                'title' => $photo->getTitle(),
+                'isFavorite' => $photo->getIsFavorite(),
+                'isDeleted' => $photo->getIsDeleted(),
+
+
+            ], $favorites);
+
+
+            return new Response(200, json_encode(['favorites' => $favoritesArray]));
+        } catch (\Exception $e) {
+            return new Response(500, json_encode(['message' => $e->getMessage()]));
+        }
+    }
 
 
 
