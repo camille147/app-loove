@@ -1,12 +1,12 @@
 export class Navbar {
     constructor(navigate) {
-        this.navigate = navigate;
-        this.currentView = 'dashboard';
+        this.navigate = navigate
+        this.currentView = 'dashboard'
     }
 
     setActiveView(view) {
-        this.currentView = view;
-        this.updateActiveLink();
+        this.currentView = view
+        this.updateActiveLink()
     }
 
     mount(container) {
@@ -42,11 +42,9 @@ export class Navbar {
                     <i class="fas fa-images text-xl"></i>
                   </a>
             
-            
                   <a href="#" class="nav-link flex items-center justify-center" data-view="profileUser">
                     <i class="fa-solid fa-user text-xl"></i>
                   </a>
-            
                 </div>
               </nav>
             </div>
@@ -55,22 +53,22 @@ export class Navbar {
     addEvents() {
         document.querySelectorAll('.nav-link[data-view]').forEach(link => {
             link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const view = link.getAttribute('data-view');
-                this.navigate(view);
-                this.setActiveView(view);
-            });
-        });
-        this.updateActiveLink();
+                e.preventDefault()
+                const view = link.getAttribute('data-view')
+                this.navigate(view)
+                this.setActiveView(view)
+            })
+        })
+        this.updateActiveLink()
     }
 
     updateActiveLink() {
         document.querySelectorAll('.nav-link[data-view]').forEach(link => {
-            const isActive = link.getAttribute('data-view') === this.currentView;
-            const activeClasses = ['red-color', 'bg-red-100', 'p-3', 'rounded-full'];
+            const isActive = link.getAttribute('data-view') === this.currentView
+            const activeClasses = ['red-color', 'bg-red-100', 'p-3', 'rounded-full']
 
-            activeClasses.forEach(cls => link.classList.toggle(cls, isActive));
-            link.classList.toggle('text-base-content', !isActive);
+            activeClasses.forEach(cls => link.classList.toggle(cls, isActive))
+            link.classList.toggle('text-base-content', !isActive)
         });
     }
 

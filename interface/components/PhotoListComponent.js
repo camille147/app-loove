@@ -20,7 +20,6 @@ export class PhotoListComponent {
                                  alt="${photo.alt || ''}" 
                                  class="photo w-full h-64 object-cover"
                                  data-photo-id="${photo.id}" >
-                            
                             <button 
                                 class="favorite-btn absolute top-3 right-3 text-2xl text-yellow-500 cursor-pointer"
                                 data-photo-id="${photo.id}" 
@@ -28,18 +27,18 @@ export class PhotoListComponent {
                                 ${photo.isFavorite ? '★' : '☆'}
                             </button>
                             <div class="p-4">
-                <button class="delete-photo-btn ml-auto flex items-center gap-2 text-red-600 hover:text-red-800 transition-all"
-                 data-photo-id="${photo.id}"
-                 title="Delete">
-                  <i class="fa-solid fa-trash text-xl"></i>
-                </button>
-                <button class="btn-photo  "
-data-photo-id="${photo.id}  "               
-                    title="modif">
-                 <i class="fa-solid fa-pen mr-2"></i>
-                </button>
+                                <button class="delete-photo-btn ml-auto flex items-center gap-2 text-red-600 hover:text-red-800 transition-all"
+                                 data-photo-id="${photo.id}"
+                                 title="Delete">
+                                  <i class="fa-solid fa-trash text-xl"></i>
+                                </button>
+                                <button class="btn-photo  "
+                                    data-photo-id="${photo.id}  "               
+                                    title="modif">
+                                 <i class="fa-solid fa-pen mr-2"></i>
+                                </button>
+                            </div>
                         </div>
-                    </div>
                 `).join('')}
             </div>
             
@@ -74,22 +73,17 @@ data-photo-id="${photo.id}  "
                     photo.isFavorite = newFavoriteState
                     btn.innerHTML = newFavoriteState ? '★' : '☆'
                 }
-
-
             })
         })
         container.querySelectorAll('.delete-photo-btn').forEach(btn => {
             btn.addEventListener('click', async () => {
-                console.log("delte")
                 const photoId = btn.getAttribute('data-photo-id')
                 const photo = this.photos.find(p => p.id == photoId)
 
                 if (!photo) return
 
                 if(this.onToggleDelete) {
-                    console.log('deletephoto')
                     await this.onToggleDelete(photoId)
-                    console.log("o")
                 }
 
             })
@@ -100,7 +94,6 @@ data-photo-id="${photo.id}  "
                 const photoId = card.getAttribute('data-photo-id');
                 if (this.onPhotoClick) {
                     this.onPhotoClick(photoId)
-                    console.log(photoId)
                 }
             })
         })
@@ -113,16 +106,10 @@ data-photo-id="${photo.id}  "
                 const desc = document.getElementById('modal-photo-desc')
                 const date = document.getElementById('modal-photo-date')
 
-                //console.log(date)
 
-                console.log(img)
                 const photoId = img.getAttribute('data-photo-id')
-                console.log(photoId)
                 const photo = this.photos.find(p => p.id == photoId)
 
-                console.log(photo)
-                console.log(photoId)
-                console.log(photo)
                 modalImg.src = `http://app-loove-interface.local/uploads/photos/${photo.filename}`
                 title.textContent = photo?.title || ''
                 desc.textContent = photo?.description || ''

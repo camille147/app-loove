@@ -51,29 +51,27 @@ export class PublicsAlbumsComponent {
 
         albumCards.forEach(card => {
             card.addEventListener('click', () => {
-                const index = parseInt(card.getAttribute('data-album-index'), 10);
+                const index = parseInt(card.getAttribute('data-album-index'), 10)
                 const album = this.publicsAlbums[index]
 
-                modalTitle.textContent = album.title;
-                modalDesc.textContent = album.description;
+                modalTitle.textContent = album.title
+                modalDesc.textContent = album.description
 
-                modalPhotos.innerHTML = '';
+                modalPhotos.innerHTML = ''
 
                 if (album.photos && album.photos.length) {
                     album.photos.forEach(photo => {
                         const img = document.createElement('img')
                         img.src = `http://app-loove-interface.local/uploads/photos/${photo.filename}`
                         img.alt = photo.title || ''
-                        img.classList.add('w-full', 'h-auto', 'rounded', 'shadow-sm');
+                        img.classList.add('w-full', 'h-auto', 'rounded', 'shadow-sm')
                         modalPhotos.appendChild(img)
                     });
                 } else {
-                    modalPhotos.innerHTML = '<p class="text-gray-500">Pas de photos dans cet album.</p>';
+                    modalPhotos.innerHTML = '<p class="text-gray-500">Pas de photos dans cet album.</p>'
                 }
-
-                // Ouvrir la modal
-                modal.showModal();
-            });
-        });
+                modal.showModal()
+            })
+        })
     }
 }

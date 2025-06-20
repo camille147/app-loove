@@ -10,17 +10,17 @@ export class FavoriteCarouselComponent {
 
         return `
             <div class="flex gap-4 overflow-x-auto">
-    ${this.favorites.map(photo => `
-      <div class=" carousel-item min-w-[200px] flex-shrink-0" data-photo-id="${photo.id}">
-        <img 
-          src="http://app-loove-interface.local/uploads/photos/${photo.filename}" 
-          alt="${photo.alt || 'Photo favorite'}" 
-          class="w-full h-40 object-cover rounded-xl border border-gray-200 shadow cursor-pointer hover:brightness-110 transition" />
-      </div>
-    `).join('')}
-  </div>
+                ${this.favorites.map(photo => `
+                  <div class=" carousel-item min-w-[200px] flex-shrink-0" data-photo-id="${photo.id}">
+                    <img 
+                      src="http://app-loove-interface.local/uploads/photos/${photo.filename}" 
+                      alt="${photo.alt || 'Photo favorite'}" 
+                      class="w-full h-40 object-cover rounded-xl border border-gray-200 shadow cursor-pointer hover:brightness-110 transition" />
+                  </div>
+                `).join('')}
+            </div>
 
-            <!-- Modale photo zoomée -->
+            <!-- Modale photo zoomée avec modale -->
             <dialog id="photo_modal" class="modal">
               <div class="modal-box max-w-3xl p-4 space-y-2">
                 <img id="modal-photo-img" src="" alt="Photo zoomée" class="w-full h-auto rounded-lg shadow" />
@@ -38,7 +38,6 @@ export class FavoriteCarouselComponent {
     }
 
     bindEvents(container) {
-        // Placeholder si tu veux plus tard ajouter un clic, popup, etc.
         container.querySelectorAll('.carousel-item img').forEach(img => {
             img.addEventListener('click', () => {
                 const modal = document.getElementById('photo_modal')
@@ -46,7 +45,6 @@ export class FavoriteCarouselComponent {
                 const title = document.getElementById('modal-photo-title')
                 const desc = document.getElementById('modal-photo-desc')
                 const date = document.getElementById('modal-photo-date')
-
 
                 const carouselItem = img.closest('.carousel-item')
                 const photoId = carouselItem.getAttribute('data-photo-id')

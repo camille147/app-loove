@@ -1,7 +1,7 @@
 export class NavBarAdminComponent {
     constructor(navigate) {
-        this.navigate = navigate;
-        this.root = null;
+        this.navigate = navigate
+        this.root = null
     }
 
     mount(root) {
@@ -22,8 +22,6 @@ export class NavBarAdminComponent {
               <li><a href="#" data-view="adminCreateAdmin">Créer Admin</a></li>
               <li><a href="#" data-view="adminProfile">Profil</a></li>
               <li><a href="#" class="red-color" data-view="logout">Déconnexion</a></li>
-
-        
             </ul>
           </div>
         </div>

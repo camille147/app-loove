@@ -6,12 +6,10 @@ export class AlbumsRecentsListCarouselComponent{
     }
 
     render() {
-        console.log(this.albumsRecents)
 
         if (!this.albumsRecents.length) {
             return `<p class="p-4 text-gray-600">Aucune photo favorite trouvée.</p>`
         }
-
         return `
         <div class="flex gap-4 overflow-x-auto">
             ${this.albumsRecents.map(album => `
@@ -22,15 +20,14 @@ export class AlbumsRecentsListCarouselComponent{
                             alt="${album.description || 'Photo album'}"
                             class="w-full h-40 object-cover"
                         />          
-                        <div class="text-center">                         <p class="mt-2 text-center text-sm text-gray-700 font-medium truncate w-full">${album.title}</p>
-   </div>      
-
+                        <div class="text-center">                         
+                            <p class="mt-2 text-center text-sm text-gray-700 font-medium truncate w-full">${album.title}</p>
+                        </div>      
                     </div>
                 </div>
             `).join('')}
         </div>
     `;
-
     }
 
     bindEvents(container) {
