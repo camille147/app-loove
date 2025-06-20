@@ -18,11 +18,9 @@ export class PhotoModel {
         })
 
         if (!response.ok) {
-            console.log("erreur recup photo privé")
             const errorData = await response.json()
             throw new Error(errorData.message || "Erreur lors recup album privé")
         }
-
         const myAlbums = await response.json()
         return myAlbums.albums
 
@@ -30,14 +28,11 @@ export class PhotoModel {
 
     async getPhotosByAlbum(albumId, {order = 'all',tag = null,  favorite = false} = {} ) {
         const params = new URLSearchParams()
-
         params.append('album_id', albumId)
 
         if (tag) params.append('tag', tag)
         if (order !== 'all') params.append('order', order)
         if (favorite) params.append('favorite', "1")
-
-
 
         const response = await apiFetch(`${this.baseUrl}/user/album/photos?${params.toString()}`, {
             method : "GET",
@@ -65,9 +60,9 @@ export class PhotoModel {
         }
 
     async toggleFavorite(photoId, isFavorite) {
-        const formData = new URLSearchParams();
-        formData.append('photo_id', photoId);
-        formData.append('favorite', isFavorite ? '1' : '0');
+        const formData = new URLSearchParams()
+        formData.append('photo_id', photoId)
+        formData.append('favorite', isFavorite ? '1' : '0')
 
         return await apiFetch(`${this.baseUrl}/user/albums/photo/favorite`, {
             method: "POST",
@@ -76,7 +71,7 @@ export class PhotoModel {
             headers: {
                 "Content-Type": "application/x-www-form-urlencoded"
             }
-        });
+        })
     }
 
     async getAllTags() {
@@ -88,23 +83,22 @@ export class PhotoModel {
     }
 
     async getAlbum(albumId) {
-        const params = new URLSearchParams();
-        params.append('album_id', albumId);
+        const params = new URLSearchParams()
+        params.append('album_id', albumId)
         const response = await apiFetch(`${this.baseUrl}/album?${params.toString()}`, {
             method: "GET",
             credentials: "include"
         })
-        //console.log(response)
         return response
     }
 
     async getInformations(photoId) {
-        const params = new URLSearchParams();
-        params.append('photo_id', photoId);
+        const params = new URLSearchParams()
+        params.append('photo_id', photoId)
 
         return await apiFetch(`${this.baseUrl}/photo?${params.toString()}`, {
             method: "GET",
-        });
+        })
     }
 
     async modification(photoDataModif){
@@ -122,8 +116,8 @@ export class PhotoModel {
             headers: {
                 "Content-Type": "application/json",
             }
-        });
-        return response;
+        })
+        return response
     }
 
 

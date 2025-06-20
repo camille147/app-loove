@@ -46,7 +46,6 @@ class AdminRepository extends BaseRepository {
             ->query("SELECT * FROM users WHERE is_deleted = 0 ORDER BY created_at DESC")
             ->fetchAll();
 
-        //var_dump($results);
         foreach ($results as $result) {
             $users[] = new User($result['id'],
                 $result['username'],

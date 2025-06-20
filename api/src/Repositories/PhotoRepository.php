@@ -176,7 +176,6 @@ class PhotoRepository extends BaseRepository {
             ->fetch(['id' => $photoId])
         ;
 
-        //var_dump($result);
         if(empty($result)) {
             throw new Exception("photo non identifié");
         }

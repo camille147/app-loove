@@ -3,7 +3,6 @@ import {AddPhotoView} from "../views/AddPhotoView"
 import {PhotosView} from "../views/PhotosView"
 import {ModificationProfileView} from "../views/ModificationProfileView"
 import {ModificationPhotoView} from "../views/ModificationPhotoView"
-import {MenuUserView} from "../views/MenuUserView";
 import {AlbumsView} from "../views/AlbumsView";
 import {SearchView} from "../views/SearchView"
 

@@ -37,9 +37,9 @@ export class AddPhotoView {
                 <button type="submit" class="btn btn-primary mt-4">Ajouter</button>
                 <button type="button" id="cancelBtn" class="btn btn-secondary mt-4 ml-2">Annuler</button>
             </form>
-        `;
+        `
 
-        this.bindEvents();
+        this.bindEvents()
     }
 
 
@@ -81,9 +81,9 @@ export class AddPhotoView {
 
            if (filteredTags.length === 0) {
                tagSuggestions.innerHTML = `
-            <span class="text-gray-500 italic">Aucun tag trouvé</span>
-        `;
-               return;
+                    <span class="text-gray-500 italic">Aucun tag trouvé</span>
+                `
+               return
            }
 
            tagSuggestions.innerHTML = filteredTags.map(tag => `
@@ -105,20 +105,16 @@ export class AddPhotoView {
         })
 
 
-
-
         form.addEventListener('submit', async (e) => {
             e.preventDefault()
-            //messageDiv.textContent = ''
 
             const title = document.getElementById('title').value.trim()
             const description = document.getElementById('description').value.trim()
             const takenAt = document.getElementById('takenAt').value
             const file = document.getElementById('img_file')
-            const tags = Array.from(this.selectedTags);
+            const tags = Array.from(this.selectedTags)
 
             if (file.files.length === 0) {
-                console.log("img manquante")
                 return
             }
 
@@ -126,15 +122,15 @@ export class AddPhotoView {
 
             if (this.onSubmit) {
                 try {
-                    const formData = new FormData();
-                    formData.append('title', title);
-                    formData.append('description', description);
-                    formData.append('takenAt', takenAt);
-                    formData.append('photo_file', coverImageFile);
-                    formData.append('album_id', this.albumId);
-                    formData.append('tags', JSON.stringify(tags));
+                    const formData = new FormData()
+                    formData.append('title', title)
+                    formData.append('description', description)
+                    formData.append('takenAt', takenAt)
+                    formData.append('photo_file', coverImageFile)
+                    formData.append('album_id', this.albumId)
+                    formData.append('tags', JSON.stringify(tags))
 
-                    await this.onSubmit(formData);
+                    await this.onSubmit(formData)
                 } catch (error) {
                     console.error(error)
                 }
@@ -144,7 +140,7 @@ export class AddPhotoView {
         })
 
         this.root.querySelector("#cancelBtn").addEventListener("click", () => {
-            this.navigate(`photos/${this.albumId}`);
+            this.navigate(`photos/${this.albumId}`)
         });
 
         updateSelectedTags()

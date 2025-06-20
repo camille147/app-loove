@@ -140,8 +140,6 @@ export class SignInView {
             } else {
                 console.warn("Aucune fonction onSubmit définie.")
             }
-
-
         })
     }
 

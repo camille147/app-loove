@@ -46,30 +46,30 @@ export class ModificationAlbumView {
         
         
                 <div class="form-control mb-4">
-  <label class="label">
-    <span class="label-text">Visibilité</span>
-  </label>
-  <div class="flex gap-4">
-    <label class="label cursor-pointer">
-      <input type="radio" name="visibility" value="public" id="public"
-        class="radio checked:bg-error"
-        ${this.album.album.visibility === 'public' ? 'checked' : ''} />
-      <span class="label-text ml-2">Public</span>
-    </label>
-    <label class="label cursor-pointer">
-      <input type="radio" name="visibility" value="private" id="private"
-        class="radio checked:bg-error"
-        ${this.album.album.visibility === 'private' ? 'checked' : ''} />
-      <span class="label-text ml-2">Privé</span>
-    </label>
-  </div>
-</div>
+                  <label class="label">
+                    <span class="label-text">Visibilité</span>
+                  </label>
+                  <div class="flex gap-4">
+                    <label class="label cursor-pointer">
+                      <input type="radio" name="visibility" value="public" id="public"
+                        class="radio checked:bg-error"
+                        ${this.album.album.visibility === 'public' ? 'checked' : ''} />
+                      <span class="label-text ml-2">Public</span>
+                    </label>
+                    <label class="label cursor-pointer">
+                      <input type="radio" name="visibility" value="private" id="private"
+                        class="radio checked:bg-error"
+                        ${this.album.album.visibility === 'private' ? 'checked' : ''} />
+                      <span class="label-text ml-2">Privé</span>
+                    </label>
+                  </div>
+                </div>
 
                 
                 
                 <div class="mt-4">
-  <button type="submit" class="btn btn-primary">Mettre à jour</button>
-</div>
+                  <button type="submit" class="btn btn-primary">Mettre à jour</button>
+                </div>
                 
         </form>
 
@@ -97,8 +97,8 @@ export class ModificationAlbumView {
         })
 
         retourBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.navigate(`albums/${this.album.album.id}`); // ou autre route retour
+            e.preventDefault()
+            this.navigate(`albums/${this.album.album.id}`)
         })
 
 
@@ -110,10 +110,7 @@ export class ModificationAlbumView {
             const visibility = document.querySelector('input[name="visibility"]:checked').value
             const profile_picture_file = document.getElementById('profilePictureInput')
             const picture = profile_picture_file.files[0] || null
-            console.log(this.album.album.profile_picture_file)
-            console.log(picture)
 
-            console.log(profile_picture_file.files[0])
 
             const formData = new FormData()
             formData.append("title", title)
@@ -122,19 +119,15 @@ export class ModificationAlbumView {
             formData.append("album_id", this.album.album.id)
 
             if (picture) {
-                formData.append("img_profile_album", picture)  // 👈 utiliser le bon nom attendu
+                formData.append("img_profile_album", picture)
             }
-            console.log(formData)
             if (this.onSubmit) {
                 try {
-                    await this.onSubmit(formData);  // passe le FormData
+                    await this.onSubmit(formData)
                 } catch (error) {
                     alert(error.message || "Erreur lors de la mise à jour d'un album.")
                 }
-
             }
-
-
         })
     }
 

@@ -115,7 +115,6 @@ class AdminController extends BaseController
             }
 
             $userDeleteId = $_POST['user_id'] ?? null;
-            //var_dump($userDeleteId);
             $userRepo = new UserRepository();
             $userInformations = $userRepo->get($userDeleteId);
             if ($userInformations->getRole() == 1) {

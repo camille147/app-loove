@@ -27,13 +27,11 @@ export class AdminTagsCreateView {
                     </div>
                 </div>
 
-                <!-- Bouton pour ouvrir la modale -->
                 <div class="mt-6">
                     <button class="btn btn-primary" onclick="document.getElementById('tag_modal').showModal()">Créer un tag</button>
                 </div>
             </div>
 
-            <!-- Modale -->
             <dialog id="tag_modal" class="modal">
                 <div class="modal-box">
                     <h3 class="font-bold text-lg">Créer un nouveau tag</h3>
@@ -50,49 +48,48 @@ export class AdminTagsCreateView {
                     </form>
                 </div>
             </dialog>
-        `;
+        `
 
 
-        this.bindEvents();
+        this.bindEvents()
     }
 
 
 
 
     bindEvents() {
-        const form = document.getElementById('createTagForm');
-        const closeBtn = document.getElementById('closeModalBtn');
+        const form = document.getElementById('createTagForm')
+        const closeBtn = document.getElementById('closeModalBtn')
 
         form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const name = form.name.value.trim();
+            e.preventDefault()
+            const name = form.name.value.trim()
 
-            if (!name) return;
+            if (!name) return
 
             if (this.onSubmit) {
                 try {
-                    await this.onSubmit({name});
-                    document.getElementById('tag_modal').close();
+                    await this.onSubmit({name})
+                    document.getElementById('tag_modal').close()
 
-                    // Ajouter visuellement le tag à la liste
-                    const tagsList = this.root.querySelector('#tagsList');
-                    const span = document.createElement('span');
-                    span.className = "badge badge-outline";
-                    span.textContent = name;
-                    tagsList.appendChild(span);
+                    const tagsList = this.root.querySelector('#tagsList')
+                    const span = document.createElement('span')
+                    span.className = "badge badge-outline"
+                    span.textContent = name
+                    tagsList.appendChild(span)
 
-                    form.reset();
+                    form.reset()
                 } catch (err) {
-                    alert("Erreur lors de la création du tag.");
-                    console.error(err);
+                    alert("Erreur lors de la création du tag.")
+                    console.error(err)
                 }
             }
 
         });
 
         closeBtn.addEventListener('click', () => {
-            document.getElementById('tag_modal').close();
-        });
+            document.getElementById('tag_modal').close()
+        })
 
     }
 

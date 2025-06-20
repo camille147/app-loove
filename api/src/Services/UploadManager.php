@@ -59,10 +59,7 @@ class UploadManager
     {
         $filePath = $this->uploadDir . '/' . $filename;
 
-        var_dump("Trying to delete: " . $filePath);
-
         if (!file_exists($filePath)) {
-            //var_dump("File does not exist");
             return false;
         }
 

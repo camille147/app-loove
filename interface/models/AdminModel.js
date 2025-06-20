@@ -35,9 +35,7 @@ export class AdminModel {
 
     async deleteAdmin(userId) {
         const body = new URLSearchParams()
-        console.log(userId)
         body.append("user_id", userId)
-
 
         const response = await apiFetch(`http://app-loove-api.local/admin/delete`, {
             method: "POST",
@@ -46,9 +44,8 @@ export class AdminModel {
             },
             body: body.toString(),
 
-        });
-        console.log(response)
-        return response;
+        })
+        return response
     }
 
     async creationAdmin({ username, email, password, profile_picture_file, bio }) {

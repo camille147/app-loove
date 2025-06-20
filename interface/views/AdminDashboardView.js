@@ -1,5 +1,4 @@
-import {Navbar} from "../components/navbar";
-import {PhotoListComponent} from "../components/PhotoListComponent";
+
 import {UserListComponent} from "../components/UserListComponent";
 
 export class AdminDashboardView {

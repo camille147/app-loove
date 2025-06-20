@@ -32,7 +32,6 @@ class Routeur {
 
                 foreach ($route->getMiddlewares() as $mw) {
                     $middlewareClass = $mw['middleware'];
-                    //var_dump($middlewareClass);
 
                     $requiredRole = $mw['role'] ?? null;
 

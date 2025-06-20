@@ -10,20 +10,17 @@ export class ModificationProfileView {
 
     render() {
         this.root.innerHTML = `
-            <!-- Bouton retour -->
 <div class="p-4">
   <button class="text-red-600 hover:text-red-800 transition-all" id="return">
     <i class="fa-solid fa-arrow-left text-xl"></i>
   </button>
 </div>
 
-<!-- Formulaire -->
 <div class="max-w-2xl mx-auto bg-base-100 shadow-xl rounded-xl p-6 sm:p-8 space-y-6">
   <h2 class="text-2xl sm:text-3xl font-bold">Modifier le profil</h2>
 
   <form id="editProfileForm" class="space-y-6" enctype="multipart/form-data" method="POST">
 
-    <!-- Avatar + Input -->
 <div class="w-full flex justify-center">
       <label for="profilePictureInput" class="cursor-pointer group relative">
         <div class="avatar">
@@ -36,7 +33,6 @@ export class ModificationProfileView {
       <input type="file" name="photo" id="profilePictureInput" accept="image/*" class="hidden" />
     </div>
 
-    <!-- Nom de profil -->
     <div class="form-control">
       <label class="label">
         <span class="label-text">Nom de profil</span>
@@ -44,7 +40,6 @@ export class ModificationProfileView {
       <input type="text" name="username" value="${this.user.user.username}" class="input input-bordered w-full" required />
     </div>
 
-    <!-- Email -->
     <div class="form-control">
       <label class="label">
         <span class="label-text">Email</span>
@@ -52,7 +47,6 @@ export class ModificationProfileView {
       <input type="email" name="email" value="${this.user.user.email}" class="input input-bordered w-full" required />
     </div>
 
-    <!-- Bio -->
     <div class="form-control">
       <label class="label">
         <span class="label-text">Bio</span>
@@ -60,7 +54,6 @@ export class ModificationProfileView {
       <textarea name="bio" class="textarea textarea-bordered w-full resize-none" rows="4">${this.user.user.bio}</textarea>
     </div>
 
-    <!-- Bouton Submit -->
     <div class="pt-2">
       <button type="submit" class="btn btn-primary w-full text-base">Enregistrer les modifications</button>
     </div>
@@ -75,8 +68,6 @@ export class ModificationProfileView {
 
     bindEvents(){
 
-        //console.log(this.user)
-        //console.log(this.user.user.photo)
         const btnReturn = document.getElementById('return')
         btnReturn.addEventListener('click', async (e) => {
             e.preventDefault()
@@ -108,7 +99,7 @@ export class ModificationProfileView {
 
         form.addEventListener('submit', async (e) => {
 
-            e.preventDefault();
+            e.preventDefault()
 
             const username = document.querySelector('input[name="username"]').value.trim()
             const email = document.querySelector('input[name="email"]').value.trim()
@@ -116,15 +107,12 @@ export class ModificationProfileView {
             const bio = document.querySelector('textarea[name="bio"]').value.trim()
             const profile_picture_file = document.getElementById('profilePictureInput')
             const picture = profile_picture_file.files[0] || null
-            console.log(picture)
 
-            console.log(profile_picture_file.files[0]
-        )
             const formData = new FormData(form);
 
             if (this.onSubmit) {
                 try {
-                    await this.onSubmit(formData);  // passe le FormData
+                    await this.onSubmit(formData)
                 } catch (error) {
                     alert(error.message || "Erreur lors de la mise à jour du profil.")
                 }

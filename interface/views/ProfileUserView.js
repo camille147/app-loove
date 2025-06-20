@@ -7,7 +7,7 @@ export class ProfileUserView {
         this.navigate = navigate
         this.user = user
         this.albums = albums
-        this.onSubmit = null;
+        this.onSubmit = null
     }
 
     render() {
@@ -16,7 +16,6 @@ export class ProfileUserView {
         this.root.innerHTML = `
   <div class="max-w-xl mx-auto bg-base-100 rounded-lg p-6">
     
-    <!-- Ligne du haut : avatar + infos -->
     <div class="flex items-start gap-6">
       <div class="avatar">
         <div class="w-24 rounded-full">
@@ -32,7 +31,6 @@ export class ProfileUserView {
             <i class="fa-solid fa-pen mr-1"></i> Modifier le profil
           </button>
 
-          <!-- Roue des paramètres -->
           <div class="drawer-menu drawer-end">
             <input id="drawer-menu" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content">
@@ -61,10 +59,8 @@ export class ProfileUserView {
       </div>
     </div>
 
-    <!-- Bio en dessous -->
     <p class="mt-4 text-sm">${this.user.user.bio}</p>
 
-    <!-- Albums -->
     <div class="px-4 mt-6">
       <h3 class="font-semibold mb-2">Mes albums privés</h3>
       <div id="albumList" class="grid gap-4">
@@ -75,7 +71,6 @@ export class ProfileUserView {
 `
 
         this.albumListComponent = albumListComponent
-
         this.bindEvents()
     }
 
@@ -103,7 +98,6 @@ export class ProfileUserView {
     }
 
     handleAlbumClick(albumId) {
-        console.log("Album sélectionné :", albumId)
         this.navigate(`photos/${albumId}`)
     }
 

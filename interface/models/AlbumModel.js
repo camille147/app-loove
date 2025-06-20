@@ -7,21 +7,18 @@ export class AlbumModel {
 
     async createAlbum({ title, description, creationDate, visibility, coverImageFile }) {
 
-        const formData = new FormData();
-        formData.append('title', title);
-        formData.append('description', description);
-        formData.append('creationDate', creationDate);
-        formData.append('visibility', visibility);
-        formData.append('img_profile_album', coverImageFile);  // le fichier ici
+        const formData = new FormData()
+        formData.append('title', title)
+        formData.append('description', description)
+        formData.append('creationDate', creationDate)
+        formData.append('visibility', visibility)
+        formData.append('img_profile_album', coverImageFile)
 
         return await apiFetch(`${this.baseUrl}/user/albums/create`, {
             method: "POST",
             body: formData,
         })
     }
-
-
-
 
     async getMyAlbums() {
         const token = localStorage.getItem("token")
@@ -35,7 +32,6 @@ export class AlbumModel {
         })
 
         if (!response.ok) {
-            console.log("erreur recup album privé")
             const errorData = await response.json()
             throw new Error(errorData.message || "Erreur lors recup album privé")
         }
@@ -57,7 +53,6 @@ export class AlbumModel {
         })
 
         if (!response.ok) {
-            console.log("erreur recup album filtrer")
             const errorData = await response.json()
             throw new Error(errorData.message || "Erreur lors recup albums filtrés")
         }
@@ -75,13 +70,12 @@ export class AlbumModel {
     }
 
     async getAlbum(albumId) {
-        const params = new URLSearchParams();
-        params.append('album_id', albumId);
+        const params = new URLSearchParams()
+        params.append('album_id', albumId)
         const response = await apiFetch(`${this.baseUrl}/album?${params.toString()}`, {
             method: "GET",
             credentials: "include"
         })
-        //console.log(response)
         return response
     }
 
@@ -92,8 +86,8 @@ export class AlbumModel {
             headers: {
                 "Content-Type": "application/json",
             }
-        });
-        return response;
+        })
+        return response
     }
 
 }

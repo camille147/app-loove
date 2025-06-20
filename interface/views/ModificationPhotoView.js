@@ -62,9 +62,7 @@ export class ModificationPhotoView {
             </form>
         </div>
     `;
-        console.log(this.photo.photo)
-        console.log(this.allTags)
-        console.log("Selected tags:", [...this.selectedTags])
+
 
         this.bindEvents()
         this.updateSelectedTags()
@@ -73,22 +71,16 @@ export class ModificationPhotoView {
 
 
     bindEvents() {
-        const form = this.root.querySelector('#editPhotoForm');
+        const form = this.root.querySelector('#editPhotoForm')
         const tagSearch = this.root.querySelector("#tagSearch")
         const tagSuggestions = this.root.querySelector('#tagSuggestions')
         const selectedTagsContainer = this.root.querySelector("#selectedTagsContainer")
-        const retourBtn = this.root.querySelector('#cancelBtn');
+        const retourBtn = this.root.querySelector('#cancelBtn')
 
         retourBtn.addEventListener('click', (e) => {
-            e.preventDefault();
-            this.navigate(`photos/${this.photo.photo.album_id}`); // ou autre route retour
-        });
-
-
-
-
-
-
+            e.preventDefault()
+            this.navigate(`photos/${this.photo.photo.album_id}`)
+        })
 
         tagSearch.addEventListener("input", ()=> this.renderSuggestions())
 
@@ -108,7 +100,7 @@ export class ModificationPhotoView {
             const title= form.querySelector('input[name="title"]').value.trim()
             const description = form.querySelector('textarea[name="description"]').value.trim()
             const taken_at= form.querySelector('input[name="taken_at"]').value
-            const tags = Array.from(this.selectedTags);
+            const tags = Array.from(this.selectedTags)
 
             const jsonTags = JSON.stringify(tags)
 
@@ -122,20 +114,18 @@ export class ModificationPhotoView {
                 alt: title
             }
 
-            console.log(photoDataForm)
-            console.log(JSON.stringify(photoDataForm))
             if (this.onSubmit) {
                 try {
                     await this.onSubmit(photoDataForm);
                 } catch (error) {
-                    alert(error.message || "Erreur lors de la mise à jour de la photo.");
+                    alert(error.message || "Erreur lors de la mise à jour de la photo.")
                 }
             }
-        });
+        })
     }
 
      updateSelectedTags = () => {
-        const selectedTagsContainer = this.root.querySelector("#selectedTagsContainer");
+        const selectedTagsContainer = this.root.querySelector("#selectedTagsContainer")
         selectedTagsContainer.innerHTML = ""
         this.selectedTags.forEach(tag => {
             const btn = document.createElement("button")

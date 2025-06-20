@@ -2,7 +2,7 @@ export class SearchView {
     constructor(root, navigate, tags) {
         this.root = root
         this.navigate = navigate
-        this.tags = tags // Tableau d'objets { name, photos }
+        this.tags = tags
         this.selectedTag = null
     }
 

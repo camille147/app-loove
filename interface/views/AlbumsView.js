@@ -68,7 +68,6 @@ export class AlbumsView {
     }
 
     handleAlbumClick(albumId) {
-        console.log("Album sélectionné :", albumId)
         this.navigate(`photos/${albumId}`)
     }
 

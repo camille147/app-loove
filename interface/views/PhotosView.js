@@ -9,11 +9,11 @@ export class PhotosView {
         this.navigate = navigate
         this.photos = photos
         this.albumId = albumId
-        this.onToggleFavorite = null;
-        this.onToggleDelete = null;
+        this.onToggleFavorite = null
+        this.onToggleDelete = null
         this.albumInfo = albumInfo
 
-        this.model = null;
+        this.model = null
     }
 
     async render() {
@@ -57,7 +57,6 @@ export class PhotosView {
   </div>
 </div>
 
-<!-- Album infos -->
 <div class="w-full max-w-5xl mx-auto px-4">
   <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mt-3">
     <span>${this.albumInfo.album.visibility}</span>
@@ -65,11 +64,9 @@ export class PhotosView {
 
   <p class="mt-2 text-base text-gray-700">${this.albumInfo.album.description}</p>
 
-  <!-- Barre outils et ajout photo -->
   <div class="bg-white shadow rounded p-4 mt-6">
     <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
       
-      <!-- Drawer pour filtres -->
       <div class="drawer drawer-end">
         <input id="drawer-profile" type="checkbox" class="drawer-toggle" />
         <div class="drawer-content">
@@ -100,11 +97,9 @@ export class PhotosView {
         </div>
       </div>
 
-      <!-- Bouton d'ajout -->
       <button id="addPhotoBtn" class="btn btn-sm red-color-background"><i class="fa-solid fa-plus"></i> Ajouter</button>
     </div>
 
-    <!-- Liste des photos -->
     <div id="photoListContainer">
       ${photoListComponent.render()}
     </div>
@@ -116,18 +111,17 @@ export class PhotosView {
         this.photoListComponent = photoListComponent
 
         await this.loadTags()
-        this.bindEvents();
+        this.bindEvents()
         this.photoListComponent.bindEvents(this.root.querySelector('#photoListContainer'))
     }
 
 
     async loadTags() {
-        if (!this.model) return;
+        if (!this.model) return
         try {
             const tags = await this.model.getAllTags()
-            console.log(tags)
             const tagSelect = this.root.querySelector('#filterTag')
-            tagSelect.innerHTML = `<option value="">Tous tags</option>` + tags.map(tag => `<option value="${tag}">${tag}</option>`).join('');
+            tagSelect.innerHTML = `<option value="">Tous tags</option>` + tags.map(tag => `<option value="${tag}">${tag}</option>`).join('')
         } catch {
             console.warn("Erreur chargement des tags :", e.message)
         }
@@ -149,21 +143,16 @@ export class PhotosView {
         const modificationAlbumBtn = document.getElementById("modification")
 
         deleteAlbumBtn.addEventListener('click', async (e) => {
-            console.log('delete')
             e.preventDefault()
 
-            const albumId =  e.currentTarget.getAttribute('data-album-id');
-            console.log(albumId)
+            const albumId =  e.currentTarget.getAttribute('data-album-id')
             this.navigate(`deleteAlbum/${albumId}`)
         })
 
         modificationAlbumBtn.addEventListener('click', async(e) => {
-            console.log('modif')
             e.preventDefault()
-
             this.navigate(`updateAlbum/${this.albumId}`)
         })
-
 
     }
 
@@ -201,9 +190,7 @@ export class PhotosView {
     }
 
     handlePhotoClick(photoId) {
-        console.log("Album sélectionné :", photoId)
         this.navigate(`modificationPhoto/${photoId}`)
     }
-
 
 }
