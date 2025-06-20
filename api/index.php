@@ -66,6 +66,9 @@ $routeur->addRoute(['GET'], '/public/albums', \App\Controllers\AlbumController::
 $routeur->addRoute(['GET'], '/user/recent/albums', \App\Controllers\AlbumController::class, 'listRecentsAlbums', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 ]);
+$routeur->addRoute(['GET'], '/search/photo', \App\Controllers\PhotoController::class, 'listSearchPhotos', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+]);
 $routeur->addRoute(['POST'], 'user/profile/update', \App\Controllers\UserController::class, 'editProfile', [
     ['middleware' => AuthMiddleware::class]
 ]);

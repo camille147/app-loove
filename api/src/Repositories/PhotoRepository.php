@@ -242,7 +242,6 @@ class PhotoRepository extends BaseRepository {
             $this->query("DELETE FROM photos WHERE id = :photoId")
                 ->execute(['photoId' => $photoId]);
 
-
             return true;
         }catch (\Exception $e) {
             throw new Exception("Erreur lors de la suppression : " . $e->getMessage());
@@ -272,6 +271,51 @@ class PhotoRepository extends BaseRepository {
             );
         }
         return $favorites;
+    }
+
+
+    public function getPhotosByTag() {
+
+        $results = $this
+            ->query("SELECT 
+    t.id AS tag_id,
+    t.name AS tag_name,
+    p.id AS photo_id,
+    p.title AS photo_title,
+    p.filename,
+    p.description,
+    p.uploaded_at
+FROM tags t
+JOIN photo_tags pt ON pt.tag_id = t.id
+JOIN photos p ON p.id = pt.photo_id
+WHERE p.is_deleted = 0
+ORDER BY t.name ASC
+")
+            ->fetchAll();
+
+
+        $tags = [];
+
+        foreach ($results as $row) {
+            $tagName = $row['tag_name'];
+
+            if (!isset($tags[$tagName])) {
+                $tags[$tagName] = [
+                    'name' => $tagName,
+                    'photos' => []
+                ];
+            }
+
+            $tags[$tagName]['photos'][] = [
+                'id' => $row['photo_id'],
+                'title' => $row['photo_title'],
+                'filename' => $row['filename'],
+                'description' => $row['description'],
+                'uploaded_at' => $row['uploaded_at']
+            ];
+        }
+
+        return array_values($tags);
     }
 
 

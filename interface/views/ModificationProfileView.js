@@ -10,57 +10,64 @@ export class ModificationProfileView {
 
     render() {
         this.root.innerHTML = `
-            <div class="p-4">
-        <button class="ml-auto gap-2 text-red-600 hover:text-red-800 transition-all" id="return">
-          <i class="fa-solid fa-arrow-left text-xl"></i>
-        </button>
-      </div>
-      
-       <div class="max-w-xl mx-auto bg-base-100 shadow-xl rounded-lg p-6">
-    <h2 class="text-2xl font-bold mb-4">Modifier le profil</h2>
-    <form id="editProfileForm" class="space-y-4" enctype="multipart/form-data" method="POST">
-      
-      <div class="form-control">
-        
+            <!-- Bouton retour -->
+<div class="p-4">
+  <button class="text-red-600 hover:text-red-800 transition-all" id="return">
+    <i class="fa-solid fa-arrow-left text-xl"></i>
+  </button>
+</div>
 
-          <label for="profilePictureInput" class="cursor-pointer w-fit">
-            <div class="avatar">
-              <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 hover:opacity-80 transition">
-                <img id="profilePreview" src="http://app-loove-interface.local/uploads/profile_pictures/${this.user.user.profile_picture}" alt="Photo de profil actuelle" />
-              </div>
-            </div>
-          </label>
-        
-          <!-- Input caché -->
-          <input type="file" name="photo" id="profilePictureInput" accept="image/*" class="hidden" />
-                
-      </div>
+<!-- Formulaire -->
+<div class="max-w-2xl mx-auto bg-base-100 shadow-xl rounded-xl p-6 sm:p-8 space-y-6">
+  <h2 class="text-2xl sm:text-3xl font-bold">Modifier le profil</h2>
 
-      <div class="form-control">
-        <label class="label">
-            <span class="label-text">Nom de profil</span>
-        </label>
-        <input type="text" name="username" value="${this.user.user.username}" class="input input-bordered" required />
-      </div>
-      <div class="form-control">
-        <label class="label">
-            <span class="label-text">Email</span>
-        </label>
-        <input type="text" name="email" value="${this.user.user.email}" class="input input-bordered" required />
-      </div>
-      <div class="form-control">
-        <label class="label">
-          <span class="label-text">Bio</span>
-        </label>
-        <textarea name="bio" class="textarea textarea-bordered" rows="3">${this.user.user.bio}</textarea>
-      </div>
+  <form id="editProfileForm" class="space-y-6" enctype="multipart/form-data" method="POST">
 
-      <div class="form-control mt-6">
-        <button type="submit" class="btn btn-primary w-full">Enregistrer les modifications</button>
-      </div>
+    <!-- Avatar + Input -->
+<div class="w-full flex justify-center">
+      <label for="profilePictureInput" class="cursor-pointer group relative">
+        <div class="avatar">
+          <div class="w-24 sm:w-28 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 transition group-hover:opacity-80">
+            <img id="profilePreview" src="http://app-loove-interface.local/uploads/profile_pictures/${this.user.user.profile_picture}" alt="Photo de profil actuelle" />
+          </div>
+        </div>
+        <div class="text-sm text-center text-gray-500 group-hover:text-primary transition mt-1">Changer</div>
+      </label>
+      <input type="file" name="photo" id="profilePictureInput" accept="image/*" class="hidden" />
+    </div>
 
-    </form>
-  </div>
+    <!-- Nom de profil -->
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Nom de profil</span>
+      </label>
+      <input type="text" name="username" value="${this.user.user.username}" class="input input-bordered w-full" required />
+    </div>
+
+    <!-- Email -->
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Email</span>
+      </label>
+      <input type="email" name="email" value="${this.user.user.email}" class="input input-bordered w-full" required />
+    </div>
+
+    <!-- Bio -->
+    <div class="form-control">
+      <label class="label">
+        <span class="label-text">Bio</span>
+      </label>
+      <textarea name="bio" class="textarea textarea-bordered w-full resize-none" rows="4">${this.user.user.bio}</textarea>
+    </div>
+
+    <!-- Bouton Submit -->
+    <div class="pt-2">
+      <button type="submit" class="btn btn-primary w-full text-base">Enregistrer les modifications</button>
+    </div>
+
+  </form>
+</div>
+
       `
 
         this.bindEvents()

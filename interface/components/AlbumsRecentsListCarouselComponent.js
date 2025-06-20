@@ -31,7 +31,6 @@ export class AlbumsRecentsListCarouselComponent{
     }
 
     bindEvents(container) {
-        // Placeholder si tu veux plus tard ajouter un clic, popup, etc.
         container.querySelectorAll('.carousel-item img').forEach(btn => {
             btn.addEventListener('click', () => {
                 const albumId = btn.getAttribute('data-album-id')

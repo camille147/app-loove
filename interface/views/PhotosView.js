@@ -28,23 +28,24 @@ export class PhotosView {
               <h1 class="absolute bottom-4 left-4 text-white font-bold text-xl drop-shadow">
                 ${this.albumInfo.album.title}
               </h1>
-              <div class="drawer drawer-end absolute top-4 left-4 z-10">
-                  <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+              <div class="drawer-filter drawer-end absolute top-4 left-4 z-10">
+                  <input id="drawer-filter" type="checkbox" class="drawer-toggle" />
                   <div class="drawer-content">
                     <!-- Page content here -->
-                    <label for="my-drawer" class="drawer-button"><i class="fa-solid fa-ellipsis-vertical"></i></label>
+                    <label for="drawer-filter" class="drawer-button"><i class="fa-solid fa-ellipsis-vertical"></i></label>
                   </div>
                   <div class="drawer-side">
-                    <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+                    <label for="drawer-filter" aria-label="close sidebar" class="drawer-overlay"></label>
                     <ul class="menu bg-base-200 text-base-content min-h-full w-60 p-4">
                       <!-- Sidebar content here -->
                       <li>
-                        <button class="btn btn-outline btn-primary btn-sm" id="modification">
-                          <i class="fa-solid fa-pen mr-2"></i> Modifier le profil
-                        </button>
+                        
+                        <button class="ml-auto flex items-center gap-2 hover:text-red-800 transition-all" id="modification">
+<i class="fa-solid fa-pen mr-2"></i> Modifier le profil                    
+                  </button>
                       </li>
                       <li>
-                        <button class="btn btn-outline btn-primary btn-sm" id="delete" data-album-id="${this.albumId}" >
+                        <button class="ml-auto flex items-center gap-2 hover:text-red-800 transition-all"  id="delete" data-album-id="${this.albumId}" >
                             <i class="fa-solid fa-trash"></i> Supprimer l'album
                         </button>
                       </li>
@@ -65,14 +66,14 @@ export class PhotosView {
                 
                 
                 
-                <div class="drawer drawer-end">
-  <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-content">
+                <div class="drawer-profile drawer-end">
+  <input id="drawer-profile" type="checkbox" class="drawer-toggle" />
+  <div class="drawer-profile">
     <!-- Page content here -->
-    <label for="my-drawer" class="drawer-button"><i class="fa-solid fa-sliders"></i></label>
+    <label for="drawer-profile" class="drawer-button"><i class="fa-solid fa-sliders"></i></label>
   </div>
   <div class="drawer-side">
-    <label for="my-drawer" aria-label="close sidebar" class="drawer-overlay"></label>
+    <label for="drawer-profile" aria-label="close sidebar" class="drawer-overlay"></label>
     <ul class="menu bg-base-200 text-base-content min-h-full w-60 p-4">
       <!-- Sidebar content here -->
       <li><select id="filterOrder" class="select select-bordered select-sm">

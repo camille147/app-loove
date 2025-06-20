@@ -23,7 +23,7 @@ export class DashboardUserView {
 
         this.root.innerHTML = `
             <div class="max-w-md mx-auto space-y-4">
-
+<h1></h1>
       <!-- Albums récents -->
       <div class="card bg-base-200 shadow-xl">
         <div class="card-body flex-row items-center gap-4">
@@ -63,7 +63,11 @@ export class DashboardUserView {
 
 
     bindEvents() {
-
+        const userStr = localStorage.getItem("user");
+        if (userStr) {
+            const user = JSON.parse(userStr); // convert string to object
+            console.log(user.username); // now you can access the username
+        }
     }
     handleAlbumClick(albumId) {
         console.log("Album sélectionné :", albumId)

@@ -276,56 +276,103 @@ class PhotoController extends BaseController {
 
 
     public function deletePhoto() {
+
         try {
+
+
             if (session_status() !== PHP_SESSION_ACTIVE) {
+
+
                 session_start();
+
+
             }
+
+
+
+
+
+
 
 
             if (!isset($_SESSION['user']['id'])) {
+
+
                 return new Response(401, json_encode(['message' => 'Non authentifié']));
+
+
             }
+
+
+
+
+
+
 
 
             $rawPostData = file_get_contents("php://input");
+
+
             $_DELETE = json_decode($rawPostData, true) ?? [];
 
+
+
+
+
             if (!isset($_DELETE['photo_id'])) {
+
+
                 return new Response(400, json_encode(['message' => 'photo_id manquant']));
+
+
             }
 
+
+
+
+
             $photoId = $_DELETE['photo_id'];
-try {
-    $photo = $this->repo->get($photoId);
-    if (!$photo) {
-        return new Response(404, json_encode(['message' => 'Photo non trouvée']));
-    }
-
-    // Supprimer le fichier physique
-    $uploader = new UploadManager(__DIR__ . '../../../../interface/uploads/photos');
-
-// Ne pas faire echo ici !
-    $uploader->delete($photo->getFilename());
 
 
-    // var_dump($uploader);
-} catch  (\Exception $e) {
-    return new Response(500, json_encode(['message' => $e->getMessage()]));
-}
+
 
 
             try {
+
+
                 $this->repo->deletePhoto($photoId);
 
+
+
+
+
                 return new Response(200, json_encode([
+
+
                     "message" => "Photo supprimée"
+
+
                 ]));
 
+
+
+
+
             } catch (\Exception $e) {
+
+
                 return new Response(500, json_encode(['error' => $e->getMessage()]));
+
+
             }
+
+
         }catch (\Exception $e) {
+
+
             return new Response(500, json_encode(['message' => $e->getMessage()]));
+
+
         }
     }
 
@@ -368,6 +415,31 @@ try {
         } catch (\Exception $e) {
             return new Response(500, json_encode(['message' => $e->getMessage()]));
         }
+    }
+
+
+    public function listSearchPhotos() {
+        try{
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+
+            if (!isset($_SESSION['user']['id'])) {
+                return new Response(401, json_encode(['message' => 'Non authentifié']));
+            }
+
+            $userId = $_SESSION['user']['id'];
+
+
+            $searchPhotos = $this->repo->getPhotosByTag();
+
+            return new Response(200, json_encode([
+                'tags' => $searchPhotos
+            ]));
+    } catch (\Exception $e) {
+return new Response(500, json_encode(['message' => $e->getMessage()]));
+}
+
     }
 
 

@@ -34,7 +34,6 @@ export class FavoriteCarouselComponent {
                 <button>close</button>
               </form>
             </dialog>
-        
         `
     }
 
@@ -48,7 +47,6 @@ export class FavoriteCarouselComponent {
                 const desc = document.getElementById('modal-photo-desc')
                 const date = document.getElementById('modal-photo-date')
 
-                console.log(date)
 
                 const carouselItem = img.closest('.carousel-item')
                 const photoId = carouselItem.getAttribute('data-photo-id')

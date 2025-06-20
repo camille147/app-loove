@@ -4,6 +4,8 @@ import {PhotosView} from "../views/PhotosView";
 import {ModificationProfileView} from "../views/ModificationProfileView";
 import {ModificationPhotoView} from "../views/ModificationPhotoView";
 import {MenuUserView} from "../views/MenuUserView";
+import {AlbumsView} from "../views/AlbumsView";
+import {SearchView} from "../views/SearchView";
 
 
 export class PhotoController {
@@ -74,6 +76,17 @@ export class PhotoController {
         } catch (e) {
             console.error("Erreur lors de la modification du profil :", e.message)
             this.navigate("home")
+        }
+    }
+
+    async showSearchPhotos() {
+        try {
+            const tags = await this.photoModel.getSearchPhotos();
+            const view = new SearchView( this.root, this.navigate, tags);
+            view.render();
+        } catch (e) {
+            console.error("Erreur chargement tags recherche photo :", e.message);
+            this.navigate("home");
         }
     }
 

@@ -127,4 +127,12 @@ export class PhotoModel {
     }
 
 
+    async getSearchPhotos(){
+        const response = await apiFetch(`${this.baseUrl}/search/photo`, {
+            method: "GET",
+            credentials: "include"
+        })
+        return response.tags
+    }
+
 }

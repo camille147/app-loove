@@ -72,7 +72,6 @@ export class Router {
                 const controller = new AlbumController(this.root, this.navigate.bind(this), this.apiBaseUrl)
                 controller.showUserAlbums();
             },
-            search : () => new SearchView(this.root, this.navigate.bind(this)).render(),
             albums: () => {
                 const controller = new AlbumController(this.root, this.navigate.bind(this), this.apiBaseUrl )
                 controller.showAlbums()
@@ -100,6 +99,10 @@ export class Router {
             photos: (albumId) => {
                 const controller = new PhotoController(this.root, this.navigate.bind(this), this.apiBaseUrl);
                 controller.showPhotos(albumId);
+            },
+            search: () => {
+                const controller = new PhotoController(this.root, this.navigate.bind(this), this.apiBaseUrl);
+                controller.showSearchPhotos();
             },
 
             addPhoto: (albumId) => {

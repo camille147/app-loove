@@ -14,46 +14,66 @@ export class ProfileUserView {
         const albumListComponent = new AlbumListComponent(this.albums, this.handleAlbumClick.bind(this) )
 
         this.root.innerHTML = `
-            
-      <div class="max-w-xl mx-auto bg-base-100 shadow-xl rounded-lg p-6">
-        <div class="flex items-center gap-6">
-          <div class="avatar">
-            <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2">
-              <img src="http://app-loove-interface.local/uploads/profile_pictures/${this.user.user.profile_picture}" alt="Photo de profil" />
-            </div>
-          </div>
-          <div>
-            <h2 class="text-2xl font-bold">${this.user.user.username}</h2>
-            <!--<div class="flex gap-6 mt-2 text-sm text-gray-500">
-              <span><strong>152</strong> publications</span>
-              <span><strong>2 340</strong> abonnés</span>
-            </div>-->
-            
-            <div class="flex items-center justify-between mt-2">
-    <button class="btn btn-outline btn-primary btn-sm" id="modification">
-      <i class="fa-solid fa-pen mr-2"></i> Modifier le profil
-    </button>
+  <div class="max-w-xl mx-auto bg-base-100 rounded-lg p-6">
     
-    <button class=" px-2" id="menu">
-    <i class="fa-solid fa-gear text-sm"></i>
-  </button>
-  </div>
-          </div>
-        </div>
-<p class="mt-2 text-sm">
-              ${this.user.user.bio}
-            </p>
-
-
-        <div class="px-4 mt-6">
-          <h3 class="font-semibold mb-2">Mes albums</h3>
-          <div id="albumList" class="grid gap-4">
-      ${albumListComponent.render()}
-    </div>
+    <!-- Ligne du haut : avatar + infos -->
+    <div class="flex items-start gap-6">
+      <div class="avatar">
+        <div class="w-24 rounded-full">
+          <img src="http://app-loove-interface.local/uploads/profile_pictures/${this.user.user.profile_picture}" alt="Photo de profil" />
         </div>
       </div>
 
-        `
+      <div class="flex-1">
+        <h2 class="text-2xl font-bold mt-4">${this.user.user.username}</h2>
+        
+        <div class="flex items-center gap-2">
+          <button class="btn btn-outline grey-color btn-sm" id="modification">
+            <i class="fa-solid fa-pen mr-1"></i> Modifier le profil
+          </button>
+
+          <!-- Roue des paramètres -->
+          <div class="drawer-menu drawer-end">
+            <input id="drawer-menu" type="checkbox" class="drawer-toggle" />
+            <div class="drawer-content">
+              <label for="drawer-menu" class="drawer-button ml-1">
+                <i class="fa-solid fa-gear text-sm"></i>
+              </label>
+            </div>
+            <div class="drawer-side">
+              <label for="drawer-menu" aria-label="close sidebar" class="drawer-overlay"></label>
+              <ul class="menu bg-base-200 text-base-content min-h-full w-60 p-4">
+                <li>
+                  <button class="ml-auto flex items-center gap-2 text-red-600 hover:text-red-800 transition-all" id="disconnection">
+                     Déconnexion <i class="fa-solid fa-arrow-right-from-bracket text-xl"></i>
+                    
+                  </button>
+                </li>
+                <li>
+                  <button class="ml-auto flex items-center gap-2 hover:text-red-800 transition-all" id="delete">
+                    Supprimer mon profil <i class="fa-solid fa-trash text-xl"></i>
+                  </button>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bio en dessous -->
+    <p class="mt-4 text-sm">${this.user.user.bio}</p>
+
+    <!-- Albums -->
+    <div class="px-4 mt-6">
+      <h3 class="font-semibold mb-2">Mes albums privés</h3>
+      <div id="albumList" class="grid gap-4">
+        ${albumListComponent.render()}
+      </div>
+    </div>
+  </div>
+`
+
         this.albumListComponent = albumListComponent
 
         this.bindEvents()
@@ -63,11 +83,16 @@ export class ProfileUserView {
 
         this.albumListComponent.bindEvents(document.getElementById('albumList'))
 
-
-        const btnMenu = document.getElementById('menu')
-        btnMenu.addEventListener('click', async (e) => {
+        const btnDisconnection = document.getElementById('disconnection')
+        btnDisconnection.addEventListener('click', async (e) => {
             e.preventDefault()
-            this.navigate("menu")
+            this.navigate("logout")
+        })
+
+        const btnDelete = document.getElementById('delete')
+        btnDelete.addEventListener('click', async (e) => {
+            e.preventDefault()
+            this.navigate("delete")
         })
 
         const btnModification = document.getElementById('modification')
