@@ -15,13 +15,14 @@ export class AlbumsView {
         this.root.innerHTML = `
             
             <div class="max-w-4xl mx-auto bg-white dark:bg-base-100 shadow-xl rounded-2xl p-6 sm:p-8">
+                            <h2 class="text-xl font-bold mb-4">Mes albums</h2>
+
   <div class="px-2 sm:px-4 mt-4 sm:mt-6">
   
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-6">
       <h3 class="text-xl font-bold text-gray-800 dark:text-white">Mes albums</h3>
       
       <div class="flex items-center gap-2">
-        <label for="albumFilter" class="text-sm font-medium text-gray-700 dark:text-gray-300">Filtrer :</label>
         <select id="albumFilter" class="select select-bordered select-sm">
           <option value="all">Tous</option>
           <option value="public">Public</option>

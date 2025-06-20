@@ -9,16 +9,16 @@ export class FavoriteCarouselComponent {
         }
 
         return `
-            <div class="carousel rounded-box">
-                ${this.favorites.map(photo => `
-                    <div class="carousel-item" data-photo-id="${photo.id}">
-                        <img 
-                            src="http://app-loove-interface.local/uploads/photos/${photo.filename}" 
-                            alt="${photo.alt || 'Photo favorite'}" 
-                            class="w-64 h-64 object-cover rounded-xl border border-gray-200 shadow cursor-pointer" />
-                    </div>
-                `).join('')}
-            </div>
+            <div class="flex gap-4 overflow-x-auto">
+    ${this.favorites.map(photo => `
+      <div class=" carousel-item min-w-[200px] flex-shrink-0" data-photo-id="${photo.id}">
+        <img 
+          src="http://app-loove-interface.local/uploads/photos/${photo.filename}" 
+          alt="${photo.alt || 'Photo favorite'}" 
+          class="w-full h-40 object-cover rounded-xl border border-gray-200 shadow cursor-pointer hover:brightness-110 transition" />
+      </div>
+    `).join('')}
+  </div>
 
             <!-- Modale photo zoomée -->
             <dialog id="photo_modal" class="modal">

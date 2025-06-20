@@ -22,34 +22,34 @@ export class DashboardUserView {
 
 
         this.root.innerHTML = `
-            <div class="max-w-md mx-auto space-y-4">
-<h1></h1>
-      <!-- Albums récents -->
-      <div class="card bg-base-200 shadow-xl">
-        <div class="card-body flex-row items-center gap-4">
-            
-            <h2 class="card-title">Albums récents</h2>
-            <div id="albums-recents-carousel" class="w-full overflow-x-auto"></div>
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 space-y-10">
+                <h1 class="text-3xl sm:text-4xl font-bold text-gray-800 text-center" id="titleDashboard"> </h1>
 
-          <!--<button class="btn btn-sm btn-circle btn-primary text-lg">+</button>-->
+      <section>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-gray-800">Albums récemment créés</h2>
         </div>
-      </div>
-
-      <!-- Photos favorites -->
-      <div class="card bg-base-200 shadow-md">
-        <div class="card-body flex-row items-center gap-4">
-          <span class="text-yellow-500 text-2xl">⭐</span>
-          <h2 class="card-title">Photos favorites</h2>
+        <div id="albums-recents-carousel" class="overflow-x-auto pb-2">
         </div>
-           <div id="favorites-carousel" class="w-full overflow-x-auto"></div>
-      </div>
-      
-      <div id="list-publics-albums">
-      
-      </div>
+      </section>
 
-      
+      <section>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-yellow-500"><i class="fa-solid fa-star"></i> Mes photos favorites</h2>
+        </div>
+        <div id="favorites-carousel" class="overflow-x-auto pb-2">
+        </div>
+      </section>
 
+      <!-- Albums publics -->
+      <section>
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-xl sm:text-2xl font-bold text-blue-600">Albums publics</h2>
+        </div>
+        <div id="list-publics-albums" class="space-y-4">
+          <!-- Albums publics injectés ici -->
+        </div>
+      </section>
     </div>
         `
         this.root.querySelector('#favorites-carousel').innerHTML = favoriteCarouselComponent.render()
@@ -67,6 +67,8 @@ export class DashboardUserView {
         if (userStr) {
             const user = JSON.parse(userStr); // convert string to object
             console.log(user.username); // now you can access the username
+            const userEl = document.getElementById("titleDashboard")
+            userEl.textContent = `Bienvenue ${user.username}`
         }
     }
     handleAlbumClick(albumId) {

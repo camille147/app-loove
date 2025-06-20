@@ -13,27 +13,30 @@ export class AlbumsRecentsListCarouselComponent{
         }
 
         return `
-            <div class="carousel rounded-box">
-                ${this.albumsRecents.map(album => `
-                    <div class="carousel-item" data-album-id="${album.id}">
+        <div class="flex gap-4 overflow-x-auto">
+            ${this.albumsRecents.map(album => `
+                <div class="min-w-[200px] flex-shrink-0 carousel-item " data-album-id="${album.id}">
+                    <div class="rounded-xl overflow-hidden shadow hover:shadow-lg transition cursor-pointer">
                         <img 
                             src="http://app-loove-interface.local/uploads/${album.imgProfileAlbum}" 
-                            alt="${album.description || 'Photo favorite'}" 
-                            class="w-64 h-64 object-cover rounded-xl border border-gray-200 shadow cursor-pointer" 
-                            data-album-id="${album.id}/>
-                           <h2>${album.title}</h2> 
-                    </div>
-                `).join('')}
-            </div>
+                            alt="${album.description || 'Photo album'}"
+                            class="w-full h-40 object-cover"
+                        />          
+                        <div class="text-center">                         <p class="mt-2 text-center text-sm text-gray-700 font-medium truncate w-full">${album.title}</p>
+   </div>      
 
-        
-        `
+                    </div>
+                </div>
+            `).join('')}
+        </div>
+    `;
+
     }
 
     bindEvents(container) {
-        container.querySelectorAll('.carousel-item img').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const albumId = btn.getAttribute('data-album-id')
+        container.querySelectorAll('.carousel-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const albumId = item.getAttribute('data-album-id')
                 if (this.onAlbumClick) {
                     this.onAlbumClick(albumId)
                 }

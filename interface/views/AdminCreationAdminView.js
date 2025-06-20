@@ -8,9 +8,9 @@ export class AdminCreationAdminView {
     render() {
         this.root.innerHTML = `
             
-            <div class="flex flex-col items-center justify-center min-h-screen text-center bg-base-100 text-base-content font-orbitron">
+            <div class="flex flex-col items-center justify-center min-h-screen text-center bg-base-100 text-base-content">
 
-                <h1 class="text-5xl font-bold tracking-widest red-color drop-shadow-lg">Inscription</h1>
+                <h1 class="text-5xl font-bold tracking-widest red-color drop-shadow-lg">Création Admin</h1>
                 <form id="sign-in-form" class="flex flex-col items-center justify-center min-h-screen px-4">
                     <div class="card w-full max-w-xl bg-base-100 shadow-xl p-6 space-y-4">
                         <div class="form-control">

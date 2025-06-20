@@ -17,8 +17,8 @@ export class PublicsAlbumsComponent {
             <figure>
               <img src="http://app-loove-interface.local/uploads/${album.img_profile_album}" alt="${album.title}" />
             </figure>
-            <div class="card-body">
-              <h2 class="card-title">${album.title}</h2>
+            <div class="card-body text-center">
+              <h2 class="card-title text-center">${album.title}</h2>
             </div>
           </div>
         `

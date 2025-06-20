@@ -22,83 +22,95 @@ export class PhotosView {
 
         this.root.innerHTML = `
 
-        <div class="relative ">
-              <img src="http://app-loove-interface.local/uploads/${this.albumInfo.album.img_profile_album}" alt="Photo de profil" />
-
-              <h1 class="absolute bottom-4 left-4 text-white font-bold text-xl drop-shadow">
-                ${this.albumInfo.album.title}
-              </h1>
-              <div class="drawer-filter drawer-end absolute top-4 left-4 z-10">
-                  <input id="drawer-filter" type="checkbox" class="drawer-toggle" />
-                  <div class="drawer-content">
-                    <!-- Page content here -->
-                    <label for="drawer-filter" class="drawer-button"><i class="fa-solid fa-ellipsis-vertical"></i></label>
-                  </div>
-                  <div class="drawer-side">
-                    <label for="drawer-filter" aria-label="close sidebar" class="drawer-overlay"></label>
-                    <ul class="menu bg-base-200 text-base-content min-h-full w-60 p-4">
-                      <!-- Sidebar content here -->
-                      <li>
-                        
-                        <button class="ml-auto flex items-center gap-2 hover:text-red-800 transition-all" id="modification">
-<i class="fa-solid fa-pen mr-2"></i> Modifier le profil                    
-                  </button>
-                      </li>
-                      <li>
-                        <button class="ml-auto flex items-center gap-2 hover:text-red-800 transition-all"  id="delete" data-album-id="${this.albumId}" >
-                            <i class="fa-solid fa-trash"></i> Supprimer l'album
-                        </button>
-                      </li>
-                      
-                    </ul>
-                  </div>
-              </div>
-        
-        </div>
-
-        <div class="flex ml-2 gap-6 mt-2  text-sm text-gray-500">
-            <span>${this.albumInfo.album.visibility}</span>
-        </div>
-        <p class="mt-4 ml-2">${this.albumInfo.album.description}</p>
-
-        <div class="max-w-4xl mx-auto bg-white shadow rounded p-6">
-                <div class="mb-4 flex flex-wrap justify-between items-center gap-4">
-                
-                
-                
-                <div class="drawer-profile drawer-end">
-  <input id="drawer-profile" type="checkbox" class="drawer-toggle" />
-  <div class="drawer-profile">
-    <!-- Page content here -->
-    <label for="drawer-profile" class="drawer-button"><i class="fa-solid fa-sliders"></i></label>
+        <div class="relative w-full max-w-5xl mx-auto">
+  <div class="w-full aspect-video overflow-hidden">
+    <img src="http://app-loove-interface.local/uploads/${this.albumInfo.album.img_profile_album}" 
+         alt="Photo de profil"
+         class="w-full h-full object-cover" />
   </div>
-  <div class="drawer-side">
-    <label for="drawer-profile" aria-label="close sidebar" class="drawer-overlay"></label>
-    <ul class="menu bg-base-200 text-base-content min-h-full w-60 p-4">
-      <!-- Sidebar content here -->
-      <li><select id="filterOrder" class="select select-bordered select-sm">
-                            <option value="all">Tous</option>
-                            <option value="recent">Récentes</option>
-                            <option value="old">Anciennes</option>
-                        </select></li>
-      <li><select id="filterTag" class="select select-bordered select-sm">
-                            <option value="">Tous tags</option>
-                        </select></li>
-                        
-                        <li><label class="label cursor-pointer flex items-center">
-                            <input type="checkbox" id="favoriteCheckbox" class="checkbox checkbox-sm" />
-                            <span class="label-text ml-2">Favoris</span>
-                        </label></li>
-    </ul>
+
+  <h1 class="absolute bottom-4 left-4 text-white font-bold text-xl drop-shadow-lg">
+    ${this.albumInfo.album.title}
+  </h1>
+
+  <!-- Menu drawer -->
+  <div class="drawer drawer-end absolute top-4 left-4 z-10">
+    <input id="drawer-filter" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content">
+      <label for="drawer-filter" class="drawer-button text-white bg-black/50 rounded-full p-2"><i class="fa-solid fa-ellipsis-vertical"></i></label>
+    </div>
+    <div class="drawer-side">
+      <label for="drawer-filter" class="drawer-overlay"></label>
+      <ul class="menu bg-base-200 text-base-content min-h-full w-60 p-4 space-y-2">
+        <li>
+          <button class="flex items-center gap-2 hover:text-red-800 transition-all" id="modification">
+            <i class="fa-solid fa-pen"></i> Modifier l'album
+          </button>
+        </li>
+        <li>
+          <button class="flex items-center gap-2 hover:text-red-800 transition-all" id="delete" data-album-id="${this.albumId}">
+            <i class="fa-solid fa-trash red-color"></i> Supprimer l'album
+          </button>
+        </li>
+      </ul>
+    </div>
   </div>
 </div>
-        
-                    <button id="addPhotoBtn" class="w-24 rounded-full red-color-background"><i class="fa-solid fa-plus"></i></button>
-                </div>
-                <div id="photoListContainer">
-                    ${photoListComponent.render()}
-                </div>
-            </div>
+
+<!-- Album infos -->
+<div class="w-full max-w-5xl mx-auto px-4">
+  <div class="flex flex-wrap items-center gap-4 text-sm text-gray-500 mt-3">
+    <span>${this.albumInfo.album.visibility}</span>
+  </div>
+
+  <p class="mt-2 text-base text-gray-700">${this.albumInfo.album.description}</p>
+
+  <!-- Barre outils et ajout photo -->
+  <div class="bg-white shadow rounded p-4 mt-6">
+    <div class="flex flex-wrap justify-between items-center gap-4 mb-4">
+      
+      <!-- Drawer pour filtres -->
+      <div class="drawer drawer-end">
+        <input id="drawer-profile" type="checkbox" class="drawer-toggle" />
+        <div class="drawer-content">
+          <label for="drawer-profile" class="drawer-button"><i class="fa-solid fa-sliders"></i></label>
+        </div>
+        <div class="drawer-side">
+          <label for="drawer-profile" class="drawer-overlay"></label>
+          <ul class="menu bg-base-200 text-base-content min-h-full w-60 p-4 space-y-3">
+            <li>
+              <select id="filterOrder" class="select select-bordered select-sm w-full">
+                <option value="all">Tous</option>
+                <option value="recent">Récentes</option>
+                <option value="old">Anciennes</option>
+              </select>
+            </li>
+            <li>
+              <select id="filterTag" class="select select-bordered select-sm w-full">
+                <option value="">Tous tags</option>
+              </select>
+            </li>
+            <li>
+              <label class="label cursor-pointer flex items-center">
+                <input type="checkbox" id="favoriteCheckbox" class="checkbox checkbox-sm" />
+                <span class="label-text ml-2">Favoris</span>
+              </label>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bouton d'ajout -->
+      <button id="addPhotoBtn" class="btn btn-sm red-color-background"><i class="fa-solid fa-plus"></i> Ajouter</button>
+    </div>
+
+    <!-- Liste des photos -->
+    <div id="photoListContainer">
+      ${photoListComponent.render()}
+    </div>
+  </div>
+</div>
+
         `;
 
         this.photoListComponent = photoListComponent

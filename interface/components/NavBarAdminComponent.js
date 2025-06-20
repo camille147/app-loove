@@ -19,10 +19,10 @@ export class NavBarAdminComponent {
               <!-- Sidebar content here -->
               <li><a href="#" data-view="adminDashboard">Dashboard</a></li>
               <li><a href="#" data-view="adminTags">Etiquettes</a></li>
-              <li><a href="#" data-view="logout">Déconnexion</a></li>
               <li><a href="#" data-view="adminCreateAdmin">Créer Admin</a></li>
               <li><a href="#" data-view="adminProfile">Profil</a></li>
-        
+              <li><a href="#" class="red-color" data-view="logout">Déconnexion</a></li>
+
         
             </ul>
           </div>

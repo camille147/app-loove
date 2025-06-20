@@ -18,21 +18,21 @@ export class ModificationAlbumView {
         <form id="editAlbumForm" enctype="multipart/form-data"  method="POST">
         
         
-        <div class="form-control">
-        
+        <div class="form-control flex items-center justify-center mb-6">
+  <label for="profilePictureInput" class="cursor-pointer flex flex-col items-center">
+    <div class="w-32 h-32 rounded-full overflow-hidden ring ring-red-500 ring-offset-2 hover:opacity-90 transition duration-300 shadow-lg">
+      <img 
+        id="profilePreview" 
+        src="http://app-loove-interface.local/uploads/${this.album.album.img_profile_album}" 
+        alt="Photo de profil actuelle" 
+        class="w-full h-full object-cover" />
+    </div>
+    <p class="text-sm mt-2 text-gray-500 hover:text-red-600 transition">Changer la photo</p>
+  </label>
 
-          <label for="profilePictureInput" class="cursor-pointer w-fit">
-            <div class="album_img">
-              <div class="w-24 rounded-full ring ring-primary ring-offset-base-100 ring-offset-2 hover:opacity-80 transition">
-                <img id="profilePreview" src="http://app-loove-interface.local/uploads/${this.album.album.img_profile_album}" alt="Photo de profil actuelle" />
-              </div>
-            </div>
-          </label>
-        
-          <!-- Input caché -->
-          <input type="file" name="photo" id="profilePictureInput" accept="image/*" class="hidden" />
-                
-      </div>
+  <input type="file" name="photo" id="profilePictureInput" accept="image/*" class="hidden" />
+</div>
+
       
                <div class="mb-4">
                     <label class="block text-sm font-medium">Titre</label>
