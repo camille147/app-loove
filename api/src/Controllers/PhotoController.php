@@ -93,9 +93,6 @@ class PhotoController extends BaseController {
                 return new Response(401, json_encode(['message' => 'Non authentifié']));
             }
 
-            $user_id = $_SESSION['user']['id'];
-            //var_dump($_SESSION);
-
             $album_id = $_GET['album_id'] ?? null;
             if(!$album_id) {
                 return new Response(400, json_encode(['message' => 'album id manquant']));
@@ -191,20 +188,15 @@ class PhotoController extends BaseController {
                 return new Response(401, json_encode(['message' => 'Non authentifié']));
             }
 
-
             $photo_id = $_GET['photo_id'] ?? null;
 
             if(!$photo_id) {
                 return new Response(400, json_encode(['message' => 'photo id manqua,t']));
             }
 
-
             $photo = $this->repo->get($photo_id);
-            //var_dump($photo);
 
             return new Response(200, json_encode(['photo' => $photo->toArray()]));
-
-
         }catch (\Exception $e) {
             return new Response(500, json_encode(['message' => $e->getMessage()]));
         }
@@ -218,14 +210,10 @@ class PhotoController extends BaseController {
                 session_start();
             }
 
-
             if (!isset($_SESSION['user']['id'])) {
                 return new Response(401, json_encode(['message' => 'Non authentifié']));
             }
 
-            $userId = $_SESSION['user']['id'];
-
-            //var_dump($_POST);
             $rawPostData = file_get_contents("php://input");
             if (empty($_POST) && !empty($rawPostData)) {
                 $_POST = json_decode($rawPostData, true);
@@ -253,11 +241,8 @@ class PhotoController extends BaseController {
                     return new Response(404, json_encode(['message' => 'Photo non trouvée']));
                 }
 
-
-                // Mise à jour des informations
                 $this->repo->editPhoto($photoId, $title, $description, $takenAt, $alt, $tags);
 
-                // Récupérer la photo mise à jour
                 $updatedPhoto = $this->repo->get($photoId);
 
                 return new Response(200, json_encode([
@@ -278,105 +263,36 @@ class PhotoController extends BaseController {
     public function deletePhoto() {
 
         try {
-
-
             if (session_status() !== PHP_SESSION_ACTIVE) {
-
-
                 session_start();
-
-
             }
-
-
-
-
-
-
-
 
             if (!isset($_SESSION['user']['id'])) {
-
-
                 return new Response(401, json_encode(['message' => 'Non authentifié']));
-
-
             }
-
-
-
-
-
-
-
 
             $rawPostData = file_get_contents("php://input");
-
-
             $_DELETE = json_decode($rawPostData, true) ?? [];
 
-
-
-
-
             if (!isset($_DELETE['photo_id'])) {
-
-
                 return new Response(400, json_encode(['message' => 'photo_id manquant']));
-
-
             }
-
-
-
-
 
             $photoId = $_DELETE['photo_id'];
 
-
-
-
-
             try {
-
-
                 $this->repo->deletePhoto($photoId);
-
-
-
-
-
                 return new Response(200, json_encode([
-
-
                     "message" => "Photo supprimée"
-
-
                 ]));
-
-
-
-
-
             } catch (\Exception $e) {
-
-
                 return new Response(500, json_encode(['error' => $e->getMessage()]));
-
-
             }
 
-
         }catch (\Exception $e) {
-
-
             return new Response(500, json_encode(['message' => $e->getMessage()]));
-
-
         }
     }
-
-
 
     public function listAllFavorites() {
         try {
@@ -390,7 +306,6 @@ class PhotoController extends BaseController {
             }
 
             $userId = $_SESSION['user']['id'];
-
 
             $favorites = $this->repo->getAllFavorites($userId);
 
@@ -406,8 +321,6 @@ class PhotoController extends BaseController {
                 'title' => $photo->getTitle(),
                 'isFavorite' => $photo->getIsFavorite(),
                 'isDeleted' => $photo->getIsDeleted(),
-
-
             ], $favorites);
 
 
@@ -428,9 +341,6 @@ class PhotoController extends BaseController {
                 return new Response(401, json_encode(['message' => 'Non authentifié']));
             }
 
-            $userId = $_SESSION['user']['id'];
-
-
             $searchPhotos = $this->repo->getPhotosByTag();
 
             return new Response(200, json_encode([
@@ -441,9 +351,6 @@ return new Response(500, json_encode(['message' => $e->getMessage()]));
 }
 
     }
-
-
-
 
 
 }

@@ -121,10 +121,8 @@ class AdminController extends BaseController
             if ($userInformations->getRole() == 1) {
                 return new Response(401, json_encode(['message' => 'nop admin']));
             }
-            //var_dump($userRepo);
             $user = $userRepo->deleteUser($userDeleteId);
 
-            //var_dump($user->getRole());
 
             return new Response(200, json_encode([
                 "message"=> "profil supprimé"
@@ -153,7 +151,6 @@ class AdminController extends BaseController
             }
 
             $nameTag = $_POST['name'];
-            //var_dump($nameTag);
 
             try {
                 $tag = $this->repo->createTag($nameTag);

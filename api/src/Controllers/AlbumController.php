@@ -75,14 +75,12 @@ class AlbumController extends BaseController {
             }
 
             $album_id = $_GET['album_id'] ?? null;
-            //var_dump($album_id);
 
             if(!$album_id) {
                 return new Response(400, json_encode(['message' => 'album id manqua,t']));
             }
 
             $album = $this->repo->getAlbum($album_id);
-            //var_dump($album);
             return new Response(200, json_encode(['album' => [
                 'id' => $album->getId(),
                 'title' => $album->getTitle(),
@@ -135,7 +133,6 @@ class AlbumController extends BaseController {
                 return new Response(401, json_encode(['message' => 'Non authentifié']));
             }
 
-            //var_dump($_POST);
             $rawPostData = file_get_contents("php://input");
             if (empty($_POST) && !empty($rawPostData)) {
                 $_POST = json_decode($rawPostData, true);
@@ -156,22 +153,18 @@ class AlbumController extends BaseController {
             try {
                 // Récupérer la photo existante
                 $album = $this->repo->getAlbum($albumId);
-                //$uploader->delete($album->getImgProfileAlbum());
 
                 if (!$album) {
                     return new Response(404, json_encode(['message' => 'Album non trouvée']));
                 }
-                $filename = $album->getImgProfileAlbum(); // Par défaut, on conserve l'ancienne image
+                $filename = $album->getImgProfileAlbum();
 
-                //var_dump($_FILES);
                 if ($imgFile) {
                     $uploader = new UploadManager(__DIR__ . '../../../../interface/uploads');
                     $filename = $uploader->upload($imgFile);
                 }
-                // Mise à jour des informations
                 $this->repo->editAlbum($albumId, $title, $description, $visibility, $filename);
 
-                // Récupérer la photo mise à jour
                 $updatedAlbum = $this->repo->getAlbum($albumId);
 
                 return new Response(200, json_encode([
@@ -213,7 +206,7 @@ class AlbumController extends BaseController {
             try {
                 $this->repo->deleteAlbum($albumId);
                 return new Response(200, json_encode([
-                    "message" => "Albuù supprimée"
+                    "message" => "Album supprimé"
                 ]));
             } catch (\Exception $e) {
                 return new Response(500, json_encode(['error' => $e->getMessage()]));
@@ -237,8 +230,6 @@ class AlbumController extends BaseController {
 
             $albums = $this->repo->getAlbumsAndPhotos();
             $albumsArray = array_map(fn($album) => $album->toArray(), $albums);
-
-            //mofdif à partir de là
 
 
             return new Response(200, json_encode(['albums' => $albumsArray]));

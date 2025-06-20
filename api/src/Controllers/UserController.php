@@ -19,19 +19,15 @@ class UserController extends BaseController {
         header('Content-Type: application/json');
     }
 
-
     public function editProfile() {
 
         if (session_status() !== PHP_SESSION_ACTIVE) {
             session_start();
         }
 
-
-
         if (!isset($_SESSION['user']['id'])) {
             return new Response(401, json_encode(['message' => 'Non authentifié']));
         }
-
         $userId = $_SESSION['user']['id'];
 
         if(!isset($_POST['username'], $_POST['email'], $_POST['bio'])) {
@@ -42,7 +38,6 @@ class UserController extends BaseController {
         $email = $_POST['email'];
         $bio = $_POST['bio'];
         $filename = null;
-        //$imgFile = $_FILES['photo'] ?? null;
 
         if (!empty($_FILES['photo']) && $_FILES['photo']['error'] !== UPLOAD_ERR_NO_FILE) {            try {
                 $uploadDir = realpath(__DIR__ . '/../') . '/../../interface/uploads/profile_pictures';
@@ -86,7 +81,6 @@ class UserController extends BaseController {
     }
 
     public function deleteProfile() {
-
         try{
             if (session_status() !== PHP_SESSION_ACTIVE) {
                 session_start();
@@ -107,18 +101,6 @@ class UserController extends BaseController {
             return new Response(500,json_encode(['error' => $e->getMessage()]));
         }
 
-    }
-    public function home(): Response {
-        $user = $_SESSION['user'] ?? null;
-
-        if (!$user || $user['role'] != 0) {
-            return new Response(403, json_encode(['message' => 'Accès réservé aux utilisateurs']));
-        }
-
-        return new Response(200, json_encode([
-            'message' => "Bienvenue sur l'espace utilisateur",
-            'user' => $user
-        ]));
     }
 
 
