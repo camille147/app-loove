@@ -10,7 +10,7 @@ use PDOStatement;
 abstract class BaseRepository {
 
     private PDO $connection;
-    private ?PDOStatement $current_statement = null;
+    protected ?PDOStatement $current_statement = null;
 
     public function __construct(string $dsn = '')
     {

@@ -98,7 +98,7 @@ export class ModificationAlbumView {
 
         retourBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            this.navigate(`album/${this.album.album.id}`); // ou autre route retour
+            this.navigate(`albums/${this.album.album.id}`); // ou autre route retour
         })
 
 

@@ -60,6 +60,12 @@ $routeur->addRoute(['POST'], '/user/albums/create', \App\Controllers\AlbumContro
 $routeur->addRoute(['GET'], '/user/albums', \App\Controllers\AlbumController::class, 'list', [
     ['middleware' => AuthMiddleware::class, 'role' => 0]
 ]);
+$routeur->addRoute(['GET'], '/public/albums', \App\Controllers\AlbumController::class, 'listPublicsAlbums', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+]);
+$routeur->addRoute(['GET'], '/user/recent/albums', \App\Controllers\AlbumController::class, 'listRecentsAlbums', [
+    ['middleware' => AuthMiddleware::class, 'role' => 0]
+]);
 $routeur->addRoute(['POST'], 'user/profile/update', \App\Controllers\UserController::class, 'editProfile', [
     ['middleware' => AuthMiddleware::class]
 ]);

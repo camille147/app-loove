@@ -131,16 +131,9 @@ class AlbumController extends BaseController {
     public function editAlbum()
     {
         try {
-            if (session_status() !== PHP_SESSION_ACTIVE) {
-                session_start();
-            }
-
-
             if (!isset($_SESSION['user']['id'])) {
                 return new Response(401, json_encode(['message' => 'Non authentifié']));
             }
-
-            $userId = $_SESSION['user']['id'];
 
             //var_dump($_POST);
             $rawPostData = file_get_contents("php://input");
@@ -158,23 +151,23 @@ class AlbumController extends BaseController {
             $visibility = $_POST['visibility'];
             $imgFile = $_FILES['img_profile_album'] ?? null;
 
-            //var_dump($_FILES);
-            if (!$imgFile) {
-                return new Response(400, json_encode(['message' => 'image manquante ${$imgFile}']));
-            }
 
-            $uploader = new UploadManager(__DIR__ . '../../../../interface/uploads');
-            $filename = $uploader->upload($imgFile);
-
-           // $albumRepo = new AlbumRepository();
 
             try {
                 // Récupérer la photo existante
                 $album = $this->repo->getAlbum($albumId);
+                //$uploader->delete($album->getImgProfileAlbum());
+
                 if (!$album) {
                     return new Response(404, json_encode(['message' => 'Album non trouvée']));
                 }
+                $filename = $album->getImgProfileAlbum(); // Par défaut, on conserve l'ancienne image
 
+                //var_dump($_FILES);
+                if ($imgFile) {
+                    $uploader = new UploadManager(__DIR__ . '../../../../interface/uploads');
+                    $filename = $uploader->upload($imgFile);
+                }
                 // Mise à jour des informations
                 $this->repo->editAlbum($albumId, $title, $description, $visibility, $filename);
 
@@ -229,5 +222,58 @@ class AlbumController extends BaseController {
             return new Response(500, json_encode(['message' => $e->getMessage()]));
         }
     }
+
+
+    public function listPublicsAlbums() {
+        try {
+            if (session_status() !== PHP_SESSION_ACTIVE) {
+                session_start();
+            }
+
+            if (!isset($_SESSION['user']['id'])) {
+                return new Response(401, json_encode(['message' => 'Non authentifié']));
+            }
+            $user_id = $_SESSION['user']['id'];
+
+            $albums = $this->repo->getAlbumsAndPhotos();
+            $albumsArray = array_map(fn($album) => $album->toArray(), $albums);
+
+            //mofdif à partir de là
+
+
+            return new Response(200, json_encode(['albums' => $albumsArray]));
+
+        }catch (\Exception $e) {
+            return new Response(500, json_encode(['message' => $e->getMessage()]));
+        }
+    }
+        public function listRecentsAlbums() {
+            try {
+                if (session_status() !== PHP_SESSION_ACTIVE) {
+                    session_start();
+                }
+                if (!isset($_SESSION['user']['id'])) {
+                    return new Response(401, json_encode(['message' => 'Non authentifié']));
+                }
+                $user_id = $_SESSION['user']['id'];
+
+                $albums = $this->repo->getRecentsAlbums($user_id);
+                $albumsArray = array_map(fn($album) => [
+                    'id' => $album->getId(),
+                    'title' => $album->getTitle(),
+                    'description' => $album->getDescription(),
+                    'creationDate' => $album->getCreationDate(),
+                    'visibility' => $album->getVisibility(),
+                    'imgProfileAlbum' => $album->getImgProfileAlbum(),
+                ], $albums);
+
+
+                return new Response(200, json_encode(['albums' => $albumsArray]));
+
+            }catch (\Exception $e) {
+                return new Response(500, json_encode(['message' => $e->getMessage()]));
+            }
+        }
+
 
 }

@@ -11,6 +11,9 @@ class Album {
     private string $visibility;
     private string $imgProfileAlbum;
 
+    private array $photos = [];
+
+
 
     public function __construct(
         int $id,
@@ -45,5 +48,26 @@ class Album {
     {return $this->visibility;}
     public function getImgProfileAlbum(): string
     {return $this->imgProfileAlbum;}
+
+    public function getPhotos(): array {
+        return $this->photos;
+    }
+
+    public function addPhoto(Photo $photo): void {
+        $this->photos[] = $photo;
+    }
+    public function toArray(): array {
+        return [
+            'id' => $this->id,
+            'user_id' => $this->userId,
+            'title' => $this->title,
+            'description' => $this->description,
+            'created_at' => $this->creationDate,
+            'visibility' => $this->visibility,
+            'img_profile_album' => $this->imgProfileAlbum,
+            'photos' => array_map(fn($photo) => $photo->toArray(), $this->photos),
+        ];
+    }
+
 
 }

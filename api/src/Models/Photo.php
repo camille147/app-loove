@@ -78,6 +78,11 @@ class Photo {
         return $this->tags;
     }
 
+    public function setTags(array $tags): void {
+        $this->tags = $tags;
+    }
+
+
     public function toArray() {
         return [
             'id' => $this->id,

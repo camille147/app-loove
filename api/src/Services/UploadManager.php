@@ -10,7 +10,7 @@ class UploadManager
 
     public function __construct(string $uploadDir)
     {
-        $this->uploadDir = rtrim($uploadDir, '/');
+        $this->uploadDir = rtrim($uploadDir, '/\\');
         if (!file_exists($this->uploadDir)) {
             mkdir($this->uploadDir, 0755, true);
         }
@@ -54,4 +54,20 @@ class UploadManager
 
         return $uniqueName;
     }
+
+    public function delete(string $filename): bool
+    {
+        $filePath = $this->uploadDir . '/' . $filename;
+
+        var_dump("Trying to delete: " . $filePath);
+
+        if (!file_exists($filePath)) {
+            //var_dump("File does not exist");
+            return false;
+        }
+
+        return unlink($filePath);
+    }
+
+
 }

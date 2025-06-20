@@ -253,6 +253,7 @@ class PhotoController extends BaseController {
                     return new Response(404, json_encode(['message' => 'Photo non trouvée']));
                 }
 
+
                 // Mise à jour des informations
                 $this->repo->editPhoto($photoId, $title, $description, $takenAt, $alt, $tags);
 
@@ -294,6 +295,24 @@ class PhotoController extends BaseController {
             }
 
             $photoId = $_DELETE['photo_id'];
+try {
+    $photo = $this->repo->get($photoId);
+    if (!$photo) {
+        return new Response(404, json_encode(['message' => 'Photo non trouvée']));
+    }
+
+    // Supprimer le fichier physique
+    $uploader = new UploadManager(__DIR__ . '../../../../interface/uploads/photos');
+
+// Ne pas faire echo ici !
+    $uploader->delete($photo->getFilename());
+
+
+    // var_dump($uploader);
+} catch  (\Exception $e) {
+    return new Response(500, json_encode(['message' => $e->getMessage()]));
+}
+
 
             try {
                 $this->repo->deletePhoto($photoId);

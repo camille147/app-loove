@@ -253,7 +253,7 @@ class PhotoRepository extends BaseRepository {
     public function getAllFavorites($userId): array
     {
         $results = $this
-            ->query("SELECT * FROM photos WHERE is_favorite = 1 AND user_id = :user_id")
+            ->query("SELECT * FROM photos WHERE is_favorite = 1 AND user_id = :user_id ORDER BY uploaded_at DESC")
             ->fetchAll(['user_id' => $userId]);
 
         $favorites = [];

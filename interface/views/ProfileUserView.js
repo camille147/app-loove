@@ -1,7 +1,8 @@
 import {AuthModel} from "../models/AuthModel";
+import {AlbumListComponent} from "../components/AlbumListComponent";
 
 export class ProfileUserView {
-    constructor(root, navigate, user, albums= []) {
+    constructor(root, navigate, user, albums) {
         this.root = root
         this.navigate = navigate
         this.user = user
@@ -10,6 +11,8 @@ export class ProfileUserView {
     }
 
     render() {
+        const albumListComponent = new AlbumListComponent(this.albums, this.handleAlbumClick.bind(this) )
+
         this.root.innerHTML = `
             
       <div class="max-w-xl mx-auto bg-base-100 shadow-xl rounded-lg p-6">
@@ -44,33 +47,22 @@ export class ProfileUserView {
 
         <div class="px-4 mt-6">
           <h3 class="font-semibold mb-2">Mes albums</h3>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-4">
-            ${this.albums.map(album => `
-              <button class="btn-album relative group overflow-hidden rounded-lg shadow hover:shadow-lg transition-all" data-album-id="${album.id}">
-                <img src="http://app-loove-interface.local/uploads/${album.imgProfileAlbum}" class="w-full h-auto object-cover transition-transform group-hover:scale-105" />
-                  <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent flex flex-col justify-end p-3 text-white">
-                  <h4 class="text-sm font-semibold">${album.title}</h4>
-                  <p class="text-xs">${album.visibility}</p>
-                </div>
-              </button>
-            `).join('')}
-          </div>
+          <div id="albumList" class="grid gap-4">
+      ${albumListComponent.render()}
+    </div>
         </div>
       </div>
 
         `
+        this.albumListComponent = albumListComponent
+
         this.bindEvents()
     }
 
     bindEvents() {
 
-        //console.log(this.albums)
-        document.querySelectorAll('.btn-album').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const albumId = btn.getAttribute('data-album-id')
-                console.log(albumId)
-            })
-        })
+        this.albumListComponent.bindEvents(document.getElementById('albumList'))
+
 
         const btnMenu = document.getElementById('menu')
         btnMenu.addEventListener('click', async (e) => {
@@ -83,6 +75,11 @@ export class ProfileUserView {
             e.preventDefault()
             this.navigate("modification")
         })
+    }
+
+    handleAlbumClick(albumId) {
+        console.log("Album sélectionné :", albumId)
+        this.navigate(`photos/${albumId}`)
     }
 
 }

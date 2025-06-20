@@ -12,4 +12,20 @@ export class UserModel {
         })
         return response.favorites
     }
+
+    async getPublicsAlbums( ) {
+        const response = await apiFetch(`${this.baseUrl}/public/albums`, {
+            method: "GET",
+            credentials: "include"
+        })
+        return response.albums
+    }
+
+    async getRecentsAlbums( ) {
+        const response = await apiFetch(`${this.baseUrl}/user/recent/albums`, {
+            method: "GET",
+            credentials: "include"
+        })
+        return response.albums
+    }
 }
