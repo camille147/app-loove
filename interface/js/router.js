@@ -1,22 +1,10 @@
-import { HomeView } from '../views/HomeView'
-import { ConnectionView } from "../views/ConnectionView"
-import {SignInView} from "../views/SignInView";
-import {AuthController} from "../controllers/AuthController";
-import {DashboardUserView} from "../views/DashboardUserView";
-import {ProfileUserView} from "../views/ProfileUserView";
-import {AddAlbumView} from "../views/AddAlbumView";
-import {AlbumsView} from "../views/AlbumsView";
-import {SearchView} from "../views/SearchView";
-import {AdminUsersView} from "../views/AdminUsersView";
-import {AdminDashboardView} from "../views/AdminDashboardView";
-import {ProfileController} from "../controllers/ProfileController";
-import {AlbumListComponent} from "../components/AlbumListComponent";
-import {NavBarAdminComponent} from "../components/NavBarAdminComponent";
-
-import {AlbumController} from "../controllers/AlbumController";
-import {PhotoController} from "../controllers/PhotoController";
-import {AdminController} from "../controllers/AdminController";
-import {UserController} from "../controllers/UserController";
+import {AuthController} from "../controllers/AuthController"
+import {ProfileController} from "../controllers/ProfileController"
+import {NavBarAdminComponent} from "../components/NavBarAdminComponent"
+import {AlbumController} from "../controllers/AlbumController"
+import {PhotoController} from "../controllers/PhotoController"
+import {AdminController} from "../controllers/AdminController"
+import {UserController} from "../controllers/UserController"
 
 export class Router {
     constructor(root, apiBaseUrl) {
@@ -26,11 +14,9 @@ export class Router {
         this.navBarAdmin = null
 
         this.routes = {
-            //home: () => new HomeView(this.root, this.navigate.bind(this)).render(),   // permet de passer la func ds les vues sans perdre le this du router
             home: () => {
                 const authController = new AuthController(this.root, this.navigate.bind(this), this.apiBaseUrl)
                 authController.showLogin()
-                //new ConnectionView(this.root, this.navigate.bind(this)).render(),
             },
             signin : () => {
                 const authController = new AuthController(this.root, this.navigate.bind(this), this.apiBaseUrl)
@@ -118,23 +104,18 @@ export class Router {
                 photoController.showInformations()
             },
 
-
-
-
         }
     }
 
     navigate(viewName) {
-        // Ex: viewName = "photos/123" ou "addPhoto/123"
-        const [route, param] = viewName.split('/');
-
-        const routeHandler = this.routes[route];
+        const [route, param] = viewName.split('/')
+        const routeHandler = this.routes[route]
 
         if (routeHandler) {
             if (param) {
-                routeHandler(param);
+                routeHandler(param)
             } else {
-                routeHandler();
+                routeHandler()
             }
 
             localStorage.setItem('lastView', viewName)
@@ -142,19 +123,18 @@ export class Router {
             const user = this.getUSer()
             const isConnected = this.isAuthentificated()
             const isAdmin = user?.role === 1
-            const navbarContainer = document.getElementById("navbar");
-            const navBarAdminContainer = document.getElementById("navBarAdmin");
-const mainContent = document.getElementById("app")
+            const navbarContainer = document.getElementById("navbar")
+            const navBarAdminContainer = document.getElementById("navBarAdmin")
+            const mainContent = document.getElementById("app")
 
             if (this.navbar) {
                 if (isConnected && !isAdmin) {
-                    this.navbar.mount(navbarContainer);
-                    this.navbar.setActiveView(route);  // attention : ici route sans param
+                    this.navbar.mount(navbarContainer)
+                    this.navbar.setActiveView(route)
                 } else {
-                    this.navbar.unmount(navbarContainer);
+                    this.navbar.unmount(navbarContainer)
                 }
             }
-
 
             if (isAdmin) {
                 if (!this.navBarAdmin) {
@@ -167,7 +147,7 @@ const mainContent = document.getElementById("app")
             }
 
         } else {
-            this.root.innerHTML = "<h1>404 - Vue inconnue</h1>";
+            this.root.innerHTML = "<h1>404 - Vue inconnue</h1>"
         }
     }
 
@@ -180,7 +160,6 @@ const mainContent = document.getElementById("app")
         })
     }
 
-
     isAuthentificated() {
         const token = localStorage.getItem("token")
         return !!token
@@ -189,7 +168,6 @@ const mainContent = document.getElementById("app")
     getUSer() {
         const user = localStorage.getItem("user")
         if (!user) return null
-
         try {
             return JSON.parse(user)
         } catch (error) {

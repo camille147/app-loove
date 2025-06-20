@@ -22,7 +22,6 @@ export class ProfileController {
     async showProfile (){
         try {
             const user = await this.userModel.me()
-
             const albums = await this.albumModel.getMyAlbums()
             const view = await new ProfileUserView(this.root, this.navigate, user, albums)
             view.render()
@@ -34,10 +33,8 @@ export class ProfileController {
     }
 
     async showMenu (){
-
             const view = await new MenuUserView(this.root, this.navigate)
             view.render()
-
     }
 
 
@@ -53,7 +50,6 @@ export class ProfileController {
                         this.navigate("profileUser")
 
                     } else {
-                        console.log(user)
                         this.navigate("adminProfile")
 
                     }
@@ -61,45 +57,25 @@ export class ProfileController {
                     alert("Erreur :" + e.message)
                 }
             }
-
             view.render()
-
         } catch (e) {
             console.error("Erreur lors de la modification du profil :", e.message)
             this.navigate("home")
         }
-
     }
 
     async showDelete() {
         const view = new MenuUserView(this.root, this.navigate)
-
-            try {
-                //const user = await this.userModel.me();
-                await this.userModel.delete();
-                view.showMessage("Suppression réussie ! Redirection en cours...");
-                localStorage.removeItem("token")
-                localStorage.removeItem("user")
-                localStorage.removeItem("lastView")
-
-                setTimeout(() => this.navigate("home"), 1500);
-
-            } catch (err) {
-                view.showMessage(err.message || "Erreur lors de la suppression");
-            }
-
-    }
-
-
-    async showUserAlbums() {
-        // CHANGER PROFILE USER VIEW POUR PRENDRE ALBUMS ET USER
         try {
-            const albums = await this.albumModel.getMyAlbums();
-            const view = new ProfileUserView( this.root, this.navigate, user, albums);
-            view.render();
-        } catch (e) {
-            console.error("Erreur chargement albums :", e.message);
-            this.navigate("home");
+            await this.userModel.delete()
+            view.showMessage("Suppression réussie ! Redirection en cours...")
+            localStorage.removeItem("token")
+            localStorage.removeItem("user")
+            localStorage.removeItem("lastView")
+
+            setTimeout(() => this.navigate("home"), 1500)
+        } catch (err) {
+            view.showMessage(err.message || "Erreur lors de la suppression")
         }
     }
 

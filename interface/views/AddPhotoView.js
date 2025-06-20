@@ -57,7 +57,7 @@ export class AddPhotoView {
                const btn = document.createElement("button")
                btn.type = "button"
                btn.className = "btn btn-sm btn-primary"
-               btn.innerHTML = `${tag} <span class="ml-1">$times;</span>`
+               btn.innerHTML = `${tag} <span class="ml-1">&times;</span>`
                btn.addEventListener("click", () => {
                    this.selectedTags.delete(tag)
                    updateSelectedTags()

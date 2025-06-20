@@ -11,34 +11,30 @@ import {HomeView} from "../views/HomeView";
 
 export class AdminController {
     constructor(root, navigate, apiBaseUrl) {
-        this.adminModel = new AdminModel(apiBaseUrl);
+        this.adminModel = new AdminModel(apiBaseUrl)
         this.root = root
         this.navigate = navigate
     }
 
     async showAdmin() {
-
         try {
-            const users = await this.adminModel.getUsers();
-            const view = new AdminDashboardView( this.root, this.navigate, users);
+            const users = await this.adminModel.getUsers()
+            const view = new AdminDashboardView( this.root, this.navigate, users)
 
             view.onToggleDelete = async (userId) => {
-                await this.adminModel.deleteAdmin(userId);
+                await this.adminModel.deleteAdmin(userId)
                 await this.showAdmin()
             }
-
-            view.render();
+            view.render()
         } catch (e) {
-            console.error("Erreur chargement users :", e.message);
-            this.navigate("home");
+            console.error("Erreur chargement users :", e.message)
+            this.navigate("home")
         }
-
-
     }
 
     async showTagsAndCreate () {
         try {
-            const tags = await this.adminModel.getTags();
+            const tags = await this.adminModel.getTags()
             const view = new AdminTagsCreateView(this.root, this.navigate, tags)
 
             view.render()
@@ -46,13 +42,11 @@ export class AdminController {
             view.onSubmit = async ({name}) => {
                 try {
                     const result = await this.adminModel.createTag(name)
-                    this.showTagsAndCreate();
-                    //view.navigate("dashboard")
+                    this.showTagsAndCreate()
                 } catch (err) {
                     console.error("Erreur création tag :", err.message)
                 }
             }
-
         } catch (e) {
             console.error("Erreur chargement tags et/ou création :", e.message)
             this.navigate("home")
@@ -63,20 +57,16 @@ export class AdminController {
         try {
             const view = new AdminCreationAdminView(this.root, this.navigate)
 
-
             view.onSubmit = async (formData) => {
                 try {
-                    await this.adminModel.creationAdmin(formData);
-                    view.showMessage("Inscription admin réussie ! Redirection en cours...");
+                    await this.adminModel.creationAdmin(formData)
+                    view.showMessage("Inscription admin réussie ! Redirection en cours...")
                     this.navigate("adminDashboard")
-
                 } catch (err) {
-                    view.showMessage(err.message || "Erreur lors de l'inscription admmin");
-
+                    view.showMessage(err.message || "Erreur lors de l'inscription admin")
                 }
             }
             view.render()
-
         }catch (e) {
             console.error("Erreur creation admin :", e.message)
             this.navigate("home")
@@ -89,12 +79,9 @@ export class AdminController {
 
             const view = await new AdminProfileView(this.root, this.navigate, userAdmin)
             view.render()
-
         }catch (e) {
             console.error("Erreur admin profil :", e.message)
             this.navigate("home")
         }
     }
-
-
 }

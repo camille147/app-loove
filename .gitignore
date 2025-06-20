@@ -2,5 +2,11 @@ vendor/
 .env
 composer.lock
 api/composer.lock
+api/composer.json
 idea/
+interface/uploads/
+interface/composer.json
+interface/composer.lock
+interface/uploads/photos/
+interface/uploads/profile_pictures/
 interface/uploads/

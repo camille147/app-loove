@@ -1,11 +1,11 @@
-import {PhotoModel} from "../models/PhotoModel";
-import {AddPhotoView} from "../views/AddPhotoView";
-import {PhotosView} from "../views/PhotosView";
-import {ModificationProfileView} from "../views/ModificationProfileView";
-import {ModificationPhotoView} from "../views/ModificationPhotoView";
+import {PhotoModel} from "../models/PhotoModel"
+import {AddPhotoView} from "../views/AddPhotoView"
+import {PhotosView} from "../views/PhotosView"
+import {ModificationProfileView} from "../views/ModificationProfileView"
+import {ModificationPhotoView} from "../views/ModificationPhotoView"
 import {MenuUserView} from "../views/MenuUserView";
 import {AlbumsView} from "../views/AlbumsView";
-import {SearchView} from "../views/SearchView";
+import {SearchView} from "../views/SearchView"
 
 
 export class PhotoController {
@@ -17,16 +17,16 @@ export class PhotoController {
 
     async showAddPhotoForm(albumId) {
         const tags = await this.photoModel.getAllTags()
-        const view = new AddPhotoView(this.root, this.navigate, albumId, tags);
+        const view = new AddPhotoView(this.root, this.navigate, albumId, tags)
         view.onSubmit = async (formData) => {
             try {
                 await this.photoModel.createPhoto(formData)
-                this.navigate(`photos/${albumId}`);
+                this.navigate(`photos/${albumId}`)
             } catch (e) {
-                console.error("Erreur création photo :", e.message);
-                alert("Erreur : " + e.message);
+                console.error("Erreur création photo :", e.message)
+                alert("Erreur : " + e.message)
             }
-        };
+        }
         await view.render()
     }
 
@@ -38,21 +38,20 @@ export class PhotoController {
             view.model = this.photoModel
 
             view.onToggleFavorite = async (photoId, isFavorite) => {
-                await this.photoModel.toggleFavorite(photoId, isFavorite);
+                await this.photoModel.toggleFavorite(photoId, isFavorite)
                 await view.applyFilters()
             }
 
             view.onToggleDelete = async (photoId) => {
-                await this.photoModel.deletePhoto(photoId);
+                await this.photoModel.deletePhoto(photoId)
                 await view.applyFilters()
             }
             await view.render()
         } catch (e) {
-            console.error("Erreur chargement photos :", e.message);
-            alert("Erreur chargement photos : " + e.message);
-            this.navigate("home");
+            console.error("Erreur chargement photos :", e.message)
+            alert("Erreur chargement photos : " + e.message)
+            this.navigate("home")
         }
-
 
     }
 
@@ -64,13 +63,11 @@ export class PhotoController {
             view.onSubmit = async (formData) => {
                 try {
                     await this.photoModel.modification(formData)
-                    console.log(photo.photo.album_id)
                     this.navigate(`photos/${photo.photo.album_id}`)
                 } catch (e) {
                     alert("Erreur :" + e.message)
                 }
             }
-
             view.render()
 
         } catch (e) {
@@ -81,15 +78,13 @@ export class PhotoController {
 
     async showSearchPhotos() {
         try {
-            const tags = await this.photoModel.getSearchPhotos();
-            const view = new SearchView( this.root, this.navigate, tags);
-            view.render();
+            const tags = await this.photoModel.getSearchPhotos()
+            const view = new SearchView( this.root, this.navigate, tags)
+            view.render()
         } catch (e) {
-            console.error("Erreur chargement tags recherche photo :", e.message);
-            this.navigate("home");
+            console.error("Erreur chargement tags recherche photo :", e.message)
+            this.navigate("home")
         }
     }
-
-
 
 }

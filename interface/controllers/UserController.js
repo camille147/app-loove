@@ -1,14 +1,12 @@
-import {PhotoModel} from "../models/PhotoModel";
-import {UserModel} from "../models/UserModel";
-import {DashboardUserView} from "../views/DashboardUserView";
+import {UserModel} from "../models/UserModel"
+import {DashboardUserView} from "../views/DashboardUserView"
 
 export class UserController {
     constructor(root, navigate, apiBaseUrl) {
-        this.userModel = new UserModel(apiBaseUrl);
+        this.userModel = new UserModel(apiBaseUrl)
         this.root = root
         this.navigate = navigate
     }
-
 
     async showFavorites () {
         try {
@@ -19,8 +17,6 @@ export class UserController {
             const view = new DashboardUserView(this.root, this.navigate, favorites, publicsAlbums, albumsRecents)
 
             view.render()
-
-
 
         } catch (e) {
             console.error("Erreur chargement photos favorites :", e.message)
