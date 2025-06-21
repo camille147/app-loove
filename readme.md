@@ -1,5 +1,4 @@
-# 🥂 Clink - L'app de rencontres par affinités alcoolisées
-
+# TrackShots
 Trakshots est une application d'album photo développée dans le cadre d’un projet de fin d’année à CODA. 
 
 
