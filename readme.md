@@ -1,4 +1,4 @@
-# TrackShots
+# TrackShots ALBUMS PHOTOS
 Trakshots est une application d'album photo développée dans le cadre d’un projet de fin d’année à CODA. 
 
 
